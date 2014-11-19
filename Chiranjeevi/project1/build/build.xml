@@ -16,7 +16,6 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
-
     <target name="run" depends="compile">
         <java classname="com.vl.training.sample.MySample">
             <arg value="225"/>

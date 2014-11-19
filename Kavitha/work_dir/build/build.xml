@@ -20,9 +20,9 @@
     <target name="run" depends="compile">
         <java classname="com.vl.training.sample.MySample">
             <arg value="225"/>
-            <classpath>
-                <pathelement path="${classes.dir}"/>
-            </classpath>
+                <classpath>
+                    <pathelement path="${classes.dir}"/>
+                </classpath>
         </java>
     </target>
 

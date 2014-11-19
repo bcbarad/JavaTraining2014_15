@@ -25,7 +25,7 @@
             </classpath>
         </java>
     </target>
-
+    
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
