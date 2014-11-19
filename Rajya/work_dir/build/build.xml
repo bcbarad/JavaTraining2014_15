@@ -11,12 +11,21 @@
         </javac>
 	</target>
 
-    <target name="run" depends="compile" description="Run the main class">
+    <target name="check" depends="compile" description="Run the main class">
         <checkstyle config="${checkstyleXml}">
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
 
+    <target name="run" depends="compile">
+        <java classname="com.vl.training.sample.MySample">
+            <arg value="225"/>
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+    
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
