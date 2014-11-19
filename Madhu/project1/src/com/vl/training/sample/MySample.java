@@ -4,5 +4,6 @@ public class MySample {
 
     public static void main(final String[] args) {
         System.out.println("Hello, World!");
+        System.out.println("hai friends");
     }
 }
