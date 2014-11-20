@@ -1,0 +1,5 @@
+workDir=/home/chiranjeevi/workdir/JavaTraining2014_15/Chiranjeevi/project3
+src.dir=${workDir}/src
+classes.dir=${workDir}/classes
+checkstyle.jar=${workDir}/../../common/lib/checkstyle-6.1-all.jar
+checkstyleXml=${workDir}/xml/sun_checks.xml
