@@ -18,8 +18,10 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.MySample">
-            <arg value="225"/>
+        <java classname="com.vl.training.sample.Arr_Ele_Diff">
+            <arg value="${val1}"/>
+            <arg value="${val2}"/>
+            <arg value="${val3}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

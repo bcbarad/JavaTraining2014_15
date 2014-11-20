@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
  
-<project name="Sample" basedir="." default="run">
+<project name="wordsinstring" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -18,14 +18,14 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.MySample">
+        <java classname="com.vl.training.wordsinstring.Words_String">
             <arg value="225"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
         </java>
     </target>
-
+    
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
