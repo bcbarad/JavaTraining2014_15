@@ -1,4 +1,5 @@
 package com.vl.training.sample;
+import java.util.Scanner;
 public class ParanthisisBal
 {
     static boolean checkParnthBal(String str)
@@ -25,7 +26,10 @@ public class ParanthisisBal
     }
     public static void main(String args[])
     {
-       boolean res=ParanthisisBal.checkParnthBal(" ((A ) (D)(( ");
+       Scanner sc=new Scanner(System.in);
+       System.out.println("Enter a string;");
+       String  sentence=sc.nextLine();
+       boolean res=ParanthisisBal.checkParnthBal(sentence);
        if(res)
            System.out.println(" string paranthisis balenced ");
        else

@@ -1,4 +1,5 @@
 package com.vl.training.sample;
+import java.util.Scanner;
 public class WordCount
 {
     static int countWords(String str)
@@ -18,7 +19,10 @@ public class WordCount
     }
     public static void main(String args[])
     {
-        int count=WordCount.countWords(" Hai  this     is first  Word count program ");
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter a string;");
+        String  sentence=sc.nextLine();
+        int count=WordCount.countWords(sentence);
         System.out.println(" the number of words in the sentence are:"+count);
     }
 }
