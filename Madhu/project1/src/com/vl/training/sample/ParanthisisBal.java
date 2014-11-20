@@ -26,7 +26,7 @@ public class ParanthisisBal
     }
     public static void main(String args[])
     {
-       boolean res=ParanthisisBal.checkParnthBal(" ((A ) (D) ");
+       boolean res=ParanthisisBal.checkParnthBal(" ((A ) (D)(( ");
        if(res)
            System.out.println(" string paranthisis balenced ");
        else
