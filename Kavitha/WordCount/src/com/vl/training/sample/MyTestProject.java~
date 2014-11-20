@@ -1,0 +1,66 @@
+import java.io.*;
+import java.lang.*;
+
+public class MyTestProject {
+
+    public static void main(final String[] args) {
+        int wcount;
+        boolean arrD,para;
+        wcount=wordCount();
+        para=paran();
+        arrD=arrDiff();
+        System.out.println("Word Count"+wcount);
+        System.out.println("Paranbal"+para);
+        System.out.println("array Diff"+arrD);
+    }
+    public static int wordCount() {
+        int i,count=1;
+        String str="dsf fsfgd dgdege rgrrhe getyeyeyetg5y3      hrhhryhr e4rt45t                  fhgj";
+        char[] a = str.toCharArray();
+            for(i=0;i<a.length;i++) {
+                if(a[i]==' ') {
+                    i++;
+                        if(a[i]!=' ') {
+                             count++;
+                        }          
+                }
+            }
+            return count; 
+    }
+    public static boolean paran(){
+        int depth=0,i;
+        Scanner scanner = new Scanner(System.in);
+        String username = scanner.nextLine();
+        System.out.println("Your username is " + username);
+
+
+       // String c=")sdfbs())";
+        //char[] a=c.toCharArray();;
+            for(i=0;i<a.length&&depth>=0;i++) {
+                    if(a[i]=='(')
+                        depth++;
+                    if(a[i]==')')
+                        depth--;
+            }
+            if(depth==0)
+                return true;
+            else
+                return false;
+    }
+    public static boolean arrDiff() {
+        int a,b,i;
+        boolean flag=false; 
+        int[] c={2,4,6,8,10};
+                a=c[0]-c[1];
+            for(i=1;i<3;i++) {
+                b=c[i]-c[i+1];
+                if(a==b)
+                    continue;
+                else{
+                flag=true;
+                break;
+                }
+            }
+            return flag;
+    }   
+}                   
