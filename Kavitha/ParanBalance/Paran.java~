@@ -1,0 +1,22 @@
+import java.util.Scanner;
+public class Paran {
+public static void main(String[] args) {
+    Paran.paran();
+} 
+public static boolean paran(){
+    int depth=0,i;
+        System.out.println(" enter a string");
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        for(i=0;i<a.length&&depth>=0;i++) {
+            if(a[i]=='(')
+                depth++;
+            if(a[i]==')')
+                depth--;
+        }
+        if(depth==0)
+            System.out.println("true");
+        else
+            System.out.println("false");
+}
+}
