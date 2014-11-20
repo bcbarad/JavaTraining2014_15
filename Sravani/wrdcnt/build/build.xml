@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
  
-<project name="Sample" basedir="." default="run">
+<project name="wrdcnt" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -18,9 +18,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Word_Count">
-            <arg value="${val1}"/>
-            
+        <java classname="paranthesis.prog.com.WordCount">
+            <arg value="225"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

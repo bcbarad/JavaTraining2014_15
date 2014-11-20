@@ -18,9 +18,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Word_Count">
-            <arg value="${val1}"/>
-            
+        <java classname="com.vl.training.sample.MySample">
+            <arg value="225"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
