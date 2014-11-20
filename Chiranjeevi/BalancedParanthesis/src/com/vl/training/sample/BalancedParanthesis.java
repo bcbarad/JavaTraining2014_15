@@ -2,11 +2,6 @@ package com.vl.training.sample;
 
 public class BalancedParanthesis {
     public static void main(String[] args) {
-      /*  String s;
-        DataInputStream d= new DataInputStream(System.in);
-        System.out.println("Enter the expression:\t");
-        s=d.readLine();
-        checkExpression(s);*/
         System.out.println("result:"+checkExpression(args[0]));
     }
     public static boolean checkExpression(String arr){
