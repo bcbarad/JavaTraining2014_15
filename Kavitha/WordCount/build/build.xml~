@@ -18,8 +18,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Bal_Paranthesis">
-            <arg value="()()("/>
+        <java classname="com.vl.training.sample.count_Word">
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
