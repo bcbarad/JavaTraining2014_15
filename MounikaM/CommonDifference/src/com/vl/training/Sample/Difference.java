@@ -2,14 +2,14 @@
 import java.util.Scanner;
 import java.lang.Math;
 
-public class CommonDifference
+ class CommonDifference
 {
     static boolean checkDifference(int array[],int numOfElements)
     {
       int count = 0;
       int length=array.length;
 
-      for(int i=0;i<length-1;i++) //to store the differences of cosecutive elements in diff array
+      for(int i=0;i<numOfElements-1;i++) //to store the differences of cosecutive elements in diff array
       {   
           int a = array[i+1]-array[i];
           int b = array[i+2]-array[i+1];
@@ -37,7 +37,7 @@ public class CommonDifference
      { 
         array[i]=s.nextInt();
      } 
-     boolean result=Difference.checkDifference(array,numOfElements);
+     boolean result=CommonDifference.checkDifference(array,numOfElements);
      if(result)
        System.out.println("Difference between any consecutive elements in array are same");
      else
