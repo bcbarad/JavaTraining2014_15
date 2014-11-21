@@ -6,14 +6,13 @@ public class Difference
    {
         int[] diff=new int[50];
         int i=0;
-        int length=list.length;
-        
-        for(;i<length-1;i++) //to store the differences of cosecutive elements in diff array
+        for(;list[i+1]!='\0';i++) //to store the differences of cosecutive elements in diff array
         {
             if(list[i]>list[i+1])
                  diff[i]=list[i]-list[i+1];
             else
                  diff[i]=list[i+1]-list[i];
+            System.out.println(diff[i]);
         }
         for(int j=0;j<i;j++)// to check the duplicate diffrence elements
         {
