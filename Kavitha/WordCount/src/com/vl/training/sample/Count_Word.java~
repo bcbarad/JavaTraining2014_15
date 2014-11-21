@@ -14,7 +14,7 @@ public class Count_Word{
     char[] ch=sent.toCharArray();
     int i,count=1;
     for(i=0;i<ch.length;i++){
-        if(ch[i]==' '){
+        while(ch[i]==' '){
             i++;
         if(ch[i]!=' ')
             count++;
