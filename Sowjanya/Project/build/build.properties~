@@ -1,4 +1,4 @@
-workDir=/home/sowjanya/PrjTest/JavaTraining2014_15 /Sowjanya/project4
+workDir=/home/sowjanya/PrjTest/JavaTraining2014_15 /Sowjanya/Project
 src.dir=${workDir}/src
 classes.dir=${workDir}/classes
 checkstyle.jar=${workDir} ../../../common/lib/checkstyle-6.1-all.jar
