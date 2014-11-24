@@ -19,19 +19,21 @@ public final class PrimeCheck {
         boolean val1 , val2 , dif;
         int num1 = Integer.parseInt(args[0]);
         int num2 = Integer.parseInt(args[1]);
-        val1 = PrimeCheck.checkPrime(num1);
-        val2 = PrimeCheck.checkPrime(num2);
-        int diff = num1 - num2;
-        if (diff < 0) {
-            dif = PrimeCheck.checkPrime(-1 * diff);
+        if ((num1 - num2) != 2 && (num2 - num1) != 2) {
+           System.out.println(" False ");
         } else {
-            dif = PrimeCheck.checkPrime(diff);
-        }
-        if (val1 && val2 && dif) {
-            System.out.println(" True ");
-        } else {
-            System.out.println(" False ");
-        }
+            val1 = PrimeCheck.checkPrime(num1);
+            val2 = PrimeCheck.checkPrime(num2);
+            if (val1) {
+               if (val2) {
+                  System.out.println(" True ");
+               } else {
+                     System.out.println(" false ");
+               }
+            } else {
+                  System.out.println(" True ");
+            }
+        }   
     }
 }
 
