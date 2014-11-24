@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+ 
+<project name="Sample" basedir="." default="run">
+   <property file="build.properties"/>
+
+   <!-- Checkstyle task -->
+   <taskdef resource="checkstyletask.properties" classpath="${checkstyle.jar}"/>
+    <target name="compile" description="Compiles the Task" depends="init">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" debug="true">
+        </javac>
+	</target>
+
+    <target name="check" depends="compile" description="Run the main class">
+        <checkstyle config="${checkstyleXml}">
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+        </checkstyle>
+    </target>
+    <target name="run" depends="compile">
+        <java classname="com.vl.training.sample.ModeFinder">
+            <arg value="${a1}"/>
+            <arg value="${a2}"/>
+            <arg value="${a3}"/>
+            <arg value="${a4}"/>
+            <arg value="${a5}"/>
+            <arg value="${a6}"/>
+            <arg value="${a7}"/>
+            <arg value="${a8}"/>
+
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="init">
+		<mkdir dir="${classes.dir}"/>
+    </target>
+        
+
+    <!-- Cleanup -->
+    <target name="clean" description="Remove all generated files">
+        <delete>
+            <fileset dir="${classes.dir}"/>
+        </delete>
+    </target>
+
+</project>
