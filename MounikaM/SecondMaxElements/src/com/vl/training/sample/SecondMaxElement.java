@@ -1,16 +1,12 @@
 package com.vl.training.sample;
-import java.util.Scanner;
+
 
 public class SecondMaxElement {
     public static void main(final String[] args) {
-        System.out.println("\n enetr number of elemnets want to enter:");
-        Scanner s = new Scanner(System.in);
-        int numOfElements = s.nextInt();
-        int[] array = new int[numOfElements];
-        System.out.println("\n enter random number of elements : ");
+        int[] array = new int[args.length];
 
-        for (int j = 0; j < numOfElements; j++) {
-            array[j] = s.nextInt();
+        for (int j = 0; j < args.length; j++) {
+            array[j] = Integer.parseInt(args[j]);
         }
 
         SecondMaxElement sm = new SecondMaxElement();
