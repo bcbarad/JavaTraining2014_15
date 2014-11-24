@@ -3,21 +3,18 @@
 public class Factorial {
 	public static void main(String arr[]) {
 		int n = Integer.parseInt(arr[0]);
-		int a = 0;
-		for( int i = 1 ; i <= n ; i++ ) {
-			System.out.print(i + "! + ");
-			a = a + factorial( i );
-
-		}
-		System.out.println(" = " + a);
+		System.out.println("output: " + facSum(n));
 	}
-	public static int factorial(int n) {
+	public static int facSum(int n){
+		int tmp,sum=0;
+		for (int i=n;i>0;i--){
+			tmp = 1; // important to reset
+			for (int j=1;j<=i;j++){
+				tmp *= j;
+			}
+			sum+=tmp;
+		}
+		return sum;
+	} 
 
-		if ( n == 1) {
-			return 1;
-		}
-		else {
-			return n * factorial(n-1);
-		}
-	}
 }
