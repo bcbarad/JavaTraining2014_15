@@ -15,6 +15,6 @@ public final class NFactSum {
         for (int i = 1; i < (number * 2); i *= 2) {
             sum = sum + NFactSum.factorial(i);
         }
-        System.out.println("  sum of the factorials series be: " + sum);
+        System.out.println("  sum of the factorials series : " + sum);
     }
 }
