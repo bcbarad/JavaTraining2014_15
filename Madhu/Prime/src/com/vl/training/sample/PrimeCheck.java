@@ -3,16 +3,16 @@ public final class PrimeCheck {
     private PrimeCheck() {
     }
     static boolean checkPrime(final int num) {
-        int temp = 1;
+        boolean temp = true;
         for (int i = 2; i <= (num / 2); i++) {
             if ((num % i) == 0) {
-                temp = 0;
+                temp = false;
             }
         }
-        if (temp == 0) {
-            return false;
+        if (temp) {
+            return temp;
         } else {
-            return true;
+            return temp;
         }
     }
     public static void main(final String[] args) {
