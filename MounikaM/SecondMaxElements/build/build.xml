@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
+
 <project name="Sample" basedir="." default="run">
    <property file="build.properties"/>
 
@@ -16,9 +16,10 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
+
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Factorial">
-            <arg value="${n}"/>
+        <java classname="com.vl.training.sample.SecondMaxElement">
+            <arg value="225"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -28,7 +29,7 @@
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
-        
+
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">

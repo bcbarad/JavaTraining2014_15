@@ -13,8 +13,8 @@ public class TwinPrime {
 		}
 	}
 	public static boolean areTwinPrimes(int a, int b) {
-		if( isPrime(a) && isPrime(b) ){
-			if(a - b == 2 || b - a == 2)
+		if( a - b == 2 || b - a == 2){
+			if( isPrime(a) && isPrime(b) )
 				return true;//System.out.println(a+"and "+b+"are TwinPrimes");
 			else return false;
 		}
