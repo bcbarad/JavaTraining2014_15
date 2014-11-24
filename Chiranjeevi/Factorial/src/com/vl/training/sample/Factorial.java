@@ -1,4 +1,4 @@
-//package com.vl.training.sample;
+package com.vl.training.sample;
 
 public class Factorial {
 	public static void main(String arr[]) {
