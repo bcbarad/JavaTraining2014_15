@@ -18,8 +18,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.balanceparanthesis.Balance_Paranthesis">
-            <arg value="225"/>
+        <java classname="com.vl.training.balanceparanthesis.BalanceParanthesis">
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
