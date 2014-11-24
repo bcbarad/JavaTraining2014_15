@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
  
-<project name="balanceparanthesis" basedir="." default="run">
+<project name="Sample" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -16,15 +16,22 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
-
     <target name="run" depends="compile">
-        <java classname="com.vl.training.balanceparanthesis.BalanceParanthesis">
+        <java classname="com.vl.training.sample.SecondMax">
+            <arg value="${v1}"/>
+            <arg value="${v2}"/>
+            <arg value="${v3}"/>
+            <arg value="${v4}"/>
+            <arg value="${v5}"/>
+            <arg value="${v6}"/>
+            <arg value="${v7}"/>
+            <arg value="${v8}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
         </java>
     </target>
-    
+
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
