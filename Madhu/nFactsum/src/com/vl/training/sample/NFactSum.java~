@@ -1,0 +1,26 @@
+//package com.vl.training.sample;
+import java.util.Scanner;
+public class NFactSum
+{
+	static int  factorial(int num)
+	{
+		int fact=1;
+		for(int i=1;i<=num;i++)
+		{
+			fact=fact*i;
+		}
+		return fact;
+	}
+	public static void main(String args[])
+	{
+		int sum=0;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the number");
+		int number = sc.nextInt();
+		for( int i=1;i<=number;i++)
+		{
+			sum=sum+NFactSum.factorial(i);
+		}
+		System.out.println(" the sum of factorials of the "+number+" th terms be: "+sum);
+	}
+}
