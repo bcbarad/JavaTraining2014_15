@@ -18,8 +18,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.countdifference.Find_Difference">
-            <arg value="225"/>
+        <java classname="com.vl.training.countdifference.FindDifference">
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
