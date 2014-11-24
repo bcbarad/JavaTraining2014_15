@@ -1,7 +1,7 @@
 package com.vl.training.sample;
 import java.util.Scanner;
 public class Difference {
-	static boolean checkDiff(final int list[]) {
+    static boolean checkDiff(final int list[]) {
 		int[] diff = new int[50];
 		int i = 0;
 		for ( ; list[i + 1] != '\0'; i++) { //to store the differences of cosecutive elements in diff arra
