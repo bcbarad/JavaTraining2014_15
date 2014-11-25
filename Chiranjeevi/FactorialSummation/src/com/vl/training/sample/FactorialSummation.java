@@ -2,8 +2,13 @@ package com.vl.training.sample;
 
 public class FactorialSummation {
     public static void main(String arr[]) {
-    int n = Integer.parseInt(arr[0]);
-    System.out.println("\b\b = " + factSummation(n));
+        if (arr.length == 1) {
+            int n = Integer.parseInt(arr[0]);
+            System.out.println("\b\b = " + factSummation(n));
+        }
+        else {
+            System.out.println("Pass exactly one Parameter");
+        }
     }
     public static int factSummation(int n) {
         int sum = 0, j = 0, temp = 1;
