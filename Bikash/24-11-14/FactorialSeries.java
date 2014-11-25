@@ -11,7 +11,6 @@ public class FactorialSeries {
 			for (int i = 1; i <=number; i++) {
                 factorial=preNumberFactorial*i;
 			    preNumberFactorial=factorial;
-			    System.out.println(factorial);
                 factorialSeriesSum+=factorial;
                 factorial=1;
 			}//outer for loop
