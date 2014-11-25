@@ -6,13 +6,12 @@ public class FactorialSummation {
     System.out.println("Sigma " + n + "!= " + factSummation(n));
     }
     public static int factSummation(int n) {
-        int tmp,sum = 0;
-        for (int i = n; i > 0; i--){
-            tmp = 1; // important to reset
-            for (int j = 1; j <= i; j++){
-                tmp *= j;
-            }
-            sum += tmp;
+        int sum = 0, j = 0, temp = 1;
+        for (int i=1; i <= n; i++){
+            //temp, sum are integer variables
+            sum = sum + temp;
+            j+=2;
+            temp = temp * j * (j - 1);
         }
         return sum;
     } 
