@@ -2,8 +2,9 @@ package com.vl.training.sample;
 public final class Mode {
     private Mode() {
     }
-    static int mostRepeted(final int[] list , final int length) {
+    static int mostRepeted(final int[] list) {
         int mode = list[0] , newmode = list[0] , tempfre = 0 , modefre = 1;
+        int length = list.length;
         for (int i = 1; i < length; i++) {
             if (newmode == list[i]) {
                 if (mode == newmode) {
@@ -24,12 +25,11 @@ public final class Mode {
         return mode;
     }
     public static void main(final String[] args) {
-        int len = args.length;
-        int[] list = new int[len];
+        int[] list = new int[args.length];
         for (int i = 0; i < args.length; i++) {
             list[i] = Integer.parseInt(args[i]);
         }
-        int mode = Mode.mostRepeted(list , len);
+        int mode = Mode.mostRepeted(list);
         System.out.println(" the mode  in the list is : " + mode);
     }
 }
