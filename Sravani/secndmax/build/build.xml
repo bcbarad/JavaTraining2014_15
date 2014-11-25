@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="secndmax" basedir="." default="run">
+   <property file="build.properties"/>
+
+   <!-- Checkstyle task -->
+   <taskdef resource="checkstyletask.properties" classpath="${checkstyle.jar}"/>
+    <target name="compile" description="Compiles the Task" depends="init">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" debug="true">
+        </javac>
+	</target>
+
+    <target name="check" depends="compile" description="Run the main class">
+        <checkstyle config="${checkstyleXml}">
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+        </checkstyle>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="fmax.smax.com.Secondmax">
+            <arg value="${arg1}"/>
+            <arg value="${arg2}"/>
+            <arg value="${arg3}"/>
+            <arg value="${arg4}"/>
+            <arg value="${arg5}"/>
+            <arg value="${arg6}"/>
+            <arg value="${arg7}"/>
+            <arg value="${arg8}"/>
+            <arg value="${arg9}"/>
+            <arg value="${arg10}"/>
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="init">
+		<mkdir dir="${classes.dir}"/>
+    </target>
+        
+
+    <!-- Cleanup -->
+    <target name="clean" description="Remove all generated files">
+        <delete>
+            <fileset dir="${classes.dir}"/>
+        </delete>
+    </target>
+
+</project>
