@@ -1,9 +1,8 @@
-//package com.vl.training.sample;
+package com.vl.training.sample;
 public class Fact {
-    public static int count=1,result=1;
+    private static int count = 1, result = 1;
     public static void main(final String[] args) {
         int n = 0;
-        //public static int j=0;
         for (int i = 0; i < args.length; i++) {
             n = Integer.parseInt(args[i]);
         }
@@ -24,12 +23,10 @@ public class Fact {
         //int result = 1;
         if (k == 0) {
             return 1;
-        }
-        else {
-            for (int temp = k; temp >= count; temp--) {
-                System.out.println(count);
+        } else {
+            for (int temp = k; temp >= Fact.count; temp--) {
                 result = result * temp;
-                count++;
+                Fact.count++;
             }
         }
         return result;

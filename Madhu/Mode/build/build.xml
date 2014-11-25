@@ -18,10 +18,17 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Prime">
+        <java classname="com.vl.training.sample.Mode">
             <arg value="${val1}"/>
             <arg value="${val2}"/>
-            
+            <arg value="${val3}"/>
+            <arg value="${val4}"/>
+            <arg value="${val5}"/>
+            <arg value="${val6}"/>
+            <arg value="${val7}"/>
+            <arg value="${val8}"/>
+            <arg value="${val9}"/>
+            <arg value="${val10}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

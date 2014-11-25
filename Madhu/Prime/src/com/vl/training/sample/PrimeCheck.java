@@ -20,20 +20,20 @@ public final class PrimeCheck {
         int num1 = Integer.parseInt(args[0]);
         int num2 = Integer.parseInt(args[1]);
         if ((num1 - num2) != 2 && (num2 - num1) != 2) {
-           System.out.println(" False ");
+            System.out.println(" False ");
         } else {
             val1 = PrimeCheck.checkPrime(num1);
             val2 = PrimeCheck.checkPrime(num2);
             if (val1) {
-               if (val2) {
-                  System.out.println(" True ");
-               } else {
-                     System.out.println(" false ");
-               }
+                if (val2) {
+                    System.out.println(" True ");
+                } else {
+                    System.out.println(" false ");
+                }
             } else {
-                  System.out.println(" True ");
+                System.out.println(" True ");
             }
-        }   
+        }
     }
 }
 
