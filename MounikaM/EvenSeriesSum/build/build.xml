@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
+
 <project name="Sample" basedir="." default="run">
    <property file="build.properties"/>
 
@@ -18,15 +18,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Mode">
-            <arg value="${val1}"/>
-            <arg value="${val2}"/>
-            <arg value="${val3}"/>
-            <arg value="${val4}"/>
-            <arg value="${val5}"/>
-            <arg value="${val6}"/>
-            <arg value="${val7}"/>
-            <arg value="${val8}"/>
+        <java classname="com.vl.training.sample.EvenSeriesSum">
+            <arg value="${range}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
-<project name="Sample" basedir="." default="run">
+<project name="secndmax" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -18,15 +17,17 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Mode">
-            <arg value="${val1}"/>
-            <arg value="${val2}"/>
-            <arg value="${val3}"/>
-            <arg value="${val4}"/>
-            <arg value="${val5}"/>
-            <arg value="${val6}"/>
-            <arg value="${val7}"/>
-            <arg value="${val8}"/>
+        <java classname="fmax.smax.com.Secondmax">
+            <arg value="${arg1}"/>
+            <arg value="${arg2}"/>
+            <arg value="${arg3}"/>
+            <arg value="${arg4}"/>
+            <arg value="${arg5}"/>
+            <arg value="${arg6}"/>
+            <arg value="${arg7}"/>
+            <arg value="${arg8}"/>
+            <arg value="${arg9}"/>
+            <arg value="${arg10}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -36,7 +37,7 @@
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
-
+        
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">

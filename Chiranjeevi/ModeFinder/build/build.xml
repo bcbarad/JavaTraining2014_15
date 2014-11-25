@@ -16,17 +16,17 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
-
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Mode">
-            <arg value="${val1}"/>
-            <arg value="${val2}"/>
-            <arg value="${val3}"/>
-            <arg value="${val4}"/>
-            <arg value="${val5}"/>
-            <arg value="${val6}"/>
-            <arg value="${val7}"/>
-            <arg value="${val8}"/>
+        <java classname="com.vl.training.sample.ModeFinder">
+            <arg value="${a1}"/>
+            <arg value="${a2}"/>
+            <arg value="${a3}"/>
+            <arg value="${a4}"/>
+            <arg value="${a5}"/>
+            <arg value="${a6}"/>
+            <arg value="${a7}"/>
+            <arg value="${a8}"/>
+
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -36,7 +36,7 @@
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
-
+        
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">
