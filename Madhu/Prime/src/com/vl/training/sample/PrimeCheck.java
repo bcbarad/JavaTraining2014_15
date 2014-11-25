@@ -1,20 +1,17 @@
 package com.vl.training.sample;
+import java.lang.Math;
 public final class PrimeCheck {
     private PrimeCheck() {
     }
     static boolean checkPrime(final int num) {
         boolean temp = true;
-        for (int i = 2; i <= (num / 2); i++) {
+        for (int i = 2; i <= Math.sqrt(num); i++) {
             if ((num % i) == 0) {
                 temp = false;
                 break;
             }
         }
-        if (temp) {
-            return temp;
-        } else {
-            return temp;
-        }
+        return temp;
     }
     public static void main(final String[] args) {
         boolean val1 , val2 , dif;
@@ -24,8 +21,8 @@ public final class PrimeCheck {
             System.out.println(" False ");
         } else {
             val1 = PrimeCheck.checkPrime(num1);
-            val2 = PrimeCheck.checkPrime(num2);
             if (val1) {
+                val2 = PrimeCheck.checkPrime(num2);
                 if (val2) {
                     System.out.println(" True ");
                 } else {

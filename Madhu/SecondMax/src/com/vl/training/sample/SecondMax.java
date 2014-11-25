@@ -1,9 +1,10 @@
-package com.vl.training.sample;
+//package com.vl.training.sample;
 public final class SecondMax {
     private SecondMax() {
     }
-    static int findSecMax(final int[] list , final int length) {
+    static int findSecMax(final int[] list) {
         int firstmax , secondmax;
+        int length = list.length;
         if (length < 2) {
             secondmax = list[0];
         } else {
@@ -26,12 +27,11 @@ public final class SecondMax {
         return secondmax;
     }
     public static void main(final String[] args) {
-        int len = args.length;
-        int[] list = new int[len];
+        int[] list = new int[args.length];
         for (int i = 0; i < args.length; i++) {
             list[i] = Integer.parseInt(args[i]);
         }
-        int secondmax = SecondMax.findSecMax(list , len);
+        int secondmax = SecondMax.findSecMax(list);
         System.out.println(" the second max element in the list is : " + secondmax);
     }
 }
