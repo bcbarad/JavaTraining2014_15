@@ -30,14 +30,14 @@ public class PrimeDifference {
         }
     }
     public boolean isPrime(final int a) {
-        int flag = 0;
+        boolean flag = false;
         for (int i = 2; i < a / 2; i++) {
             if (a % i == 0) {
-                flag = 1;
+                flag = true;
                 break;
             }
         }
-        if (flag == 1) {
+        if (flag == true) {
             return false;
         } else {
             return true;
