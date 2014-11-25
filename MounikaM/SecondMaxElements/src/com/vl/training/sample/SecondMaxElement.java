@@ -19,8 +19,12 @@ public class SecondMaxElement {
 
         for (int i = 0; i < array.length; i++) {
 
-            if (array[i] > first) {
-                second = first;
+            if (array[i] >= first) {
+                if (array[i] == first) {
+                    continue;
+                } else {
+                    second = first;
+                }
                 first = array[i];
             } else {
 
