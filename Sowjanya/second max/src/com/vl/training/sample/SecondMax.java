@@ -1,7 +1,9 @@
 package com.vl.training.sample;
 import java.util.Scanner;
-public class SecondMax {
-    public static int Max(final int[] array) {
+public final class SecondMax {
+    private SecondMax() {
+    }
+    public static int max(final int[] array) {
         int maxval = array[0], secondmax = array[1], temp = 0;
         if (maxval < secondmax) {
             temp = secondmax;
@@ -28,7 +30,7 @@ public class SecondMax {
         for (int i = 0; i < n; i++) {
             series[i] = sc.nextInt();
         }
-        int result = SecondMax.Max(series);
+        int result = SecondMax.max(series);
         System.out.println("second max is" + result);
     }
 }
