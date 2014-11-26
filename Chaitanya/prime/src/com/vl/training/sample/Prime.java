@@ -16,8 +16,7 @@ public class Prime {
             } else {
                 System.out.println("Condition false");
             }
-        }
-        else {
+        } else {
             System.out.println("arguments should be 2 only");
         }
     }
@@ -26,24 +25,19 @@ public class Prime {
         boolean ret = false;
         Prime p = new Prime();
         if ((p1 - p2) == 2 || (p2 - p1) == 2) {
-            p.primecheck(p1);    
-            if (!ret) {
-                p.primecheck(p2);
-            }
-            if (!ret) {
-                ret = true;
-            } else {
-                ret = false;
+            ret = p.primecheck(p1);
+            if (ret) {
+                ret = p.primecheck(p2);
+                return ret;
             }
             return ret;
-        } else {
-            return false;
         }
+        return ret;
     }
     final boolean primecheck(final int p1) {
         boolean ret = true;
         for (int i = 2; i <= Math.sqrt(p1); i++) {
-            if (p1 % i ==0) {
+            if (p1 % i == 0) {
                 ret = false;
                 return ret;
             }
