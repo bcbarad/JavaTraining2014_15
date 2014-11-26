@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
  
-<project name="Sample" basedir="." default="run">
+<project name="number" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -18,18 +18,14 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.SecondMax">
+        <java classname="com.vl.training.numberconversion.ConvertNumber">
             <arg value="${val1}"/>
-            <arg value="${val2}"/>
-            <arg value="${val3}"/>
-            <arg value="${val4}"/>
-            <arg value="${val5}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
         </java>
     </target>
-
+    
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
