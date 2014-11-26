@@ -1,4 +1,4 @@
-//package com.vl.training.sample;
+package com.vl.training.sample;
 public class Fact {
     private static int count = 1, result = 1;
     public static void main(final String[] args) {
