@@ -14,6 +14,9 @@ public class Expandnumber {
         String[] tens = {"" , "ten" , "twenty" , "thirty" , "forty" , "fifty" , "sixty" , "seventy" , "eighty" , "ninety"};
         String[] teens = {"" , "eleven" , "twelve" , "thirteen" , "fourteen" , "fifteen" , "sixteen" , "seventeen" , "eighteen" , "nineteen"};
         String word = "";
+        if (n == 0) {
+            word = "zero";
+        }
         if (n >= 100000) {
             int quo = n / 100000;
             n = n % 100000;
