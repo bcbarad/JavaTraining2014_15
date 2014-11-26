@@ -1,7 +1,9 @@
 package com.vl.training.sample;
 import java.util.Scanner;
-public class Mode {
-    public static void main(String[] args) {
+public final class Mode {
+    private Mode() {
+    }
+    public static void main(final String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the no of elements");
         int num = sc.nextInt();
@@ -10,18 +12,17 @@ public class Mode {
         for (int i = 0; i < num; i++) {
             n[i] = sc.nextInt();
         }
-        int res = Mode.Find(n);
+        int res = Mode.find(n);
         System.out.println("mode is" + res);
     }
-    static int Find(int[] n) {
+    static int find(final int[] n) {
         int mode = n[0];
         int temp = 1;
         int temp2 = 1;
         for (int i = 1; i < n.length; i++) {
             if (n[i - 1] == n[i]) {
                 temp++;
-            }
-            else {
+            } else {
                 temp = 1;
             }
             if (temp >= temp2) {

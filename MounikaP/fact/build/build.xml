@@ -18,12 +18,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.SecondMax">
-            <arg value="${val1}"/>
-            <arg value="${val2}"/>
-            <arg value="${val3}"/>
-            <arg value="${val4}"/>
-            <arg value="${val5}"/>
+        <java classname="com.vl.Fact">
+            <arg value="225"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
