@@ -1,9 +1,11 @@
 package com.vl.training.sample;
 import java.util.Scanner;
-public class Factorial {
+public final class Factorial {
+    private Factorial() {
+    }
     public static void main(final String[] args) {
         Scanner scanner = new Scanner(System.in);
-        //System.out.print("Enter the number ");
+        // System.out.print("Enter the number ");
         int n = scanner.nextInt();
         int result = evennumbers(n);
         System.out.println("The sum of factorial of" + n);
