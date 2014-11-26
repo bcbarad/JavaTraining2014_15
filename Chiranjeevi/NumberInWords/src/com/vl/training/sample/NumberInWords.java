@@ -29,37 +29,35 @@ public class NumberInWords {
             System.out.print(ones[n % 20]+" ");
         }
         else if (n < 100) {
-           System.out.print(tens[n / 10]+" ");
-           toWords(n % 10);
+            System.out.print(tens[n / 10]+" ");
+            toWords(n % 10);
         }
         else{
-           pos++;
-           if (n < 1000) {
-           toWords(n/100);
-           System.out.print(spl[pos % 5]+" ");
-           pos--;
-           if (n % 100 != 0)
-               System.out.print("and ");
-           toWords(n % 100);
-           }
-           else {       
-             pos++;
-             if(n < 100000) {
-             toWords(n/1000);
-             System.out.print(spl[(pos % 5) ]+" ");
-	     pos-=2 ;
-             if(n %10000 != 0)
-          
-	     toWords(n%1000);
-             }
-             else {
+            pos++;
+            if (n < 1000) {
+                toWords(n/100);
+                System.out.print(spl[pos % 5]+" ");
+                pos--;
+                if (n % 100 != 0)
+                    System.out.print("and ");
+                toWords(n % 100);
+            }
+            else {       
                 pos++;
-                toWords(n/100000);
-                System.out.print(spl[(pos % 5)]+" ");
-                pos-=3;
-                toWords(n %100000);
-             }
-	   }
+                if(n < 100000) {
+                toWords(n/1000);
+                System.out.print(spl[(pos % 5) ]+" ");
+	        pos-=2 ;
+                toWords(n%1000);
+                }
+                else {
+                    pos++;
+                    toWords(n/100000);
+                    System.out.print(spl[(pos % 5)]+" ");
+                    pos-=3;
+                    toWords(n %100000);
+                }
+	    }
         }
     }
 }
