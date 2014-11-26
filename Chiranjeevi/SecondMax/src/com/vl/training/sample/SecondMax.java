@@ -11,8 +11,8 @@ public final class SecondMax {
         System.out.println("Second Maximum element is :" + secMaximum(val));
     }
     public static int secMaximum(final int[] val) {
-        int max = 0;
-        int secMax = 0;
+        int max = val[0];
+        int secMax = val[0];
         for (int i : val) { //'val' is array of integers{
             if (i > max) {
                 secMax = max; //make curr maximum to second maximum

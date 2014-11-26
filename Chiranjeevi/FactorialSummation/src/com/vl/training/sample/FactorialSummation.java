@@ -2,18 +2,22 @@ package com.vl.training.sample;
 
 public class FactorialSummation {
     public static void main(String arr[]) {
-    int n = Integer.parseInt(arr[0]);
-    System.out.println("Sigma " + n + "!= " + factSummation(n));
+        if (arr.length == 1) {
+            int n = Integer.parseInt(arr[0]);
+            System.out.println("\b\b = " + factSummation(n));
+        }
+        else {
+            System.out.println("Pass exactly one Parameter");
+        }
     }
     public static int factSummation(int n) {
-        int tmp,sum = 0;
-        for (int i = n; i > 0; i--){
-            tmp = 1; // important to reset
-            for (int j = 1; j <= i; j++){
-                tmp *= j;
-            }
-            sum += tmp;
+        int sum = 0, j = 0, temp = 1;
+        for (int i = 0; i < n; i++){
+            sum = sum + temp;
+            j += 2;
+            temp = temp * j * (j - 1);
+            System.out.print(" " + (j - 2) + "! +");
         }
         return sum;
-    } 
+    }
 }

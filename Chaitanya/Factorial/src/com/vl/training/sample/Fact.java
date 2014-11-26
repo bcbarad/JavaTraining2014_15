@@ -1,5 +1,6 @@
-//package com.vl.training.sample;
+package com.vl.training.sample;
 public class Fact {
+    private static int count = 1, result = 1;
     public static void main(final String[] args) {
         int n = 0;
         for (int i = 0; i < args.length; i++) {
@@ -10,24 +11,13 @@ public class Fact {
         System.out.println("=" + res1);
     }
     final int series(final int l) {
-        int j = 0, res = 0;
+        int j = 0, res = 0, fact=1;
         for (int i = 0; i < l; i++) {
-            res = res + factorial(j);
-            System.out.print(j + "!");
+            res = res + fact;
             j = j + 2;
+            fact = fact * j * (j-1);
+            System.out.print(j + "!");
         }
         return res;
-    }
-    final int factorial(final int k) {
-        int result = 1;
-        if (k == 0) {
-            return 1;
-        }
-        else {
-            for (int temp = k; temp >= 1; temp--) {
-                result = result * temp;
-            }
-        }
-        return result;
     }
 }

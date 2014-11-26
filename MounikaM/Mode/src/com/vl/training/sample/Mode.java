@@ -1,15 +1,11 @@
 package com.vl.training.sample;
-import java.util.Scanner;
+
 
 public class Mode {
     public static void main(final String[] args) {
-        System.out.println("\n enter number of elements want to enter in array:");
-        Scanner s = new Scanner(System.in);
-        int numOfElements = s.nextInt();
-        int[] array = new int[numOfElements];
-        System.out.println("\n enter number of elements into array:");
-        for (int j = 0; j < numOfElements; j++) {
-            array[j] = s.nextInt();
+        int[] array = new int[args.length];
+        for (int j = 0; j < args.length; j++) {
+            array[j] = Integer.parseInt(args[j]);
         }
         Mode m = new Mode();
         int result = m.findMode(array);
