@@ -15,7 +15,7 @@ public class DigitToWordConverter2 {
 		100000, 10000000 };
 
 	public static void main(String[] args) {
-		converter(1548);
+		converter(1500);
 		System.out.println(digitInWord);
 	}
 	
@@ -46,7 +46,6 @@ public class DigitToWordConverter2 {
 	}
 	public static int divisor(int number){
 		int f=0;
-		stringLength=Integer.toString(number).length();
 		int cnt = 0;
 		
 		if(stringLength<=4){
@@ -70,6 +69,7 @@ public class DigitToWordConverter2 {
 	}
 
 	public static void converter(int number){
+		stringLength=Integer.toString(number).length();
 		int f;
 		if(number==0){
 			digitInWord+="Zero";
@@ -77,13 +77,13 @@ public class DigitToWordConverter2 {
 			System.exit(0);
 		}
 		if(number>=10000000){
-			divisor(number);
+			number=divisor(number);
 		}
 		if(number>=100000){
-			divisor(number);
+			number=divisor(number);
 		}
 		if(number>=1000){
-			divisor(number);
+			number=divisor(number);
 		}
 		if(number>=100){
 			f=number/100;
