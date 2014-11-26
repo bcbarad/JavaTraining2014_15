@@ -1,7 +1,9 @@
 //package com.vl.training.sample;
 public class Fact {
+    public static int count=1,result=1;
     public static void main(final String[] args) {
         int n = 0;
+        //public static int j=0;
         for (int i = 0; i < args.length; i++) {
             n = Integer.parseInt(args[i]);
         }
@@ -19,13 +21,15 @@ public class Fact {
         return res;
     }
     final int factorial(final int k) {
-        int result = 1;
+        //int result = 1;
         if (k == 0) {
             return 1;
         }
         else {
-            for (int temp = k; temp >= 1; temp--) {
+            for (int temp = k; temp >= count; temp--) {
+                System.out.println(count);
                 result = result * temp;
+                count++;
             }
         }
         return result;
