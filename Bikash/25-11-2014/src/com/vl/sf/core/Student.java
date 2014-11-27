@@ -7,13 +7,12 @@ public class Student {
 	private SubjectsAndMarks[] sMarks = null;
 	private int totalMarks = 0;
 	
-	public static Student readMe(Scanner scanner) {
+	public static Student readMe(Scanner scanner,int noOfStudents) {
 
 		Student student = new Student();
 		System.out.print("Name of the student:");
 		student.name = scanner.next();
-		System.out.print("No. of subjects:");
-		int noOfSubjects = scanner.nextInt();
+		int noOfSubjects = noOfStudents;
 		student.sMarks = new SubjectsAndMarks[noOfSubjects];
 		for (int i = 0; i < noOfSubjects; i++) {
 			student.sMarks[i] = SubjectsAndMarks.readMe(scanner);

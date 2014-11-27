@@ -1,19 +1,22 @@
 package com.vl.sf.core;
 
-
 import java.util.Scanner;
 
 public class Course {
 	private Student[] students = null;
-
-	public static void main(String[] args) {
+	private MaxMarkStudentDetails maxDetails=null;
+	private MaxMarkStudentDetails[] maxMarkSubjectDetails=null;
+	
+	public static Course getCourseAndSubjectDetails(){
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("No. of Students:");
 		int noOfStudents = scanner.nextInt();
 		Course course = new Course();
 		course.students = new Student[noOfStudents];
+		System.out.print("No. Of subjects: ");
+		int noOfSubjects=scanner.nextInt();
 		for (int i = 0; i < noOfStudents; i++) {
-			course.students[i] = Student.readMe(scanner);
+			course.students[i] = Student.readMe(scanner, noOfSubjects);
 		}
 		int maxMarkStudent = course.students[0].getTotalMarks();
 		int maxMarkStudentNameIndex = 0;
@@ -24,16 +27,35 @@ public class Course {
 				maxMarkStudentNameIndex = i;
 			}
 		}
-		MaxMarkStudentDetails maxDetails = course.students[maxMarkStudentNameIndex]
+		course.maxDetails = course.students[maxMarkStudentNameIndex]
 				.getMaxMarkStudentDetails();
+		course.maxMarkSubjectDetails=new MaxMarkStudentDetails[noOfStudents];
+		return course;
+	}
+	
+	
+	public MaxMarkStudentDetails getMaxDetails() {
+		return maxDetails;
+	}
+
+
+	public MaxMarkStudentDetails[] getMaxMarkSubjectDetails() {
+		return maxMarkSubjectDetails;
+	}
+
+
+	public static void main(String[] args) {
+		Course course=getCourseAndSubjectDetails();
+		MaxMarkStudentDetails maxDetails=course.getMaxDetails();
 		System.out.println("Highest Marks " + maxDetails.getMark()
 				+ " By " + maxDetails.getName());
-		MaxMarkStudentDetails[] maxMarkStudentDetails=new MaxMarkStudentDetails[noOfStudents];
+		MaxMarkStudentDetails[] maxMarkSubjectDetails=course.getMaxMarkSubjectDetails(); 
+		int noOfStudents=maxMarkSubjectDetails.length;
 		for (int i = 0; i < noOfStudents; i++) {
-			maxMarkStudentDetails[i]=course.students[i].getMaxMarkSubject();
-			System.out.println(maxMarkStudentDetails[i].getName()+" Highest "+maxMarkStudentDetails[i].getMark()+" mark in subject "+maxMarkStudentDetails[i].getSubject());
+			maxMarkSubjectDetails[i]=course.students[i].getMaxMarkSubject();
+			System.out.println(maxMarkSubjectDetails[i].getName()+" Highest "+maxMarkSubjectDetails[i].getMark()+" mark in subject "+maxMarkSubjectDetails[i].getSubject());
 		}
-
+		
 	}
 
 }

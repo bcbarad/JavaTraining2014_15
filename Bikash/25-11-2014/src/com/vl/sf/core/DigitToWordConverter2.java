@@ -3,13 +3,7 @@ package com.vl.sf.core;
 public class DigitToWordConverter2 {
 	
 	
-	private static String[] oneToTwenty = new String[] { "One", "Two", "Three",
-		"Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
-		"Twelve", "Thirteen", "Fourteen", "Fiften", "Sixteen", "Seventeen",
-		"Eighteen", "Ninteen", "Twenty" };
-    private static String[] thirtyToCrore = new String[] { "Thirty", "Fourty",
-		"Fifty", "Sixty", "Seventy", "Eighty", "Ninety", "Hundred",
-		"Thousand", "Lakh", "Crore" };
+	
     private static int[] zeroRoundedNumbers = new int[] { 10, 100, 1000,
 		100000, 10000000 };
 
@@ -25,6 +19,13 @@ public class DigitToWordConverter2 {
 	}
 	
 	public static boolean digitToWord(int number,String[] result) {
+		String[] oneToTwenty = new String[] { "One", "Two", "Three",
+			"Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
+			"Twelve", "Thirteen", "Fourteen", "Fiften", "Sixteen", "Seventeen",
+			"Eighteen", "Ninteen", "Twenty" };
+	    String[] thirtyToCrore = new String[] { "Thirty", "Fourty",
+			"Fifty", "Sixty", "Seventy", "Eighty", "Ninety", "Hundred",
+			"Thousand", "Lakh", "Crore" };
 		int tempIndex = 0;
 		
 		if(number==0){
@@ -64,6 +65,7 @@ public class DigitToWordConverter2 {
 		}
 		boolean status=false;
 		f=number / zeroRoundedNumbers[stringLength - cnt];
+		
 		if(f<=20){
 			status=digitToWord(f,result);
 		}else{
