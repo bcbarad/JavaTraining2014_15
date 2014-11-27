@@ -1,15 +1,19 @@
 package com.vl.training.sample;
 
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class MarksAssessment {
     static Student[] student;
     static int n;
-    public static void main(String arr[]) {
-        System.out.println("Enter the no. of Students:");
-        Scanner sc = new Scanner(System.in); 
+
+    public static void main(String arr[]) throws FileNotFoundException {
+        //Enter the no. of Students
+        Scanner sc = new Scanner(new File("../data.txt")); 
         n = sc.nextInt();
         student = new Student[n];
+
         int maxMarks=0;
         String maxStudent="";
         for (int i = 0; i < n; i++) {
@@ -19,9 +23,8 @@ public class MarksAssessment {
                 maxMarks = temp;
                 maxStudent = student[i].getName();
             }
-        }      
-        
-        System.out.println("Maximum marks are scored by: "+maxStudent+" with marks: "+maxMarks);
+        }   
+        System.out.println("Maximum marks are scored by "+maxStudent+" with marks: "+maxMarks);
     }
 }
 
@@ -32,10 +35,11 @@ class Student {
     static Subject[] subject;
  
     static Student readMe(Scanner sc) {
+
         student = new Student();
-        System.out.print("Enter the name:");
+        //Reading the name
         student.name = sc.next();
-        System.out.print("Enter the no. of Subjects:");
+        //Reading the no. of subjects
         int n = sc.nextInt();
         student.subject = new Subject[n];
         for (int i=0; i < n; i++)
