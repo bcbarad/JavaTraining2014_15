@@ -7,8 +7,8 @@ public class Course {
 	private MaxMarkStudentDetails maxDetails=null;
 	private MaxMarkStudentDetails[] maxMarkSubjectDetails=null;
 	
-	public static Course getCourseAndSubjectDetails(){
-		Scanner scanner = new Scanner(System.in);
+	public static Course getCourseAndSubjectDetails(Scanner scanner){
+		
 		System.out.print("No. of Students:");
 		int noOfStudents = scanner.nextInt();
 		Course course = new Course();
@@ -45,7 +45,8 @@ public class Course {
 
 
 	public static void main(String[] args) {
-		Course course=getCourseAndSubjectDetails();
+		Scanner scanner=new Scanner(System.in);
+		Course course=getCourseAndSubjectDetails(scanner);
 		MaxMarkStudentDetails maxDetails=course.getMaxDetails();
 		System.out.println("Highest Marks " + maxDetails.getMark()
 				+ " By " + maxDetails.getName());
