@@ -16,8 +16,10 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
+
     <target name="run" depends="compile">
         <java classname="com.vl.training.sample.MarksAssessment">
+            <arg value="${input}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -37,3 +39,4 @@
     </target>
 
 </project>
+
