@@ -1,48 +1,79 @@
 package com.vl.training.sample;
 
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class MarksAssessment {
     static Student[] student;
     static int n;
-    public static void main(String arr[]) {
-        System.out.println("Enter the no. of Students:");
-        Scanner sc = new Scanner(System.in); 
+
+    public static void main(final String arr[]) throws FileNotFoundException {
+        //Enter the no. of Students
+        Scanner sc = new Scanner(new File(arr[0]));
         n = sc.nextInt();
         student = new Student[n];
-        int maxMarks=0;
-        String maxStudent="";
         for (int i = 0; i < n; i++) {
-            student[i] = Student.readMe(sc);
+            student[i] = new Student().readMe(sc);
+        }
+        //Getting the TotalMax Details
+        System.out.println("Maximum marks are scored by "+totalMaximum());
+        //Getting the Details of the student who got maximum marks in a particular subject
+        String subject = sc.next();
+        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMaximum(subject));
+    }
+    
+    public static String totalMaximum() {
+        int maxMarks=0;
+        String maxStudent = "";
+        for (int i = 0; i < n; i++) {
             int temp = student[i].getTotal();
-            if (maxMarks < temp) { 
+            if (maxMarks < temp) {
                 maxMarks = temp;
                 maxStudent = student[i].getName();
             }
-        }      
-        
-        System.out.println("Maximum marks are scored by: "+maxStudent+" with marks: "+maxMarks);
+        }
+        return maxStudent + " " +maxMarks;
+    }
+
+    public static String subjectMaximum(String sub) {
+        String name="";
+        int max=0,temp=0;
+        //Code to find the subject maximum details
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < student[i].subject.length; j++) {
+                if ((sub).equals(student[i].subject[j].getSubjectName())) {
+                    temp = student[i].subject[j].getMarks();
+                    if(max < temp) {
+                        max = temp;
+                        name = student[i].getName();
+                    }                   
+                }
+            }
+        }
+        return name + " with marks: " + max;
     }
 }
 
 class Student {
     String name;
     int total;
-    static Student student;
-    static Subject[] subject;
- 
-    static Student readMe(Scanner sc) {
-        student = new Student();
-        System.out.print("Enter the name:");
+    Subject[] subject;
+
+    Student readMe(Scanner sc) {
+
+        Student student = new Student();
+        //Reading the name
         student.name = sc.next();
-        System.out.print("Enter the no. of Subjects:");
+        //Reading the no. of subjects
         int n = sc.nextInt();
         student.subject = new Subject[n];
-        for (int i=0; i < n; i++)
-              subject[i] = Subject.readMe(sc); 
+        for (int i = 0; i < n; i++){
+             student.subject[i] = new Subject().readMe(sc);
+        }
         return student;
     }
-    
+
     int getTotal() {
         for (Subject i : subject)
              total += i.getMarks();
@@ -57,16 +88,15 @@ class Student {
 class Subject {
     String name;
     int marks;
-    static Subject subject;
 
-    static Subject readMe(Scanner sc) {
-        subject = new Subject();
+    Subject readMe(Scanner sc) {
+        Subject subject = new Subject();
         subject.name = sc.next();
         subject.marks = sc.nextInt();
      return subject;
     }
-    
-    String getSubjectName() {
+
+    String getSubjectName(){
         return name;
     }
 
