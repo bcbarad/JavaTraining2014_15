@@ -40,11 +40,10 @@
     <!-- Checks that property files contain the same keys.         -->
     <!-- See http://checkstyle.sf.net/config_misc.html#Translation -->
     <module name="Translation"/>
-    
     <!-- Checks for Size Violations.                    -->
     <!-- See http://checkstyle.sf.net/config_sizes.html -->
     <module name="FileLength"/>
-    
+
     <!-- Checks for whitespace                               -->
     <!-- See http://checkstyle.sf.net/config_whitespace.html -->
     <module name="FileTabCharacter"/>
@@ -146,12 +145,10 @@
         <module name="HiddenField"/>
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
-        <module name="MagicNumber"/>
         <module name="MagicNumber">
-           <property name="tokens" value="NUM_DOUBLE, NUM_FLOAT,NUM_INT"/>
-           <property name="ignoreNumbers" value="0, 0.5, 1"/>
+         <property name="tokens" value="NUM_INT"/>
+         <property name="ignoreNumbers" value="1000, 100, 11,19,10,10000,20,1,0"/>
         </module>
-        
         <module name="MissingSwitchDefault"/>
         <module name="RedundantThrows"/>
         <module name="SimplifyBooleanExpression"/>
@@ -159,7 +156,7 @@
 
         <!-- Checks for class design                         -->
         <!-- See http://checkstyle.sf.net/config_design.html -->
-        <module name="DesignForExtension"/>
+       <!-- <module name="DesignForExtension"/> -->
         <module name="FinalClass"/>
         <module name="HideUtilityClassConstructor"/>
         <module name="InterfaceIsType"/>
@@ -169,7 +166,9 @@
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
-        <module name="FinalParameters"/>
+        <module name="FinalParameters">
+         <property name="tokens" value="CTOR_DEF"/>
+        </module>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
 

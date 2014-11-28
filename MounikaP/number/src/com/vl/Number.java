@@ -1,3 +1,4 @@
+package com.vl;
 import java.util.Scanner;
 public final class Number {
    private Number() {
