@@ -1,0 +1,17 @@
+3
+raji
+3
+a 8
+b 9
+c 7
+kavi
+3
+a 9
+b 8
+c 2
+chiru
+3
+b 1
+a 9
+f 7
+a
