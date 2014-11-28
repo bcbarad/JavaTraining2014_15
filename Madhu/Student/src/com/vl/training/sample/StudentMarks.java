@@ -1,17 +1,18 @@
-//package com.vl.training.sample;
+package com.vl.training.sample;
 import java.util.Scanner;
+import java.io.*;
 public class StudentMarks {
     private Student[] allstudents;
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println(" enter no of students:");
+    public static void main(String[] args) throws FileNotFoundException{
+        Scanner sc = new Scanner( new File(args[0]));
+        //System.out.println(" enter no of students:");
         int stucount = sc.nextInt();
-        System.out.println(" enter no of subjects:");
+        //System.out.println(" enter no of subjects:");
         int subcount = sc.nextInt();
         StudentMarks sm = new StudentMarks();
         sm.allstudents = new Student[stucount + 1];
         for (int i = 1; i <= stucount; i++) {
-            sm.allstudents[i] = Student.readMe(subcount , i , new Scanner(System.in));
+            sm.allstudents[i] = Student.readMe(subcount , i , sc);
         } 
         StudentMarks.displayMax(stucount , sm);
         StudentMarks.displayIndiviSub(subcount , stucount , sm);   
@@ -50,11 +51,11 @@ class Student {
     public static  Student readMe(int subcount , int i , Scanner sc) {    // read the name of student and move to get the sujects and marks
         int total = 0;
         Student ss = new Student();
-        System.out.println(" enter student" + i + " name: ");
-        ss.name = sc.nextLine();
+        //System.out.println(" enter student" + i + " name: ");
+        ss.name = sc.next();
         ss.allMarks = new Marks[subcount + 1];
         for (int j = 1; j <= subcount; j++) {
-            ss.allMarks[j] = Marks.readMe(j , new Scanner(System.in));
+            ss.allMarks[j] = Marks.readMe(j , sc);
             total += ss.allMarks[j].marks;
         }
         ss.total1 = total;
@@ -67,9 +68,9 @@ class Marks {
     public int marks;
     public static  Marks readMe(int j , Scanner sc) {  //  read the subjects and the marks
         Marks mm = new Marks();
-        System.out.println(" enter subject" + j + ": ");
-        mm.subject = sc.nextLine();
-        System.out.println(" enter subject" + j + " marks:");
+        //System.out.println(" enter subject" + j + ": ");
+        mm.subject = sc.next();
+        //System.out.println(" enter subject" + j + " marks:");
         mm.marks = sc.nextInt();
         return mm;     // returns the Marks object to student class
     }
