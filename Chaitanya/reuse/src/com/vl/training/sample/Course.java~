@@ -1,0 +1,72 @@
+package com.vl.training.sample;
+import java.util.Scanner;
+public class Course {
+public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Course co = new Course();
+        System.out.println("Enter no of Students");
+        int n = sc.nextInt();
+        String name="";
+        Student[] student= new Student[n];
+        for (int i = 0; i < n; i++) {
+            student[i] = new Student();
+        }
+        for (int i = 0; i < n ;i++) {
+            student[i] = Student.readme(sc);
+        }
+        int max=0;
+        int temp;
+        for (int i = 0; i < n; i++) {
+            temp = student[i].total;
+            if ( temp >= max) {
+                max = temp;
+                name = student[i].sname;
+            }
+         }
+        System.out.println("student name "+name+"has Highest Marks"+max);
+    }
+      
+}
+class Student {
+    public String sname;
+    public static int nsub;
+    public static Score[] allmarks;
+    public int total;
+    //static int number=0 ;
+    //static int count = 0;
+    static Student readme(Scanner sc) {
+        Student st = new Student();
+        int temp=0;
+        allmarks = new Score[nsub];
+        System.out.println("Enter Student name");
+        st.sname = sc.next();
+        System.out.println("Enter No of Subjects");
+        st.nsub = sc.nextInt();
+        allmarks = new Score[nsub];
+        for (int i = 0; i < st.nsub; i++) {
+            allmarks[i] = new Score();
+        }
+        for (int i = 0; i < st.nsub; i++) {
+            st.allmarks[i] = Score.readme(sc);
+            temp = temp + st.allmarks[i].marks;
+        }
+        st.total = temp;
+        return st;
+    }
+   
+}
+class Score {
+    public static String subname;
+    public int marks;
+    static Score readme(Scanner sc) {
+        System.out.print("Enter subject name");
+        String s = sc.next();
+        System.out.println("Enter Marks");
+        int m = sc.nextInt();
+        Score sco = new Score();
+        sco.subname = s;
+        sco.marks = m;
+        return sco;
+    }
+}
+
