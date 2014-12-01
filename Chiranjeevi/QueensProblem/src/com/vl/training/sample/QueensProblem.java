@@ -22,7 +22,7 @@ class Queens {
 
     boolean isSafe(int x2, int y2) {
         for (int i = 0; i < x2; i++) {
-            if (i == x2 ||
+            if ( //horizontal need not be checked as we are using the one-dimesional array the postions does'nt collide
                board[i] == y2 || //vertical
                (i - x2 == board[i] - y2) || (i - x2 == y2 - board[i]) //diagonal
                ) {
