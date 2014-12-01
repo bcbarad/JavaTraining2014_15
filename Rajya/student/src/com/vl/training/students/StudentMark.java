@@ -8,7 +8,8 @@ public final class StudentMark {
     }
     public static void main(final String []args) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(args[0]));
-        Course c = new Course().readMe(scan);
+        Course c = new Course();
+        c = c.readMe(scan);
         c.printDetails();
         String maxName = c.getMaxName();
         System.out.println("\nStudent got maximum marks is:" + maxName);
@@ -18,29 +19,29 @@ public final class StudentMark {
 
 class Course {
 
-    static int nostu;
-    public Student[] allstudents = {};
+    int nostu;
+    Student[] student;
 
-    public Course readMe(final Scanner scan) {
+    public static Course readMe(final Scanner scan) {
         Course c = new Course();
         //System.out.println("Enter no of students:");
-        Course.nostu = scan.nextInt();
-        allstudents = new Student[Course.nostu];
-        for (int i = 0; i < Course.nostu; i++) {
-            allstudents[i] = new Student().readMe(scan);
+        c.nostu = scan.nextInt();
+        c.student = new Student[c.nostu];
+        for (int i = 0; i < c.nostu; i++) {
+            c.student[i] = Student.readMe(scan);
         }
         return c;
     }
 
     public void printDetails() {
-        int[] total = new int[Course.nostu];
-        System.out.println("\n\nName\tsub1\tmarks1\tsub2\tmarks2\tsub3\tmarks3\ttotal");
-        System.out.println("-----------------------------------------------------------------");
-        for (int i = 0; i < Course.nostu; i++) {
-            System.out.print(allstudents[i].getName());
-            for (int j = 0; j < Student.nosub; j++) {
-                System.out.print("\t" + allstudents[i].allmarks[j].getSubjectName() + "\t" + allstudents[i].allmarks[j].getMarks());
-                total[i] += allstudents[i].allmarks[j].getMarks();
+        int[] total = new int[nostu];
+        System.out.println("\n\nName\tsub1\tmarks1\tsub2\tmarks2\ttotal");
+        System.out.println("------------------------------------------------");
+        for (int i = 0; i < nostu; i++) {
+            System.out.print(student[i].getName());
+            for (int j = 0; j < student[i].subject.length; j++) {
+                System.out.print("\t" + student[i].subject[j].getSubjectName() + "\t" + student[i].subject[j].getMarks());
+                total[i] += student[i].subject[j].getMarks();
             }
             System.out.println("\t" + total[i]);
         }
@@ -48,20 +49,18 @@ class Course {
 
     public String getMaxName() {
         int max = 0;
-        String maxName = " ", maxStudent = " ";
-        int[] tot = new int[Course.nostu];
-         for (int i = 0; i < Course.nostu; i++) {
-            System.out.print(allstudents[i].getName());
-            for (int j = 0; j < Student.nosub; j++) {
-                System.out.print("\t" + allstudents[i].allmarks[j].getSubjectName() + "\t" + allstudents[i].allmarks[j].getMarks());
-                tot[i] += allstudents[i].allmarks[j].getMarks();
+        String maxStudent = " ";
+        int[] tot = new int[nostu];
+        for (int i = 0; i < nostu; i++) {
+            for (int j = 0; j < student[i].subject.length; j++) {
+               tot[i] += student[i].subject[j].getMarks();
             }
             if (max < tot[i]) {
                 max = tot[i];
-                maxStudent = allstudents[i].getName();
+                maxStudent = student[i].getName();
             }
         }
-        return maxName;
+        return maxStudent;
     }
 
     public void highestMarks(final Scanner scan) {
@@ -69,40 +68,41 @@ class Course {
         String subname = scan.next();
         String name = " ";
         int submark = 0, max = 0;
-        for (int i = 0; i < Course.nostu; i++) {
-            for (int j = 0; j < Student.nosub; j++) {
-                if ((subname).equals(allstudents[i].allmarks[j].getSubjectName())) {
-                    submark = allstudents[i].allmarks[j].getMarks();
+        for (int i = 0; i < student.length; i++) {
+            for (int j = 0; j < student[i].subject.length; j++) {
+                if ((subname).equals(student[i].subject[j].getSubjectName())) {
+                    submark = student[i].subject[j].getMarks();
                     if (max < submark) {
                         max = submark;
-                        name = allstudents[i].getName();
+                        name = student[i].getName();
                     }
                 }
             }
         }
-        System.out.println(" " + name + " got highest marks of " + max + " in suject " + subname);
+        System.out.println(name + " got highest marks of " + max + " in subject " + subname);
     }
 }
 
 class Student {
-    public String name;
-    static int nosub;
-    public Score[] allmarks = {};
+    String name;
+    int nosub;
+    Score[] subject;
 
-    public Student readMe(final Scanner scan) {
+    static Student readMe(final Scanner scan) {
         Student s = new Student();
+        Score sc = new Score();
         //System.out.println("Enter name:");
-        name = scan.next();
+        s.name = scan.next();
         //System.out.println("Enter no of subjects:");
-        Student.nosub = scan.nextInt();
-        allmarks = new Score[Student.nosub];
-        for (int i = 0; i < Student.nosub; i++) {
-            allmarks[i] = new Score().readMe(scan);
+        s.nosub = scan.nextInt();
+        s.subject = new Score[s.nosub];
+        for (int i = 0; i < s.nosub; i++) {
+            s.subject[i] = Score.readMe(scan);
         }
         return s;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 }
@@ -112,19 +112,19 @@ class Score {
     String subject;
     int marks;
 
-    public Score readMe(final Scanner scan) {
+    static Score readMe(final Scanner scan) {
         Score sc = new Score();
         //System.out.println("Enter subject, mark:");
-        subject = scan.next();
-        marks = scan.nextInt();
+        sc.subject = scan.next();
+        sc.marks = scan.nextInt();
         return sc;
     }
 
-    public int getMarks() {
+    int getMarks() {
         return marks;
     }
 
-    public String getSubjectName() {
+    String getSubjectName() {
         return subject;
     }
 }
