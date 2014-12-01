@@ -38,11 +38,9 @@ public final class QueenProblem {
     }
     public static boolean isSafe(int row , int column) {    //returns is the position is safe or not to place the queen
         for (int i = 0; i < row; i++) {
-            if (board[i] == column) {
-                return false;
-            }  else if (Math.abs(board[i] - column) == Math.abs(i - row)) {
-                return false;
-            }
+            if (board[i] == column ||(Math.abs(board[i] - column) == Math.abs(i - row)) ) {
+                return false;       
+            } 
         }
         return true;
     }
