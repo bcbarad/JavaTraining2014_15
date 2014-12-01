@@ -3,7 +3,6 @@ package com.vl.sf.core;
 public class EightQueenProblem {
 	public static boolean isSafe(int[] queenPositions, int queenAllocatedColumn) {
 		for (int i = 0; i < queenAllocatedColumn; i++) {
-
 			if (queenPositions[i] == queenPositions[queenAllocatedColumn]
 					|| Math.abs(queenPositions[i]
 							- queenPositions[queenAllocatedColumn]) == (queenAllocatedColumn - i)) {
@@ -16,30 +15,26 @@ public class EightQueenProblem {
 	public static int[] queenPositions(int[] queenPositions) {
 
 		int queenAllocatedColumn = 0;
-
-		for (int j = 0; j < 8; j++) {
+		int length=queenPositions.length;
+		for (int j = 0; j < length; j++) {
 			int checkStartingLocation = 0;
-			for (int i = checkStartingLocation; i < 8; i++) {
+			for (int i = checkStartingLocation; i < length; i++) {
 				queenPositions[queenAllocatedColumn] = i;
 				boolean status = isSafe(queenPositions, queenAllocatedColumn);
 				if (status) {
 					queenAllocatedColumn++;
 					break;
-				} else if (i == 7) {
-
+				} else if (i == length-1) {
 					i = backTrack(queenPositions, queenAllocatedColumn--);
-					if (i == 7) {
+					if (i == length-1) {
 						i = backTrack(queenPositions, queenAllocatedColumn--);
 					} else {
 						queenPositions[queenAllocatedColumn] = 0;
 					}
 					j = queenAllocatedColumn;
 					checkStartingLocation = i + 1;
-
 				}
-
 			}
-
 		}
 		return queenPositions;
 	}
@@ -64,7 +59,7 @@ public class EightQueenProblem {
 
 	public static void main(String[] args) {
 		int[] queenPositions = new int[8];
-		queenPositions=queenPositions(queenPositions);
+		queenPositions = queenPositions(queenPositions);
 		printQueens(queenPositions);
 	}
 
