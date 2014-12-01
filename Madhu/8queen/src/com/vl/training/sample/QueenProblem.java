@@ -7,7 +7,7 @@ public final class QueenProblem {
     private static int row = 0 , column = 0;
     public static void main(final String[] args) {
         boolean temp = QueenProblem.checkPosition(row , column);
-        if (temp) {
+        if (temp) {                                                //checks no possible place on the row for queen
             row--;
             column = board[row] + 1;
             if (column >= SIZE) {
