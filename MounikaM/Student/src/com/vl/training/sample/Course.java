@@ -1,5 +1,6 @@
 package com.vl.training.sample;
 import java.util.Scanner;
+import java.io.*;
 class Marks  {
     private int marks;
     private String subject;
@@ -70,12 +71,12 @@ public class Course {
         }
         return std[count].getStudentname();
     }
-    public void getSubjectHighest(String subject, int noOfSubjects) {
+    public void getSubjectHighest(String subject, int noOfSubjects, int noOfStudents) {
         String name = null;
         int high = 0;
         for (int i = 0; i < noOfSubjects ; i++) {
-            for (int j = 0; j < std.length; j++) {
-                if (subject.equals(std[j].mark[j].getSubject())) {
+            for (int j = 0; j < noOfStudents; j++) {
+                if (subject.equals(std[j].mark[i].getSubject())) {
                     if (high < std[j].mark[i].getMarks()) {
                         high = std[j].mark[i].getMarks();
                         name = std[j].getStudentname();
@@ -87,7 +88,7 @@ public class Course {
     }
     public static void main(String[] args)throws Exception {
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(new File("../student.txt"));
       //  System.out.println("\n enetr number of students:");
         int noOfStudents = sc.nextInt();
       //  System.out.println("\n enetr number of subject:");
@@ -102,7 +103,7 @@ public class Course {
       //  System.out.println("\n enetr subject:");
         String subject = sc.next();
 
-        cs.getSubjectHighest(subject, noOfSubjects);
+        cs.getSubjectHighest(subject, noOfSubjects, noOfStudents);
 
 
     }
