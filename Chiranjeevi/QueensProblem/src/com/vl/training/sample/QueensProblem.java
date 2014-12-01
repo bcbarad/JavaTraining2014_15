@@ -5,6 +5,7 @@ public class QueensProblem {
         if (arr.length == 1) {
             int N = Integer.parseInt(arr[0]);
             Queens queens = new Queens(N);
+            queens.placeNQueens(0);
         }
         else {
             System.out.println("Enter exactly one input");
@@ -17,12 +18,11 @@ class Queens {
 
     Queens(int N) { // N refers to the no. of Queens
         board = new int[N];
-        placeNQueens(0, N);
     }
 
-    boolean isSafe(int x2, int y2) {
+    private boolean isSafe(int x2, int y2) {
         for (int i = 0; i < x2; i++) {
-            if (i == x2 ||
+            if ( //horizontal condition need not be checked as we are dealing with one -dimensional array
                board[i] == y2 || //vertical
                (i - x2 == board[i] - y2) || (i - x2 == y2 - board[i]) //diagonal
                ) {
@@ -32,21 +32,21 @@ class Queens {
         return true;
     }
 
-    void placeNQueens(int x , int N) {
-        for (int i = 0; i < N; i++) {
+    void placeNQueens(int x) {
+        for (int i = 0; i < board.length; i++) {
             if (isSafe(x, i)) {
                 board[x] = i;
-                if (x == N - 1) {
+                if (x == board.length - 1) {
                     printSolution(board);
                 }
                 else {
-                    placeNQueens(x + 1, N);
+                    placeNQueens(x + 1);
                 }
             }
         }
     }
 
-    void printSolution(int[] board) {
+    private void printSolution(int[] board) {
         System.out.println("Solution :" + count++);
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
