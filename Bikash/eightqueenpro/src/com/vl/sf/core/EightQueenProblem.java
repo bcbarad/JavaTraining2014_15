@@ -46,8 +46,9 @@ public class EightQueenProblem {
 	}
 
 	public static void printQueens(int[] queenPositions) {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		int length=queenPositions.length;
+		for (int i = 0; i < length; i++) {
+			for (int j = 0; j < length; j++) {
 				if (queenPositions[i] == j)
 					System.out.print("@ ");
 				else
