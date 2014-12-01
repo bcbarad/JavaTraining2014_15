@@ -27,7 +27,7 @@ public final class QueenProblem {
                     temp = false;
                     return temp;
                 } else {
-                    temp = checkPosition(row + 1 , 0);
+                    temp = checkPosition(row + 1 , 0);       // recursive call will move to check the next position
                 }
             }
             if (!temp) {
