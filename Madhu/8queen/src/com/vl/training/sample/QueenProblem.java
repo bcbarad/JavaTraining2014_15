@@ -21,7 +21,7 @@ public final class QueenProblem {
     public static boolean checkPosition(int row , int column) {
         boolean temp = true;
         for (; column < SIZE; column++) {
-            if (QueenProblem.isSafe(row , column)) {         // place  the queen on board if issafe()  be true
+            if (QueenProblem.isSafe(row  , column)) {         // place  the queen on board if issafe()  be true
                 board[row] = column;
                 if (row == (SIZE - 1)) {
                     temp = false;
