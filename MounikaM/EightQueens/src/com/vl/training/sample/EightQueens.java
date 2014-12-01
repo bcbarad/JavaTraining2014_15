@@ -1,7 +1,7 @@
 package com.vl.training.sample;
 import java.lang.Math;
 import java.util.Scanner;
-public class EightQueens {
+ class EightQueens {
     private static int[] board;
     public EightQueens(final int n) {
         board = new int[n];
@@ -16,9 +16,9 @@ public class EightQueens {
     }
     public static void position(int row) {
         for (int column = 0; column < board.length; column++) {
-            board[row] = column;
             if (EightQueens.isSafe(row, column)) {
-                if (row == 7) {
+                board[row] = column;
+                if (row == board.length) {
                     break;
                 } else {
                     position(row + 1);
