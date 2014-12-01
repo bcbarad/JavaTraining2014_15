@@ -6,41 +6,45 @@ import java.util.Scanner;
 
 public class MarksAssessment {
     static Student[] student;
-    static int n;
+    static int numberOfStudents;
 
     public static void main(final String arr[]) throws FileNotFoundException {
         //Enter the no. of Students
         Scanner sc = new Scanner(new File(arr[0]));
-        n = sc.nextInt();
-        student = new Student[n];
-        for (int i = 0; i < n; i++) {
-            student[i] = new Student().readMe(sc);
+        numberOfStudents = sc.nextInt();
+        student = new Student[numberOfStudents];
+        for (int i = 0; i < numberOfStudents; i++) {
+            student[i] = Student.readMe(sc);
         }
         //Getting the TotalMax Details
-        System.out.println("Maximum marks are scored by "+totalMaximum());
+        Value maxTotal = getMaximumTotal();
+        System.out.println("Maximum marks are scored by " + maxTotal.getName() + "with marks: " + maxTotal.getMarks());
         //Getting the Details of the student who got maximum marks in a particular subject
         String subject = sc.next();
-        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMaximum(subject));
+        Value subjectMax = subjectMaximum(subject);
+        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMax.getName() + "with marks: " + subjectMax.getMarks());
     }
     
-    public static String totalMaximum() {
+    public static Value getMaximumTotal() {
         int maxMarks=0;
         String maxStudent = "";
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < numberOfStudents; i++) {
             int temp = student[i].getTotal();
             if (maxMarks < temp) {
                 maxMarks = temp;
                 maxStudent = student[i].getName();
             }
         }
-        return maxStudent + " " +maxMarks;
+        Value value = new Value(maxStudent, maxMarks);
+        return value;
     }
 
-    public static String subjectMaximum(String sub) {
+    public static Value subjectMaximum(String sub) {
         String name="";
         int max=0,temp=0;
+        
         //Code to find the subject maximum details
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < numberOfStudents; i++) {
             for (int j = 0; j < student[i].subject.length; j++) {
                 if ((sub).equals(student[i].subject[j].getSubjectName())) {
                     temp = student[i].subject[j].getMarks();
@@ -51,7 +55,26 @@ public class MarksAssessment {
                 }
             }
         }
-        return name + " with marks: " + max;
+        Value value = new Value(name, max);
+        return value;
+    }
+}
+
+class Value {
+    private String name;
+    private int marks;
+
+    Value(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+    
+    int getMarks() {
+        return marks;
+    }
+
+    String getName() {
+        return name;
     }
 }
 
@@ -60,16 +83,16 @@ class Student {
     int total;
     Subject[] subject;
 
-    Student readMe(Scanner sc) {
+    static Student readMe(Scanner sc) {
 
         Student student = new Student();
         //Reading the name
         student.name = sc.next();
         //Reading the no. of subjects
-        int n = sc.nextInt();
-        student.subject = new Subject[n];
-        for (int i = 0; i < n; i++){
-             student.subject[i] = new Subject().readMe(sc);
+        int numberOfSubjects = sc.nextInt();
+        student.subject = new Subject[numberOfSubjects];
+        for (int i = 0; i < numberOfSubjects; i++){
+             student.subject[i] = Subject.readMe(sc);
         }
         return student;
     }
@@ -89,7 +112,7 @@ class Subject {
     String name;
     int marks;
 
-    Subject readMe(Scanner sc) {
+    static Subject readMe(Scanner sc) {
         Subject subject = new Subject();
         subject.name = sc.next();
         subject.marks = sc.nextInt();
