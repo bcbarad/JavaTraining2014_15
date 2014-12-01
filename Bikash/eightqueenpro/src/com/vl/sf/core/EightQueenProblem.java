@@ -12,7 +12,7 @@ public class EightQueenProblem {
 		return true;
 	}
 
-	public static int[] queenPositions(int[] queenPositions) {
+	public static int[] getQueenPositions(int[] queenPositions) {
 
 		int queenAllocatedColumn = 0;
 		int length=queenPositions.length;
@@ -60,7 +60,7 @@ public class EightQueenProblem {
 
 	public static void main(String[] args) {
 		int[] queenPositions = new int[8];
-		queenPositions = queenPositions(queenPositions);
+		queenPositions = getQueenPositions(queenPositions);
 		printQueens(queenPositions);
 	}
 
