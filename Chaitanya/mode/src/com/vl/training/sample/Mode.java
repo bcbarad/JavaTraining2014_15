@@ -6,11 +6,14 @@ public class Mode {
             a[i] = Integer.parseInt(args[i]);
         }
         Mode m = new Mode();
-        m.setMode(a);
+        int[] result = new int[2];
+        result = m.getMode(a);
+        System.out.println("current mode"+result[0]+"Current Frequency"+result[1]);
     }
-    final void setMode(final int[] a) {
+    final int[] getMode(final int[] a) {
         int currentmode = a[0], tempfrequency = 1;
         int currentfrequency = 1, i;
+        int[] d = new int[ 2 ];
         for (i = 0; i < a.length - 1; i++) {
             if (a[ i ] == a[ i + 1 ]) {
                 tempfrequency++;
@@ -28,6 +31,9 @@ public class Mode {
             currentmode = a[ i ];
             currentfrequency = tempfrequency;
         }
-        System.out.println("highest frequency " + currentfrequency + "element is" + currentmode);
+        d[0] = currentmode;
+        d[1] = currentfrequency;
+        //System.out.println("highest frequency " + currentfrequency + "element is" + currentmode);
+        return d;
     }
 }
