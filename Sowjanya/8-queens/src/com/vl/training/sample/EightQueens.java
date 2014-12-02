@@ -1,12 +1,12 @@
 package com.vl.training.sample;
 import java.util.Scanner;
 import java.lang.Math;
-final class EightQueens {
+final public class EightQueens {
     private EightQueens() {
     }
     static int[] board;
     static int n;
-    public static void main(final String[] args) {
+   public static void main(final String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("enter the no of queens you have to place on n/n chessboard");
         n = sc.nextInt();
