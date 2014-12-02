@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
  
-<project name="Sample" basedir="." default="run">
+<project name="queens" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -16,16 +16,15 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
-    <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.StudData">
-            <arg value="${val1}"/>
-            <arg value="${val2}"/>
-                <classpath>
-                    <pathelement path="${classes.dir}"/>
-                </classpath>
-        </java>
-    </target>	
 
+    <target name="run" depends="compile">
+        <java classname="com.vl.training.queens.EightQueens">
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+    
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>

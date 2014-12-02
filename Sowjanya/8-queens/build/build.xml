@@ -17,9 +17,8 @@
         </checkstyle>
     </target>
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.StudData">
+        <java classname="com.vl.training.sample.EightQueens">
             <arg value="${val1}"/>
-            <arg value="${val2}"/>
                 <classpath>
                     <pathelement path="${classes.dir}"/>
                 </classpath>

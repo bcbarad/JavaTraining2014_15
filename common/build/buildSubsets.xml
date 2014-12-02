@@ -16,15 +16,22 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
+
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.StudData">
-            <arg value="${val1}"/>
-            <arg value="${val2}"/>
-                <classpath>
-                    <pathelement path="${classes.dir}"/>
-                </classpath>
+        <java classname="com.vl.training.subsets.CountSets">
+            <arg value="150"/>
+            <arg value="1"/>
+            <arg value="2"/>
+            <arg value="5"/>
+            <arg value="10"/>
+            <arg value="20"/>
+            <arg value="50"/>
+            <arg value="100"/>
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
         </java>
-    </target>	
+    </target>
 
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
