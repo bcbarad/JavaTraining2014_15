@@ -17,7 +17,7 @@
         </checkstyle>
     </target>
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.StudentData">
+        <java classname="com.vl.training.sample.StudData">
             <arg value="${val1}"/>
             <arg value="${val2}"/>
                 <classpath>
