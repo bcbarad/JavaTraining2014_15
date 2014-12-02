@@ -36,3 +36,5 @@ class EightQueens {
             }
         }
         return true;
+    }
+}
