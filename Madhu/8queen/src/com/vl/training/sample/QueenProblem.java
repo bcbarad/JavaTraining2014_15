@@ -6,20 +6,7 @@ public final class QueenProblem {
     private static int[] board = new int[SIZE];
     public static void main(final String[] args) {
         int row = 0, column = 0;
-        boolean endsolution = QueenProblem.checkPosition(row , column);
-        if (!endsolution) {                                                //checks no possible place on the row for queen
-            row--;
-            if (row < 0) { 
-               System.out.println("----------------End--------------");
-            } else { 
-                column = board[row] + 1;
-                if (column >= SIZE) {
-                    row--;
-                    column = board[row] + 1;
-                }
-                QueenProblem.checkPosition(row , column);
-            }
-        } 
+        QueenProblem.checkPosition(row , column);
     }
     public static boolean checkPosition(int row , int column) {
         boolean endsolution = false;
