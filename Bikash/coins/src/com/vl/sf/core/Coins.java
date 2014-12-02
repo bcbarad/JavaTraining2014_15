@@ -2,7 +2,7 @@ package com.vl.sf.core;
 
 public class Coins {
 
-        static int[] coins = { 1, 2, 5, 10, 20, 50, 100, 500 };
+        static int[] coins = { 1, 2, 5, 10, 20, 50, 100, 500, 1000 };
         static long M1 = 0;
 
         public static long pay(int money) {
