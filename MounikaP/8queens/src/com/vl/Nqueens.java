@@ -1,44 +1,41 @@
 package com.vl;
-public final class Nqueens {
-    private Nqueens() {
-    }
-    private final int[] board = new int[8];
-    public final boolean safePosition(final int row , final int col) {
+import java.util.Scanner;
+public class Nqueens {
+    final boolean safePosition(final int[] board, final int row, final int col) {
         for (int i = 0; i < row; i++) {
             if (board[i] == col || (i - row) == (board[i] - col) || (i - row) == (col - board[i])) {
                 return false;
             }
         }
-       return true;
+        return true;
     }
-   public final void placeQueens(int row, int col) {
-       final int n = 7;
-       for (col = 0; col <= n; col++) {
-               if (safePosition(row, col)) {
-                    board[row] = col;
-               if (row == n) {
-                   printQueensPosition(board);
-               } else {
-                   placeQueens(row + 1, 0);
-               }
-           }
-       }
-   }
-   public final void placeQueens() {
-       placeQueens(0, board.length);
-   }
-   public final void printQueensPosition(final int board[]) {
-       for (int i = 0; i <= board.length; i++) {
-           for (int j = 0; j < board.length; j++) {
-               if (board[i] == j) {
-                   System.out.print("Q is in row " + i + "and col"  +j);
-                   System.out.println();
-               }
-           }
-       }
-   }
-   public static void main(String args[]) {
-       Nqueens q = new Nqueens();
-       q.placeQueens();
-   }
+    final void printQueensPosition(final int row, final int[] board) {
+        int n = board.length;
+        if (row == n) {
+            System.out.print("all possible combinations are : ");
+            System.out.println();
+            placeQueens(board, n);
+        } else {
+            for (int col = 0; col < n; col++) {
+                board[row] = col;
+                if (safePosition(board, row, col)) {
+                    printQueensPosition(row + 1, board);
+                }
+            }
+        }
+    }
+    final void placeQueens(final int[] board, final int n) {
+        for (int i = 0; i < n; i++) {
+            System.out.println("desired position is [ " + i +  ", " + board[i] + "]");
+        }
+    }
+    public static void main(final String[] args) {
+        int row = 0;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter the size of chess board");
+        int n = sc.nextInt();
+        int[] board = new int[n];
+        Nqueens q = new Nqueens();
+        q.printQueensPosition(row, board);
+    }
 }
