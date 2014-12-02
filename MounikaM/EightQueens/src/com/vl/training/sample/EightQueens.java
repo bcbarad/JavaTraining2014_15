@@ -2,7 +2,7 @@ package com.vl.training.sample;
 import java.lang.Math;
 import java.util.Scanner;
 public class EightQueens {
-    private static final int SIZE = 4;
+    private static final int SIZE = 8;
     private static int[] board = new int[SIZE];
 
     public static boolean isSafe(int irow, int jcolumn) {
