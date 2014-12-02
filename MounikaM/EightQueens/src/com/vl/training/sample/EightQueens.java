@@ -1,11 +1,10 @@
 package com.vl.training.sample;
 import java.lang.Math;
 import java.util.Scanner;
- class EightQueens {
-    private static int[] board;
-    public EightQueens(final int n) {
-        board = new int[n];
-    }
+public class EightQueens {
+    private static final int SIZE = 8;
+    private static int[] board = new int[SIZE];
+
     public static boolean isSafe(int irow, int jcolumn) {
         for (int j = 0; j < irow; j++) {
             if ((board[j] == jcolumn) || Math.abs(irow - j) == Math.abs(board[j] - jcolumn)) {
@@ -14,34 +13,28 @@ import java.util.Scanner;
         }
         return true;
     }
-    public static void position(int row) {
-        for (int column = 0; column < board.length; column++) {
-            if (EightQueens.isSafe(row, column)) {
+    public static void position(int row, int col) {
+        for (int column = col; column < SIZE; column++) {
+            if (isSafe(row, column)) {
                 board[row] = column;
-                if (row == board.length) {
-                    break;
+                if (row == SIZE - 1) {
+                    display();
                 } else {
-                    position(row + 1);
+                    position(row + 1, 0);
                 }
             }
-        }
-        if (row == board.length - 1) {
-            display();
         }
     }
     public static void display() {
         System.out.println("\n possible combinationa are:");
-        for (int i = 0; i < board.length; i++) {
-            System.out.println("(" + i + "." + board[i] + ")");
+        for (int i = 0; i < SIZE; i++) {
+            System.out.print("(" + i + "." + board[i] + ")");
         }
     }
     public static void main(String[] args) {
         int row = 0;
-        System.out.println(" enter n X n chess board ");
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        EightQueens eg = new EightQueens(n);
-        EightQueens.position(row);
+        int col = 0;
+        position(row,col);
     }
 
 }
