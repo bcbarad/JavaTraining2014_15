@@ -2,9 +2,10 @@ package com.vl.training.sample;
 import java.util.Scanner;
 public class Queen {
     public static void main(final String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the size of Chess Board");
-        int size = sc.nextInt();
+        //Scanner sc = new Scanner(System.in);
+        //System.out.println("Enter the size of Chess Board");
+        //int size = sc.nextInt();
+        int size = Integer.parseInt(args[0]);
         int[] q = new int[size];
         int row = 0;
         Queen q1 = new Queen();
