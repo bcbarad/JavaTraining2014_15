@@ -9,8 +9,7 @@ public class Nqueens {
         }
         return true;
     }
-    final void printQueensPosition(final int row, final int[] board) {
-        int n = board.length;
+    final void printQueensPosition(final int row, final int[] board, final int n) {
         if (row == n) {
             System.out.print("all possible combinations are : ");
             System.out.println();
@@ -19,7 +18,7 @@ public class Nqueens {
             for (int col = 0; col < n; col++) {
                 board[row] = col;
                 if (safePosition(board, row, col)) {
-                    printQueensPosition(row + 1, board);
+                    printQueensPosition(row + 1, board, n);
                 }
             }
         }
@@ -36,6 +35,6 @@ public class Nqueens {
         int n = sc.nextInt();
         int[] board = new int[n];
         Nqueens q = new Nqueens();
-        q.printQueensPosition(row, board);
+        q.printQueensPosition(row, board, n);
     }
 }
