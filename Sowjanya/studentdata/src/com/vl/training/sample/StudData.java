@@ -2,10 +2,10 @@ package com.vl.training.sample;
 import java.util.Scanner;
 interface Searchable {
     void stuhightotal(Course c);
-    void high(Scanner sc,Course c); 
-} 
+    void high(Scanner sc , Course c);
+}
 abstract class SearchableBase implements Searchable {
-    public void stuhightotal(Course c) {
+    public void stuhightotal(final Course c) {
         int highest = 0;
         String name = " ";
         for (int i = 0; i < c.nostud; i++) {
@@ -18,7 +18,7 @@ abstract class SearchableBase implements Searchable {
         }
         System.out.println("student who got high total marks is" + name);
     }
-     public void high(final Scanner sc,Course c) {
+    public void high(final Scanner sc , final Course c) {
         System.out.println("enter the subject name");
         String subname = sc.next();
         String name = " ";
@@ -46,10 +46,10 @@ public final class StudData {
         c = c.readme(sc);
         c.print();
         c.stuhightotal(c);
-        c.high(sc,c);
+        c.high(sc , c);
     }
 }
-class Course extends SearchableBase{
+class Course extends SearchableBase {
     int nostud;
     Student[] allstudents;
     public static Course readme(final Scanner sc) {
@@ -68,11 +68,9 @@ class Course extends SearchableBase{
             System.out.print(allstudents[i].sname);
             for (int j = 0; j < allstudents[i].allmarks.length; j++) {
                 System.out.println("\t" + allstudents[i].allmarks[j].subname + "\t" + allstudents[i].allmarks[j].submarks + "\t" + allstudents[i].total1);
-               
             }
         }
     }
-    
 }
 class Student {
     String sname;
