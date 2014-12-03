@@ -19,10 +19,7 @@
 
     <target name="run" depends="compile">
         <java classname="com.vl.training.sample.CoinsCombinations">
-            <arg value="${num1}"/>
-            <arg value="${num2}"/>
-            <arg value="${num3}"/>
-            <arg value="${num4}"/>
+            <arg line="100 1 2 5 10 20 50"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
