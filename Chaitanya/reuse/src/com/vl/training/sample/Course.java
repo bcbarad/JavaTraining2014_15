@@ -1,8 +1,8 @@
 package com.vl.training.sample;
 import java.util.Scanner;
-public class Course {
-    private  static Course c;
-    private int ns, n;
+public final class Course {
+    private static Course c;
+    private int noofsubjects, noofstudents;
     private static Student[] student;
     private static Scanner sc;
     public static void main(final String[] args) {
@@ -10,27 +10,27 @@ public class Course {
         c = new Course();
         System.out.println("Enter No Of Students");
         sc = new Scanner(System.in);
-        c.n = sc.nextInt();
+        c.noofstudents = sc.nextInt();
         System.out.println("Enter No oF Subjects");
-        c.ns = sc.nextInt();
-        int[] temp = new int[c.n];
-        student = new Student[c.n];
-        for (int i = 0; i < c.n; i++) {
-            c.student[ i ] = Student.readme(new Scanner(System.in), c.ns);
+        c.noofsubjects = sc.nextInt();
+        int[] temp = new int[c.noofstudents];
+        student = new Student[c.noofstudents];
+        for (int i = 0; i < c.noofsubjects; i++) {
+            c.student[ i ] = Student.readme(new Scanner(System.in), c.noofsubjects);
         }
-        Course.getTotalHighest();
+        getTotalHighest();
         Course.getIndividualHighest();
     }
     static void getTotalHighest() {
         int highmax = 0;
         String highname = "";
-        for (int i = 0; i < c.n; i++) {
+        for (int i = 0; i < c.noofstudents; i++) {
             int marks = 0;
-            for (int j = 0; j < c.n; j++) {
-                marks = marks + c.student[ i ].allmarks[ j ].marks;
+            for (int j = 0; j < c.noofsubjects; j++) {
+                marks = marks + c.student[ i ].total[j];
                 if (marks > highmax) {
                     highmax = marks;
-                    highname = student[ i ].sname;
+                    highname = c.student[ i ].sname;
                 }
             }
         }
@@ -41,9 +41,9 @@ public class Course {
         String str = sc.next();
         int max = 0;
         String name = "";
-        for (int i = 0; i < c.n; i++) {
-            for (int j = 0; j < c.ns; j++) {
-                if (str.equals(c.student[ i ].allmarks[ j ].subname)) {
+        for (int i = 0; i < c.noofstudents; i++) {
+            for (int j = 0; j < c.noofsubjects; j++) {
+                if (str.equals(c.student[ i ].allmarks[j].subname)) {
                     if (max < c.student[ i ].allmarks[ j ].marks) {
                         max = c.student[ i ].allmarks[ j ].marks;
                         name = c.student[ i ].sname;
@@ -57,21 +57,25 @@ public class Course {
 class Student {
     public String sname;
     public Score[] allmarks;
-    public int n, total = 0;
-    public static String[] names;
+    public int n;
+    public int[] total = {};
+    private static String[] names;
     static Student readme(final Scanner sc, final int ns) {
+        int count = 0;
         Student st = new Student();
         System.out.println("Enter Student name");
         st.sname = sc.nextLine();
         st.n = ns;
+        st.total = new int[ns];
         st.allmarks = new Score[st.n];
         int temp = 0;
         for (int i = 0; i < st.n; i++) {
             st.allmarks[i] = Score.readme(new Scanner(System.in));
-            System.out.println(st.allmarks[i].marks);
+            //System.out.println(st.allmarks[i].marks);
             temp = temp + st.allmarks[i].marks;
         }
-        st.total = temp;
+        st.total[count] = temp;
+        count++;
         return st;
     }
 }
@@ -88,5 +92,4 @@ class Score {
         sco.marks = m;
         return sco;
     }
-
 }
