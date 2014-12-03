@@ -72,38 +72,7 @@ class Course extends SearchableBase{
             }
         }
     }
-    //public void stuhightotal(Course c);
-    /*public void stuhightotal() {
-       int highest = 0;
-        String name = " ";
-        for (int i = 0; i < nostud; i++) {
-            for (int j = 0; j < allstudents[i].allmarks.length; j++) {
-                if (allstudents[i].total1 > highest) {
-                    highest = allstudents[i].total1;
-                    name = allstudents[i].sname;
-                }
-            }
-        }
-        System.out.println("student who got high total marks is" + name);
-    }*/
-    /*public void high(final Scanner sc) {
-        System.out.println("enter the subject name");
-        String subname = sc.next();
-        String name = " ";
-        int marks = 0, highest = 0;
-        for (int i = 0; i < allstudents.length; i++) {
-            for (int j = 0; j < allstudents[i].allmarks.length; j++) {
-                if ((subname).equals(allstudents[i].allmarks[j].subname)) {
-                    marks = allstudents[i].allmarks[j].submarks;
-                    if (highest < marks) {
-                        highest = marks;
-                        name = allstudents[i].sname;
-                    }
-                }
-            }
-        }
-        System.out.println(name + " got highest marks in" + subname);
-    }*/
+    
 }
 class Student {
     String sname;
