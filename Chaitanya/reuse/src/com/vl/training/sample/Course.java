@@ -1,4 +1,4 @@
-package com.vl.training.sample;
+//package com.vl.training.sample;
 import java.util.Scanner;
 public final class Course {
     private static Course c;
@@ -13,9 +13,9 @@ public final class Course {
         c.noofstudents = sc.nextInt();
         System.out.println("Enter No oF Subjects");
         c.noofsubjects = sc.nextInt();
-        int[] temp = new int[c.noofstudents];
+        //int[] temp = new int[c.noofstudents];
         student = new Student[c.noofstudents];
-        for (int i = 0; i < c.noofsubjects; i++) {
+        for (int i = 0; i < c.noofstudents; i++) {
             c.student[ i ] = Student.readme(new Scanner(System.in), c.noofsubjects);
         }
         getTotalHighest();
@@ -59,7 +59,7 @@ class Student {
     public Score[] allmarks;
     public int n;
     public int[] total = {};
-    private static String[] names;
+    static String[] names;
     static Student readme(final Scanner sc, final int ns) {
         int count = 0;
         Student st = new Student();
