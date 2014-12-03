@@ -18,7 +18,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.CoinsCombinations">
+        <java classname="com.vl.training.sample.CountSets">
             <arg line="100 1 2 5 10 20 50"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>

@@ -1,6 +1,6 @@
 package com.vl.training.sample;
 
-public class CoinsCombinations {
+public class CountSets {
 
     // Usage: First element of the array represents amount, and the rest of the elements are denominations
     // Assumption: Denominations are in sorted order
