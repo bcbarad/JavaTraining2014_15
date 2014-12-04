@@ -18,7 +18,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Course">
+        <java classname="com.vl.training.sample.StudentInfo">
+            <arg value="${val1}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
