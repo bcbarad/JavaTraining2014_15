@@ -13,84 +13,91 @@ public final class StudentMark {
         Course c = new Course();
         c = c.readMe(scan);
         c.printDetails();
-        System.out.print("Total maximum marks is:");
-        StudentTotalMaxMarks st = new StudentTotalMaxMarks();
-        Object b = c.getMaximumMarks(c.allstudents, st);
-        System.out.print("Java maximum marks is:");
-        StudentSubjectMaxMarks ss = new StudentSubjectMaxMarks();
-        Object d = c.getMaximumMarks(c.allstudents, ss);
+        StudentTotalMaxMarks stm = new StudentTotalMaxMarks();
+        Object b = c.getMaximum(c.allStudents, stm);
+        Student s = (Student) b;
+        System.out.println(s.getName() + " got total maximum marks of " + s.getTotalMarks());
+        StudentSubjectMaxMarks ssm = new StudentSubjectMaxMarks("java");
+        Object d = c.getMaximum(c.allStudents, ssm);
+        Student s1 = (Student) d;
+        System.out.print(s1.getName() + " got highest marks of " + s1.getSubjectMarks("java") + " in Java");
     }
 }
 
 interface Searchable {
-    int maximum(Object ob1, Object ob2);
+    // if ob1 > ob2 => true
+    // else ob2 > ob1 => false
+    boolean maximum(Object ob1, Object ob2);
 }
 
 class StudentTotalMaxMarks implements Searchable {
-    public int maximum(final Object ob1, final Object ob2) {
+    
+    public boolean maximum(final Object ob1, final Object ob2) {
         Student s1 = (Student) ob1;
         Student s2 = (Student) ob2;
-        if (s1.getTotalMarks() > s2.getTotalMarks()) {
-            return s1.getTotalMarks();
+        if (s2.getTotalMarks() > s1.getTotalMarks()) {
+            return true;
         } else {
-            return s2.getTotalMarks();
+            return false;
         }
     }
 }
 
 class StudentSubjectMaxMarks implements Searchable {
-    public int maximum(final Object ob1, final Object ob2) {
-        String subject = "java";
+    
+    private  String subject;
+    StudentSubjectMaxMarks(String s) {
+        this.subject = s;
+    }
+    public boolean maximum(final Object ob1, final Object ob2) {
         Student s1 = (Student) ob1;
         Student s2 = (Student) ob2;
-        if (s1.getSubjectMarks(subject) > s2.getSubjectMarks(subject)) {
-            return s1.getSubjectMarks(subject);
+        if (s2.getSubjectMarks(subject) > s1.getSubjectMarks(subject)) {
+            return true;
         } else {
-            return s2.getSubjectMarks(subject);
+            return false;
         }
     }
 }
 
 class Course {
 
-    Student[] allstudents;
+    Student[] allStudents;
 
     public static Course readMe(final Scanner scan) {
         Course c = new Course();
         //System.out.println("Enter no of students:");
         int nostu = scan.nextInt();
-        c.allstudents = new Student[nostu];
+        c.allStudents = new Student[nostu];
         for (int i = 0; i < nostu; i++) {
-            c.allstudents[i] = Student.readMe(scan);
+            c.allStudents[i] = Student.readMe(scan);
         }
         return c;
     }
 
     public void printDetails() {
-        int[] total = new int[allstudents.length];
+        int[] total = new int[allStudents.length];
         System.out.println("\n\nName\tsub1\tmarks1\tsub2\tmarks2\ttotal");
         System.out.println("------------------------------------------------");
-        for (int i = 0; i < allstudents.length; i++) {
-            System.out.print(allstudents[i].getName());
-            for (int j = 0; j < allstudents[i].subject.length; j++) {
-                System.out.print("\t" + allstudents[i].subject[j].getSubjectName() + "\t" + allstudents[i].subject[j].getMarks());
-                total[i] += allstudents[i].subject[j].getMarks();
+        for (int i = 0; i < allStudents.length; i++) {
+            System.out.print(allStudents[i].getName());
+            for (int j = 0; j < allStudents[i].subject.length; j++) {
+                System.out.print("\t" + allStudents[i].subject[j].getSubjectName() + "\t" + allStudents[i].subject[j].getMarks());
+                total[i] += allStudents[i].subject[j].getMarks();
             }
             System.out.println("\t" + total[i]);
         }
     }
 
-    Object getMaximumMarks(final Object []allstudents, final Searchable s) {
-        Object max = allstudents[0];
-        int maxMarks = 0, marks = 0;
-        for (int i = 0; i < allstudents.length; i++) {
-            maxMarks = s.maximum(max, allstudents[i]);
-            if (maxMarks > marks) {
-                max = allstudents[i];
-                marks = maxMarks;
+    // Assumption: S knows only array of allObjects
+    Object getMaximum(final Object []allObjects, final Searchable s) {
+        Object max = allObjects[0];
+        for (int i = 0; i < allObjects.length; i++) {
+            boolean b = s.maximum(max, allObjects[i]);
+            if (b) {
+                max = allObjects[i];
             }
         }
-        System.out.println(marks);
         return max;
     }
 }
