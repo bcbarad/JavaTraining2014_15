@@ -60,9 +60,9 @@ class Course {
     public void print() {
         System.out.println("name     subject     marks");
         for (int i = 0; i < nostud; i++) {
-            System.out.print(allstudents[i].sname);
+            System.out.print(allstudents[i].getName());
             for (int j = 0; j < allstudents[i].allmarks.length; j++) {
-                System.out.println("\t" + allstudents[i].allmarks[j].subname + "\t" + allstudents[i].allmarks[j].submarks + "\t" + allstudents[i].total1);
+                System.out.println("\t" + allstudents[i].allmarks[j].getSubName() + "\t" + allstudents[i].allmarks[j].getMarks() + "\t" + allstudents[i].total1);
             }
         }
     }
@@ -97,6 +97,9 @@ class Student {
         s.total1 = total;
         System.out.println(s.total1);
         return s;
+    }
+    String getName() {
+        return sname;
     }
     int getSubMarks(final String sub) {
         int submarks = 0;
