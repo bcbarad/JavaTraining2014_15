@@ -43,10 +43,10 @@ class StudentSubjectMaxMarks implements Searchable {
         String subject = "java";
         Student s1 = (Student) ob1;
         Student s2 = (Student) ob2;
-        if (s1.getMarks(subject) > s2.getMarks(subject)) {
-            return s1.getMarks(subject);
+        if (s1.getSubjectMarks(subject) > s2.getSubjectMarks(subject)) {
+            return s1.getSubjectMarks(subject);
         } else {
-            return s2.getMarks(subject);
+            return s2.getSubjectMarks(subject);
         }
     }
 }
@@ -126,7 +126,7 @@ class Student {
         return tot;
     }
 
-    int getMarks(final String sub) {
+    int getSubjectMarks(final String sub) {
         int submark = 0;
         for (int j = 0; j < subject.length; j++) {
             if ((sub).equals(subject[j].getSubjectName())) {
