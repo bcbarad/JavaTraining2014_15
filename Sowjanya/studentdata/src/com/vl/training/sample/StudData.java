@@ -1,40 +1,30 @@
 package com.vl.training.sample;
 import java.util.Scanner;
-interface Searchable {
-    void stuhightotal(Course c);
-    void high(Scanner sc , Course c);
+interface FindsMax {
+    int match(Object o1 , Object o2);
 }
-abstract class SearchableBase implements Searchable {
-    public void stuhightotal(final Course c) {
-        int highest = 0;
-        String name = " ";
-        for (int i = 0; i < c.nostud; i++) {
-            for (int j = 0; j < c.allstudents[i].allmarks.length; j++) {
-                if (c.allstudents[i].total1 > highest) {
-                    highest = c.allstudents[i].total1;
-                    name = c.allstudents[i].sname;
-                }
-            }
+class StudentMax implements FindsMax {
+    public int match(final Object obj1 , final Object obj2) {
+        Student s1 = (Student) obj1;
+        Student s2 = (Student) obj2;
+        if (s1.total1 < s2.total1) {
+            return -1;
         }
-        System.out.println("student who got high total marks is" + name);
+        return 1;
     }
-    public void high(final Scanner sc , final Course c) {
-        System.out.println("enter the subject name");
-        String subname = sc.next();
-        String name = " ";
-        int marks = 0, highest = 0;
-        for (int i = 0; i < c.allstudents.length; i++) {
-            for (int j = 0; j < c.allstudents[i].allmarks.length; j++) {
-                if ((subname).equals(c.allstudents[i].allmarks[j].subname)) {
-                    marks = c.allstudents[i].allmarks[j].submarks;
-                    if (highest < marks) {
-                        highest = marks;
-                        name = c.allstudents[i].sname;
-                    }
-                }
-            }
+}
+class SubMax implements FindsMax {
+    String subject;
+    public SubMax(final String subject) {
+        this.subject = subject;
+    }
+    public int match(final Object obj1 , final Object obj2) {
+        Student s1 = (Student) obj1;
+        Student s2 = (Student) obj2;
+        if (s1.getSubMarks(subject) < s2.getSubMarks(subject)) {
+            return -1;
         }
-        System.out.println(name + " got highest marks in" + subname);
+        return 0;
     }
 }
 public final class StudData {
@@ -43,13 +33,18 @@ public final class StudData {
     public static void main(final String []args) {
         Scanner sc = new Scanner(System.in);
         Course c = new Course();
+        FindsMax fm = new StudentMax();
         c = c.readme(sc);
         c.print();
-        c.stuhightotal(c);
-        c.high(sc , c);
+        Object o = c.getmax(c.allstudents , fm);
+        Student ss = (Student) o;
+        System.out.println("student who got total highest is " + ss.sname + "with" + ss.total1);
+        Object o1 = c.getmax(c.allstudents , new SubMax(sc.next()));
+        Student ss1 = (Student) o1;
+        System.out.println("student" + ss1.sname);
     }
 }
-class Course extends SearchableBase {
+class Course {
     int nostud;
     Student[] allstudents;
     public static Course readme(final Scanner sc) {
@@ -65,18 +60,27 @@ class Course extends SearchableBase {
     public void print() {
         System.out.println("name     subject     marks");
         for (int i = 0; i < nostud; i++) {
-            System.out.print(allstudents[i].sname);
+            System.out.print(allstudents[i].getName());
             for (int j = 0; j < allstudents[i].allmarks.length; j++) {
-                System.out.println("\t" + allstudents[i].allmarks[j].subname + "\t" + allstudents[i].allmarks[j].submarks + "\t" + allstudents[i].total1);
+                System.out.println("\t" + allstudents[i].allmarks[j].getSubName() + "\t" + allstudents[i].allmarks[j].getMarks() + "\t" + allstudents[i].total1);
             }
         }
+    }
+    Object getmax(final Object[] allobjects , final FindsMax fm) {
+        Object max = allobjects[0];
+        for (int j = 1; j < allobjects.length; j++) {
+            if (fm.match(max , allobjects[j]) < 0) {
+                max = allobjects[j];          
+            }
+        }
+        return max;
     }
 }
 class Student {
     String sname;
     int nosub;
     Marks[] allmarks;
-    int  total1;
+    int total1;
     public static Student readme(final Scanner sc) {
         Student s = new Student();
         int total = 0;
@@ -91,7 +95,20 @@ class Student {
             total = total + s.allmarks[i].submarks;
         }
         s.total1 = total;
+        System.out.println(s.total1);
         return s;
+    }
+    String getName() {
+        return sname;
+    }
+    int getSubMarks(final String sub) {
+        int submarks = 0;
+        for (int j = 0; j < allmarks.length; j++) {
+            if ((sub).equals(allmarks[j].getSubName())) {
+                submarks = allmarks[j].getMarks();
+            }
+        }
+        return submarks;
     }
 }
 class Marks {
@@ -104,5 +121,12 @@ class Marks {
         System.out.println("enter the subject marks");
         m.submarks = sc.nextInt();
         return m;
+    }
+    int getMarks() {
+        return submarks;
+    }
+
+    String getSubName() {
+        return subname;
     }
 }
