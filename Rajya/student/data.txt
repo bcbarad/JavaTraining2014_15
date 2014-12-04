@@ -1,4 +1,4 @@
-2
+4
 raji
 2
 java 80
@@ -6,5 +6,12 @@ java 80
 kavi
 2
 java 70
-.net 40
-.net
+.net 90
+meena
+2
+java 100
+.net 60
+veena
+2
+java 90
+.net 50

@@ -1,45 +1,45 @@
-package com.vl.training.sample;
+//package com.vl.training.sample;
 import java.util.Scanner;
-interface Max {
-    abstract void getTotalHighest(Course c);
-    abstract void getIndividualHighest(Course c);
+interface Searchable {
+    int max(Object o1,Object o2);
 }
-class Maxi implements Max{
-    public void getTotalHighest(Course c) {
-        int highmax = 0;
-        String highname = "";
-        for (int i = 0; i < c.noofstudents; i++) {
-            int marks = 0;
-            for (int j = 0; j < c.noofsubjects; j++) {
-                marks = marks + c.student[ i ].total[j];
-                if (marks > highmax) {
-                    highmax = marks;
-                    highname = c.student[ i ].sname;
-                }
-            }
-        }
-        System.out.println("high marks are\t" + highmax + "name\t" + highname);
+class TotalMaxHighest implements Searchable {
+   public int max(Object o1, Object o2) {
+       Student student1 = (Student)o1;
+       Student student2 = (Student)o2;
+       if (student1.total <= student2.total) {
+           return -1;
+       }
+       else {
+           return 1;
+       }
     }
-    public void getIndividualHighest(Course c) {
-        System.out.println("Enter subject name that You want to get maximum");
+}
+class SubjectHighest implements Searchable {
+    static int c=0;
+    public int max(Object o1, Object o2) {
+        Student st1 = (Student)o1;
+        Student st2 = (Student)o2;
         Scanner sc = new Scanner(System.in);
-        String str = sc.next();
-        int max = 0;
-        String name = "";
-        for (int i = 0; i < c.noofstudents; i++) {
-            for (int j = 0; j < c.noofsubjects; j++) {
-                if (str.equals(c.student[ i ].allmarks[j].subname)) {
-                    if (max < c.student[ i ].allmarks[ j ].marks) {
-                        max = c.student[ i ].allmarks[ j ].marks;
-                        name = c.student[ i ].sname;
-                    }
+        System.out.println("Enter the Subject tht u want maximum\n");
+        String sname = sc.next();
+        //System.out.println("length"+st1.allmarks.length);
+        for (int i = 0; i <= st1.allmarks.length ; i++) {
+            if ((sname.equals(st1.allmarks[i].subname)) && sname.equals(st2.allmarks[i].subname)) {
+                if ((st1.allmarks[i].marks) <= (st2.allmarks[i].marks)) {
+                    SubjectHighest.c = i;
+                    return -1;
+                }
+                else {
+                    SubjectHighest.c = i;
+                    return 1;
                 }
             }
         }
-        System.out.println("student name" + name + "marks are" + max);
+        return 0;
     }
 }
-public final class Course extends Maxi {
+public final class Course extends TotalMaxHighest {
     public static Course c;
     public int noofsubjects, noofstudents;
     public static Student[] student;
@@ -52,60 +52,43 @@ public final class Course extends Maxi {
         c.noofstudents = sc.nextInt();
         System.out.println("Enter No oF Subjects");
         c.noofsubjects = sc.nextInt();
-        //int[] temp = new int[c.noofstudents];
         student = new Student[c.noofstudents];
         for (int i = 0; i < c.noofstudents; i++) {
             c.student[ i ] = Student.readme(new Scanner(System.in), c.noofsubjects);
         }
-        c.getTotalHighest(c);
-        c.getIndividualHighest(c);
+        TotalMaxHighest tmh = new TotalMaxHighest();
+        Object o = c.getMax(student,tmh);
+        Student st = (Student)o;
+        System.out.println("max marks are"+st.sname);
+        SubjectHighest sh = new SubjectHighest();
+        Object s = c.getMax(student,sh);
+        Student st2 = (Student)s;
+        System.out.println("Individual Highest are"+st2.allmarks[SubjectHighest.c].marks);
     }
-    /*static void getTotalHighest() {
-        int highmax = 0;
-        String highname = "";
-        for (int i = 0; i < c.noofstudents; i++) {
-            int marks = 0;
-            for (int j = 0; j < c.noofsubjects; j++) {
-                marks = marks + c.student[ i ].total[j];
-                if (marks > highmax) {
-                    highmax = marks;
-                    highname = c.student[ i ].sname;
+    Object getMax(Object[] student,Searchable s) {
+        Object max = student[0];
+            for (int i = 1; i < student.length; i++) {
+                if (s.max(max, student[i]) < 0) {
+                    max = student[i];
                 }
             }
+            return max;
         }
-        System.out.println("high marks are\t" + highmax + "name\t" + highname);
-    }*/
-    static void getIndividualHighest() {
-        System.out.println("Enter subject name that You want to get maximum");
-        String str = sc.next();
-        int max = 0;
-        String name = "";
-        for (int i = 0; i < c.noofstudents; i++) {
-            for (int j = 0; j < c.noofsubjects; j++) {
-                if (str.equals(c.student[ i ].allmarks[j].subname)) {
-                    if (max < c.student[ i ].allmarks[ j ].marks) {
-                        max = c.student[ i ].allmarks[ j ].marks;
-                        name = c.student[ i ].sname;
-                    }
-                }
-            }
-        }
-        System.out.println("student name" + name + "marks are" + max);
-    }
 }
 class Student {
     public String sname;
     public Score[] allmarks;
     public int n;
-    public int[] total = {};
+    public int total;
+   // public int[] total = {};
     static String[] names;
     static Student readme(final Scanner sc, final int ns) {
-        int count = 0;
+        //int count = 0;
         Student st = new Student();
         System.out.println("Enter Student name");
         st.sname = sc.nextLine();
         st.n = ns;
-        st.total = new int[ns];
+        // st.total = new int[ns];
         st.allmarks = new Score[st.n];
         int temp = 0;
         for (int i = 0; i < st.n; i++) {
@@ -113,8 +96,9 @@ class Student {
             //System.out.println(st.allmarks[i].marks);
             temp = temp + st.allmarks[i].marks;
         }
-        st.total[count] = temp;
-        count++;
+        //st.total[count] = temp;
+         st.total = temp;
+        //count++;
         return st;
     }
 }
