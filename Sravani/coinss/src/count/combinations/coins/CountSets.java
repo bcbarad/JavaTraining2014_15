@@ -1,5 +1,4 @@
-package com.vl.training.sample;
-
+package count.combinatons.coins;
 public class CountSets {
 
     // Usage: First element of the array represents amount, and the rest of the elements are denominations
@@ -10,6 +9,7 @@ public class CountSets {
             return;
         }
 
+        // Process the args
         int amount = Integer.parseInt(args[0]);
 
         // Create an array for denominations with rest of the arguments
@@ -20,6 +20,11 @@ public class CountSets {
 
         int numberOfSets = countSubsets(amount, denominations);
         System.out.println("Total sets = " + numberOfSets);
+    }
+
+    private static void printList(int[] list) {
+        for(int elem: list)
+            System.out.println(elem);
     }
 
     public static int countSubsets(int amount, int[] denominations) {
@@ -35,7 +40,7 @@ public class CountSets {
         int[] tail = getTail(denominations);
 
         // Entire Logic is in this statement
-        return countSubsets((amount - denominations[0]), denominations)
+        return countSubsets((amount - denominations[0]), denominations) 
             + countSubsets(amount, tail);
     }
 
