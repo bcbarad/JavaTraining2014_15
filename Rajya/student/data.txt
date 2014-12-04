@@ -5,6 +5,6 @@ java 80
 .net 90
 kavi
 2
-java 70
+java 90
 .net 40
-.net
+
