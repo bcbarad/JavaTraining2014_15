@@ -40,15 +40,15 @@ class SubjectMax implements Searchable {
     }
 }
 
-class StudentInfo {
-    public static void main(final String []args) {
-        Scanner scn = new Scanner(System.in);
+public class StudentInfo {
+    public static void main(final String []args) throws FileNotFoundException {
+        Scanner scn = new Scanner(new File(args[0]));
 	Course c = Course.readMe(scn);
 	Course.display(c);
-        SubjectMax s = new SubjectMax("Java");
         Object obj1 = c.getMax(c.allStudents, new Totmax());
         Student std1 = (Student)obj1;
         System.out.println("The highest total is : " + std1.total +  "  Secured by : " + std1.studentName);
+        SubjectMax s = new SubjectMax("Java");
         Object obj2 = c.getMax(c.allStudents, s);
         Student std2 = (Student)obj1;
         System.out.println("The highest marks is: " + std2.marks + " Secured by: " + std2.studentName);
@@ -60,7 +60,7 @@ class Course {
     Student []allStudents;
     static Course readMe(final Scanner scn) {
         Course c = new Course();   
-	System.out.println("Enter no. of students:");
+	//System.out.println("Enter no. of students:");
 	numStudents = scn.nextInt();
 	c.allStudents = new Student[numStudents];
 	for (int i = 0; i < numStudents; i++) {
@@ -94,22 +94,21 @@ class Course {
 class Student {
     String studentName;
     Score[] allScores;
-    static Scanner scn = new Scanner(System.in);
     static int numSubjs;
     public int totalMarks = 0;
     public int total;
     int marks = 0;
     static Student readMe(final Scanner scn) {
         Student s = new Student();
-	System.out.println("Enter No of subjects:"); 
+	//System.out.println("Enter No of subjects:"); 
         numSubjs = scn.nextInt();
-        System.out.println("Enter student details");
-	String details = scn.nextLine();
-	System.out.println("Enter student name:");
-	s.studentName = scn.nextLine();
+        //System.out.println("Enter student details");
+	//String details = scn.nextLine();
+	//System.out.println("Enter student name:");
+	s.studentName = scn.next();
 	s.allScores = new Score[ s.numSubjs ];
 	for (int i = 0; i < s.numSubjs; i++) {
-	    s.allScores[ i ] = Score.readMe();
+	    s.allScores[ i ] = Score.readMe(scn);
             s.totalMarks = s.totalMarks + s.allScores[i].marks;
 	}
         s.total = s.totalMarks;
@@ -128,11 +127,11 @@ class Student {
 class Score {
     String subName;
     int marks;
-    static Score readMe() {
-        Scanner scn = new Scanner(System.in);
-	System.out.println("Enter sub name:");
-	String curSub = scn.nextLine();
-	System.out.println("Enter marks");
+    static Score readMe(final Scanner scn) {
+        //Scanner scn = new Scanner();
+	//System.out.println("Enter sub name:");
+	String curSub = scn.next();
+	//System.out.println("Enter marks");
 	int curMarks = scn.nextInt();
 	Score sc = new Score();
 	sc.subName = curSub;
