@@ -4,88 +4,107 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public final class StudentMark {
+
     private StudentMark() {
     }
+
     public static void main(final String []args) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(args[0]));
         Course c = new Course();
         c = c.readMe(scan);
         c.printDetails();
-        String maxName = c.getMaxName();
-        System.out.println("\nStudent got maximum marks is:" + maxName);
-        c.highestMarks(scan);
+        StudentTotalMaxMarks stm = new StudentTotalMaxMarks();
+        Object b = c.getMaximum(c.allStudents, stm);
+        Student s = (Student) b;
+        System.out.println(s.getName() + " got total maximum marks of " + s.getTotalMarks());
+        StudentSubjectMaxMarks ssm = new StudentSubjectMaxMarks("java");
+        Object d = c.getMaximum(c.allStudents, ssm);
+        Student s1 = (Student) d;
+        System.out.print(s1.getName() + " got highest marks of " + s1.getSubjectMarks("java") + " in Java");
+    }
+}
+
+interface Searchable {
+    // if ob1 > ob2 => true
+    // else ob2 > ob1 => false
+    boolean maximum(Object ob1, Object ob2);
+}
+
+class StudentTotalMaxMarks implements Searchable {
+    
+    public boolean maximum(final Object ob1, final Object ob2) {
+        Student s1 = (Student) ob1;
+        Student s2 = (Student) ob2;
+        if (s2.getTotalMarks() > s1.getTotalMarks()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+class StudentSubjectMaxMarks implements Searchable {
+    
+    private  String subject;
+    StudentSubjectMaxMarks(String s) {
+        this.subject = s;
+    }
+    public boolean maximum(final Object ob1, final Object ob2) {
+        Student s1 = (Student) ob1;
+        Student s2 = (Student) ob2;
+        if (s2.getSubjectMarks(subject) > s1.getSubjectMarks(subject)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
 class Course {
 
-    int nostu;
-    Student[] student;
+    Student[] allStudents;
 
     public static Course readMe(final Scanner scan) {
         Course c = new Course();
         //System.out.println("Enter no of students:");
-        c.nostu = scan.nextInt();
-        c.student = new Student[c.nostu];
-        for (int i = 0; i < c.nostu; i++) {
-            c.student[i] = Student.readMe(scan);
+        int nostu = scan.nextInt();
+        c.allStudents = new Student[nostu];
+        for (int i = 0; i < nostu; i++) {
+            c.allStudents[i] = Student.readMe(scan);
         }
         return c;
     }
 
     public void printDetails() {
-        int[] total = new int[nostu];
+        int[] total = new int[allStudents.length];
         System.out.println("\n\nName\tsub1\tmarks1\tsub2\tmarks2\ttotal");
         System.out.println("------------------------------------------------");
-        for (int i = 0; i < nostu; i++) {
-            System.out.print(student[i].getName());
-            for (int j = 0; j < student[i].subject.length; j++) {
-                System.out.print("\t" + student[i].subject[j].getSubjectName() + "\t" + student[i].subject[j].getMarks());
-                total[i] += student[i].subject[j].getMarks();
+        for (int i = 0; i < allStudents.length; i++) {
+            System.out.print(allStudents[i].getName());
+            for (int j = 0; j < allStudents[i].subject.length; j++) {
+                System.out.print("\t" + allStudents[i].subject[j].getSubjectName() + "\t" + allStudents[i].subject[j].getMarks());
+                total[i] += allStudents[i].subject[j].getMarks();
             }
             System.out.println("\t" + total[i]);
         }
     }
 
-    public String getMaxName() {
-        int max = 0;
-        String maxStudent = " ";
-        int[] tot = new int[nostu];
-        for (int i = 0; i < nostu; i++) {
-            for (int j = 0; j < student[i].subject.length; j++) {
-               tot[i] += student[i].subject[j].getMarks();
-            }
-            if (max < tot[i]) {
-                max = tot[i];
-                maxStudent = student[i].getName();
+    // Assumption: S knows only array of allObjects
+    Object getMaximum(final Object []allObjects, final Searchable s) {
+        Object max = allObjects[0];
+        for (int i = 0; i < allObjects.length; i++) {
+            boolean b = s.maximum(max, allObjects[i]);
+            if (b) {
+                max = allObjects[i];
             }
         }
-        return maxStudent;
-    }
-
-    public void highestMarks(final Scanner scan) {
-        //System.out.println("Enter the subjectname to find highest marks:");
-        String subname = scan.next();
-        String name = " ";
-        int submark = 0, max = 0;
-        for (int i = 0; i < student.length; i++) {
-            for (int j = 0; j < student[i].subject.length; j++) {
-                if ((subname).equals(student[i].subject[j].getSubjectName())) {
-                    submark = student[i].subject[j].getMarks();
-                    if (max < submark) {
-                        max = submark;
-                        name = student[i].getName();
-                    }
-                }
-            }
-        }
-        System.out.println(name + " got highest marks of " + max + " in subject " + subname);
+        return max;
     }
 }
 
 class Student {
-    String name;
-    int nosub;
+    private String name;
+    private int nosub;
     Score[] subject;
 
     static Student readMe(final Scanner scan) {
@@ -105,12 +124,30 @@ class Student {
     String getName() {
         return name;
     }
+
+    int getTotalMarks() {
+        int tot = 0;
+        for (int j = 0; j < subject.length; j++) {
+            tot += subject[j].getMarks();
+        }
+        return tot;
+    }
+
+    int getSubjectMarks(final String sub) {
+        int submark = 0;
+        for (int j = 0; j < subject.length; j++) {
+            if ((sub).equals(subject[j].getSubjectName())) {
+                submark = subject[j].getMarks();
+            }
+        }
+        return submark;
+    }
 }
 
 class Score {
 
-    String subject;
-    int marks;
+    private String subject;
+    private int marks;
 
     static Score readMe(final Scanner scan) {
         Score sc = new Score();
@@ -128,4 +165,5 @@ class Score {
         return subject;
     }
 }
+
 
