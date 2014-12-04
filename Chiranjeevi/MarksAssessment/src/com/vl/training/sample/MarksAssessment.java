@@ -50,9 +50,7 @@ class MaximumTotalFinder implements Searchable {
     public Object getMax(Object a, Object b) {
         Student s1 = (Student) a;
         Student s2 = (Student) b;
-        int m1 = s1.getTotal();
-        int m2 = s2.getTotal();
-        if (m1 < m2) {
+        if (s1.getTotal() < s2.getTotal()) {
                 return s2;
         }
         else {
