@@ -3,13 +3,13 @@
 MOunika
 MATHS
 24
-c
+Java
 20
 
 Asha
-Maths
+maths
 21
 Java
 23
 
-Maths
+maths
