@@ -1,4 +1,4 @@
-package com.vl.training.sample;
+//package com.vl.training.sample;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +26,25 @@ public final class FileIndent {
                     for (int k = 0; k < indent * noofopens; k++) {
                         f1.write(' ');
                     }
-                } else {
+                }
+                else if ((line.charAt(i) == '/') && (line.charAt( i + 1) == '*')) {
+                    int len = 2, temp = i;
+                    boolean check = false;
+                    for ( int j = i + 2; j < line.length(); j++) {
+                        len++;
+                        if ((line.charAt(j) == '*') && (line.charAt( j + 1) == '/')){
+                            i = j - 1;
+                            check = true;
+                            break;
+                        }
+                    }
+                    if (check) {
+                        for (; temp <  len - 1; temp++) {
+                            f1.write(line.charAt(temp));
+                        }
+                    }
+                }
+                else { 
                     if (line.charAt(i) == '}') {
                         f1.write("\n");
                         for (int k = 0; k < (indent * (noofopens - 1)); k++) {
