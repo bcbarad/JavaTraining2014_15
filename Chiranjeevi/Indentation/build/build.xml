@@ -16,10 +16,9 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
-
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Course">
-        <arg value="${val1}" />
+        <java classname="com.vl.training.sample.IndentFile">
+            <arg value="${file}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -29,7 +28,7 @@
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
-        
+
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">

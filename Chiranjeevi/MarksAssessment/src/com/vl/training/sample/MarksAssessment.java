@@ -17,24 +17,24 @@ public class MarksAssessment {
             student[i] = Student.readMe(sc);
         }
 
-        //Getting the TotalMax Details
+        //Finding the Student who secured maximum Total
         MaximumTotalFinder  maxTotalFinder = new MaximumTotalFinder();
-        Student maxTotal = getMaximum(student, maxTotalFinder);
-        System.out.println("Maximum marks are scored by " + maxTotal.getName() + "with marks: " + maxTotal.getTotal());
+        Student maxTotal = (Student) getMaximum(student, maxTotalFinder);
+        System.out.println("Maximum marks are scored by " + maxTotal.getName() + " with marks: " + maxTotal.getTotal());
 
-        //Getting the Details of the student who got maximum marks in a particular subject
+        //Find the Student who secured the highest marks in a given subject
         SubjectMaximumFinder subMaximumFinder = new SubjectMaximumFinder();
         String subject = sc.next();
         subMaximumFinder.setSubject(subject);
-        Student subjectMax = getMaximum(student, subMaximumFinder);
-        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMax.getName() + "with marks: " + subjectMax.getMarks(subject));
+        Student subjectMax = (Student) getMaximum(student, subMaximumFinder);
+        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMax.getName() + " with marks: " + subjectMax.getMarks(subject));
     }
 
-    public static Student getMaximum(Object[] object, Searchable search) {
+    public static Object getMaximum(Object[] object, Searchable search) {
 
-        Student max = (Student) object[0];
+        Object max = object[0];
         for(int i = 1; i < object.length; i++) {
-            max = (Student) search.getMax(max, object[i]);
+            max = search.getMax(max, object[i]);
         }
         return max;
     }
@@ -81,7 +81,6 @@ class SubjectMaximumFinder implements Searchable {
 
 class Student {
     String name;
-    int total;
     Subject[] subject;
 
     static Student readMe(Scanner sc) {
@@ -99,6 +98,7 @@ class Student {
     }
 
     int getTotal() {
+        int total =0;
         for (Subject i : subject)
              total += i.getMarks();
         return total;
