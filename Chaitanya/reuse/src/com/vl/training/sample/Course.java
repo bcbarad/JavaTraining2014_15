@@ -1,6 +1,7 @@
 package com.vl.training.sample;
 import java.util.Scanner;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 interface Searchable {
     boolean max(Object o1, Object o2);
 }
@@ -31,9 +32,9 @@ class SubjectHighest implements Searchable {
     }
 }
 public final class Course extends TotalMaxHighest {
-    public int noofsubjects, noofstudents;
-    public Student[] student;
-    public static Scanner sc;
+    private int noofsubjects, noofstudents;
+    private Student[] student;
+    private static Scanner sc;
     public static void main(final String[] args) throws FileNotFoundException {
         int n;
         Course c = new Course();
@@ -68,7 +69,7 @@ public final class Course extends TotalMaxHighest {
 class Student {
     public String sname;
     public Score[] allmarks;
-    public int n;
+    private int n;
     public int total;
     static String[] names;
     static Student readme(final Scanner sc, final int ns) {
