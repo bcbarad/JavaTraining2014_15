@@ -1,0 +1,7 @@
+public class Test 
+{
+    private int f() 
+    {
+        return 100;
+            }
+    }

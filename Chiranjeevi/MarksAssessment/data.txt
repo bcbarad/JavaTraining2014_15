@@ -6,7 +6,7 @@ m3 23
 mahesh
 2
 m1 20
-m2 20
+m2 18
 suresh
 2
 m1 2
