@@ -1,0 +1,6 @@
+void main(){
+string a;
+void print(){
+int b;kldsfh
+}
+}
