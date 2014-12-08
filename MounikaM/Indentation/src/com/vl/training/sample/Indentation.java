@@ -8,7 +8,7 @@ public class Indentation {
     public static void main(String[] args) throws IOException {
         FileReader reader = null;
         try {
-            reader = new FileReader("../src/com/vl/training/sample/Su.java");
+            reader = new FileReader("../src/com/vl/training/sample/Sum.java");
             Indentation in = new Indentation();
             in.indentMethod(reader);
         } catch (FileNotFoundException nfe) {
