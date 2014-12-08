@@ -1,10 +1,11 @@
 package x.y.z;
 import java.io.*;
 class Input {
-    public static void main(String args[]) {
+    public static void main(String args[]) {      // { this is main method }
         int a = 10 , b=20 , c;
         c=Input.add(a , b);
-        System.out.println("The sum is:" + c);
+        System.out.println("The sum is:" + c);/* { this can print the sum
+of the numbers  */
     }
     public static int add(int a, int b) {
         return a+b;
