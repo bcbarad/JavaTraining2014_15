@@ -5,17 +5,17 @@ public class IndentFile {
     }
     public static void main(String[] args) {
         try {
-            IndentFile.changeIndentation(args);
+            FileReader input = null;
+            FileWriter output = null;
+            input = new FileReader(args[0]);
+            output = new FileWriter(args[1]);
+            IndentFile.changeIndentation(input , output);
         } catch (IOException ie) {
             System.out.println(ie);
         }
     }
-    public static void changeIndentation(String[] args) throws IOException  {
-        FileReader input = null;
-        FileWriter output = null;
+    public static void changeIndentation(FileReader input , FileWriter output) throws IOException  {
         try {
-            input = new FileReader(args[0]);
-            output = new FileWriter("output.txt");
             int c, depth = 0;
             boolean checkspace = false;
             while ((c = input.read()) != -1) {
@@ -41,9 +41,7 @@ public class IndentFile {
                     checkspace = true;
                 } else {
                     if (checkspace) {
-                        for (int i = 0; i < depth; i++) {
-                            output.write(' ');
-                        }
+                        IndentFile.printSpaces(depth , output);                   
                         checkspace = false;
                     }
                     output.write(ch);
@@ -58,6 +56,11 @@ public class IndentFile {
             if (output != null) {
                 output.close();
             }
+        }
+    }
+    public static void printSpaces(int depth , FileWriter output) throws IOException {
+        for (int i = 0; i < depth; i++) {
+            output.write(' ');
         }
     }
     public static  char checkConditions(FileReader input , FileWriter output , char ch) throws IOException {
