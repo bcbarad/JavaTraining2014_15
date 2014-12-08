@@ -1,53 +1,66 @@
-import com.vl;
-import java.io.*;
-class Indentation {
+package com.vl;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+public class Indentation {
     public static void main(String[] args)throws IOException {
-        FileReader source = null;
-        FileWriter dest = null;
+        Indentation i = new Indentation();
+            i.unIndentToIndent();
+    }
+    public static void unIndentToIndent() {
+        FileReader in = null;
+        FileWriter out = null;
         boolean space = false;
         try {
-        source = new FileReader("Source.java");
-        dest = new FileWriter("dest.java");
-        int a = 0;
-        char ch;
-        int depth = 0;
-        while ((a = source.read()) != -1) {
-            ch = (char) a;
-            if (ch == '{') {
-                depth = depth + 4;
-                dest.write(ch);
-            }
-            else if (ch == '}') {
-                depth = depth - 4;
-                dest.write('\n');
-                for(int index = 0; index < depth; index++) {
-                    dest.write(' ');
+            in = new FileReader("Source.java");
+            out = new FileWriter("dest.java");
+            int a, depth = 0;
+            char ch;
+            while ((a = in.read()) != -1) {
+                ch = (char) a;
+                if (ch == '{') {
+                    depth = depth + 4;
+                    out.write(ch);
                 }
-                dest.write(ch);
-            }
-            else if (ch == ' ') {
-                if (!space) {
-                    dest.write(ch);
+                else if (ch == '}') {
+                    depth = depth - 4;
+                    out.write('\n');
+                    indent(depth, out);
+                    out.write(ch);
                 }
-            }
-            else {
-                if(ch == '\n') {
-                    dest.write(ch);
-                    for(int index = 0; index < depth; index++) {
-                        dest.write(' ');
-                        space = true;
+                else if (ch == ' ') {
+                    if (!space) {
+                        out.write(ch);
                     }
-                } else {
-                    dest.write(ch);
+                }
+                else {
+                    if(ch == '\n') {
+                        out.write(ch);
+                        for(int index = 0; index < depth; index++) {
+                            out.write(' ');
+                            space = true;
+                        }
+                    } else {
+                        out.write(ch);
+                    }
                 }
             }
-        }
         } catch (IOException e) {
             e.printStackTrace();
         }
         finally {
-            source.close();
-            dest.close();
+            try {
+                in.close();
+                out.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void indent(int depth, FileWriter out)throws IOException {
+        for (int index = 0; index < depth; index++) {
+            out.write(' ');
         }
     }
 }
