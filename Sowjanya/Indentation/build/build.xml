@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+ 
 <project name="Sample" basedir="." default="run">
    <property file="build.properties"/>
 
@@ -16,20 +16,19 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
-
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Indentation">
-            <arg value="${file}"/>
-            <classpath>
-                <pathelement path="${classes.dir}"/>
-            </classpath>
+        <java classname="com.vl.training.sample.FileIndentation">
+            <arg value="225"/>
+                <classpath>
+                    <pathelement path="${classes.dir}"/>
+                </classpath>
         </java>
-    </target>
+    </target>	
 
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
-
+        
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">

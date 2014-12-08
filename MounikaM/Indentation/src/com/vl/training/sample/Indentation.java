@@ -1,22 +1,26 @@
 package com.vl.training.sample;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.File;
 
 
 public class Indentation {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
+        File file = null;
+        file = new File(args[0]);
         Indentation in = new Indentation();
-        in.indentMethod();
-    }
-   public void indentMethod() throws IOException {
+        in.indentMethod(file);
 
+    }
+    public void indentMethod(File file) throws IOException {
         FileReader reader = null;
         try {
-            reader = new FileReader("../src/com/vl/training/sample/Sum.java");
             int a = 0, depth = 0;
             char c;
             boolean flag = false;
+
+            reader = new FileReader(file);
 
             while ((a = reader.read()) != -1) {
                 c = (char) a;
@@ -48,6 +52,8 @@ public class Indentation {
                     System.out.print(c);
                 }
             }
+        } catch(FileNotFoundException nfe) {
+            System.err.println("File not found in specified path: ");
         } catch (IOException io) {
             io.printStackTrace();
         } finally {
