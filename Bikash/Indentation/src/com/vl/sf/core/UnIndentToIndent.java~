@@ -37,9 +37,7 @@ public class UnIndentToIndent {
                     newLineCount=0;
                 } else if (current == '}') {
                     depth-=4;
-                   if(newLineCount<2){
                         printSpaces(depth, out);
-                    }
                     skipSpace = true;
                     out.write(current);
                     newLineCount=0;
