@@ -1,19 +1,24 @@
 package com.vl.training.sample;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.*;
+import java.io.FileNotFoundException;
 
 
 public class Indentation {
-    public static void main(String[] args) throws IOException{
-        Indentation in = new Indentation();
-        in.indentMethod();
-    }
-   public void indentMethod() throws IOException {
-
+    public static void main(String[] args) throws IOException {
         FileReader reader = null;
         try {
-            reader = new FileReader("../src/com/vl/training/sample/Sum.java");
+            reader = new FileReader("../src/com/vl/training/sample/Su.java");
+            Indentation in = new Indentation();
+            in.indentMethod(reader);
+        } catch (FileNotFoundException nfe) {
+            System.err.println("File not found in specified path");
+        }
+
+    }
+    public void indentMethod(FileReader reader) throws IOException {
+
+        try {
             int a = 0, depth = 0;
             char c;
             boolean flag = false;
