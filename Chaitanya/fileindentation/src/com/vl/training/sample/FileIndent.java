@@ -1,4 +1,4 @@
-//package com.vl.training.sample;
+package com.vl.training.sample;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,12 +8,15 @@ public final class FileIndent {
     private FileIndent() {
     }
     public static void main(final String[] args) throws IOException {
-        File f = new File("/home/chaitanya/workdir/JavaTraining2014_15"
-                 + "/Chaitanya/fileindentation/src/com/vl/training"
-                 + "/sample/Cname.txt");
-        FileWriter f1 = new FileWriter("/home/chaitanya/workdir"
-                       + "/JavaTraining2014_15/Chaitanya/fileindentation/src"
-                       + "/com/vl/training/sample/Indent.txt", true);
+            File f = null;
+            FileWriter f1 = null;
+        try {
+            f = new File("/home/chaitanya/workdir/JavaTraining2014_15"
+                     + "/Chaitanya/fileindentation/src/com/vl/training"
+                     + "/sample/Cname.txt");
+            f1 = new FileWriter("/home/chaitanya/workdir"
+                           + "/JavaTraining2014_15/Chaitanya/fileindentation/src"
+                           + "/com/vl/training/sample/Indent.txt", true);
         BufferedReader br = new BufferedReader(new FileReader(f));
         String line = null;
         int noofopens = 0;
@@ -26,20 +29,24 @@ public final class FileIndent {
                     for (int k = 0; k < indent * noofopens; k++) {
                         f1.write(' ');
                     }
-                }
-                else if ((line.charAt(i) == '/') && (line.charAt( i + 1) == '*')) {
-                    int len = 2, temp = i;
+                } else if ((line.charAt(i) == '/') && (line.charAt(i + 1) == '/')) {
+                    int len = i + 2, temp = i, length = line.length(),checklen = 0;
                     boolean check = false;
-                    for ( int j = i + 2; j < line.length(); j++) {
+                    for (int j = i + 2; j < line.length(); j++) {
                         len++;
-                        if ((line.charAt(j) == '*') && (line.charAt( j + 1) == '/')){
-                            i = j - 1;
+                        if ((line.charAt(j) == '/') && (line.charAt(j + 1) == '/')) {
+                            i = j + 1;
+                            check = true;
+                            break;
+                        }
+                        if (len == length - 1) {
+                            i = j + 1;
                             check = true;
                             break;
                         }
                     }
                     if (check) {
-                        for (; temp <  len - 1; temp++) {
+                        for (; temp <=  len; temp++) {
                             f1.write(line.charAt(temp));
                         }
                     }
@@ -61,6 +68,11 @@ public final class FileIndent {
                 f1.write('\n');
             }
         }
+        //f1.close();
+    }
+    finally {
         f1.close();
+        //f.close();
+    }
     }
 }
