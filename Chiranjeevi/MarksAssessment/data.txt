@@ -2,14 +2,14 @@
 rajesh
 2
 m1 22
-m2 23
+m3 23
 mahesh
 2
 m1 20
-m2 20
+m2 18
 suresh
 2
 m1 2
 m2 20
-m1
+m2
 

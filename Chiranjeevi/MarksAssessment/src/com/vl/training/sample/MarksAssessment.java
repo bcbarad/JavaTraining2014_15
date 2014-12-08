@@ -16,90 +16,71 @@ public class MarksAssessment {
         for (int i = 0; i < numberOfStudents; i++) {
             student[i] = Student.readMe(sc);
         }
-        //Getting the TotalMax Details
+
+        //Finding the Student who secured maximum Total
         MaximumTotalFinder  maxTotalFinder = new MaximumTotalFinder();
-        Value maxTotal = getMaximum(student, maxTotalFinder);
-        System.out.println("Maximum marks are scored by " + maxTotal.getName() + "with marks: " + maxTotal.getMarks());
-        //Getting the Details of the student who got maximum marks in a particular subject
+        Student maxTotal = (Student) getMaximum(student, maxTotalFinder);
+        System.out.println("Maximum marks are scored by " + maxTotal.getName() + " with marks: " + maxTotal.getTotal());
+
+        //Find the Student who secured the highest marks in a given subject
         SubjectMaximumFinder subMaximumFinder = new SubjectMaximumFinder();
         String subject = sc.next();
-        subMaximumFinder.sub = subject;
-        Value subjectMax = getMaximum(student, subMaximumFinder);
-        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMax.getName() + "with marks: " + subjectMax.getMarks());
+        subMaximumFinder.setSubject(subject);
+        Student subjectMax = (Student) getMaximum(student, subMaximumFinder);
+        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMax.getName() + " with marks: " + subjectMax.getMarks(subject));
     }
 
-    public static Value getMaximum(Object[] object, Searchable search) {
-        Value value = search.getMax(object);
-        return value;
+    public static Object getMaximum(Object[] object, Searchable search) {
+
+        Object max = object[0];
+        for(int i = 1; i < object.length; i++) {
+            max = search.getMax(max, object[i]);
         }
-}
-
-class Value {
-    private String name;
-    private int marks;
-
-    Value(String name, int marks) {
-        this.name = name;
-        this.marks = marks;
-    }
-
-    int getMarks() {
-        return marks;
-    }
-
-    String getName() {
-        return name;
+        return max;
     }
 }
 
 interface Searchable {
 
-    Value getMax(Object[] x);
+    Object getMax(Object a, Object b);
 }
 
 class MaximumTotalFinder implements Searchable {
 
-    public Value getMax(Object[] x) {
-        int maxTotal = 0, temp = 0;
-        String maxStudent = "";
-        Student max = (Student) x[0];
-        for (int i=0; i< x.length; i++) {
-            temp = ((Student)x[i]).getTotal();
-            if (maxTotal< temp) {
-                maxTotal = temp;
-                maxStudent = ((Student)x[i]).getName();
-            }
+    public Object getMax(Object a, Object b) {
+        Student s1 = (Student) a;
+        Student s2 = (Student) b;
+        if (s1.getTotal() < s2.getTotal()) {
+                return s2;
         }
-        return new Value(maxStudent, maxTotal);
+        else {
+                return s1;
+        }
     }
 }
 
 class SubjectMaximumFinder implements Searchable {
-    String sub="";
 
-    public Value getMax(Object[] x) {
-        String name="";
-        int max=0,temp=0;
-        //Code to find the subject maximum details
-        for (int i = 0; i < x.length; i++) {
-            for (int j = 0; j < ((Student) x[i]).subject.length; j++) {
-                if ((sub).equals(((Student) x[i]).subject[j].getSubjectName())) {
-                    temp = ((Student) x[i]).subject[j].getMarks();
-                    if(max < temp) {
-                        max = temp;
-                        name = ((Student) x[i]).getName();
-                    }
-                }
-            }
+    private String sub;
+
+    public Object getMax(Object a, Object b) {
+        Student s1 = (Student) a;
+        Student s2 = (Student) b;
+        if(s1.getMarks(sub) < s2.getMarks(sub)) {
+            return s2;
         }
-        Value value = new Value(name, max);
-        return value;
+        else {
+            return s1;
+        }
+    }
+
+    public void setSubject(String subject) {
+        this.sub = subject;
     }
 }
 
 class Student {
     String name;
-    int total;
     Subject[] subject;
 
     static Student readMe(Scanner sc) {
@@ -117,9 +98,18 @@ class Student {
     }
 
     int getTotal() {
+        int total =0;
         for (Subject i : subject)
              total += i.getMarks();
         return total;
+    }
+
+    int getMarks(String sub) {
+        for (Subject i : subject) {
+            if (sub.equals(i.getSubjectName()))
+                return i.getMarks();
+        }
+        return -1;
     }
 
     String getName() {
