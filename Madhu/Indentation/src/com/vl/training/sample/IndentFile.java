@@ -20,10 +20,11 @@ public class IndentFile {
             boolean checkspace = false;
             while ((c = input.read()) != -1) {
                 char ch = (char) c;
-                if (c == '{') {
+                if (ch == '{') {
                     depth += 4;
                     output.write(ch);
-                } else if (c == '}') {
+                    
+                } else if (ch == '}') {
                     depth -= 4;
                     for (int i = 0; i < depth; i++) {
                         output.write(" ");
@@ -33,7 +34,7 @@ public class IndentFile {
                     if (!checkspace) {
                         output.write(' ');
                     }
-                } else if (c == '\n') {
+                } else if (ch == '\n') {
                     output.write(ch);
                     checkspace = true;
                 } else {
@@ -43,7 +44,7 @@ public class IndentFile {
                         }
                         checkspace = false;
                     }
-                    output.write(c);
+                    output.write(ch);
                 }
             }
         } catch (IOException ie) {
