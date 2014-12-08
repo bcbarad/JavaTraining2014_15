@@ -12,12 +12,13 @@ public class UnIndentToIndent {
         int current;
         int depth = 0;
         int newLineCount=0;
+        boolean checkNewLine=false;
         boolean skipSpace = true;
         while ((current = in.read()) != -1) {
            if (current == ' ' && skipSpace) {
                 continue;
             } else if (current == '{') {
-                if(newLineCount<2){
+                if(newLineCount<=2){
                     printSpaces(depth, out);
                 }
                 out.write(current);
@@ -34,9 +35,13 @@ public class UnIndentToIndent {
                 skipSpace = true;
                 ++newLineCount;
                 if(newLineCount<2){
-                    printSpaces(depth, out);
+                    checkNewLine=true;
                 }
             }else{
+            	if(checkNewLine){
+            	    printSpaces(depth, out);
+            	    checkNewLine=false;
+            	}
                 out.write(current);
                 skipSpace = false;
                 newLineCount=0;
