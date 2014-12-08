@@ -1,8 +1,8 @@
-import com.vl;
+package com.vl;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-class Indentation {
+public class Indentation {
     public static void main(String[] args)throws IOException {
         Indentation i = new Indentation();
             i.unIndentToIndent();

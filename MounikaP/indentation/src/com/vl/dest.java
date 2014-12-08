@@ -1,5 +1,5 @@
 class File1{
-    publicstaticvoidmain(String[]args)
+    public static void main(String[]args)
     {
         System.out.println("helloworld");
         
