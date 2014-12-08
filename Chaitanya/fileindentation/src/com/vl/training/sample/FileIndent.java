@@ -36,11 +36,6 @@ public final class FileIndent {
                             check = true;
                             break;
                         }
-                        if ((line.charAt(j) == '\n')) {
-                            i = j - 1;
-                            check = true;
-                            break;
-                        }
                     }
                     if (check) {
                         for (; temp <  len; temp++) {
