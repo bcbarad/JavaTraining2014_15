@@ -7,9 +7,13 @@ public class IndentFile {
         try {
             FileReader input = null;
             FileWriter output = null;
-            input = new FileReader(args[0]);
-            output = new FileWriter(args[1]);
-            IndentFile.changeIndentation(input , output);
+            if(args.length < 1) {
+                System.out.println("Please make sure that pass an input text file");
+            } else {
+                input = new FileReader(args[0]);
+                output = new FileWriter(args[1]);
+                IndentFile.changeIndentation(input , output);
+            }
         } catch (IOException ie) {
             System.out.println(ie);
         }
@@ -20,7 +24,7 @@ public class IndentFile {
             boolean checkspace = false;
             while ((c = input.read()) != -1) {
                 char ch = (char) c;
-                if (ch == '/') {
+                if (ch == '/' || ch == '\'' || ch == '"') {
                     ch = IndentFile.checkConditions(input , output , ch);
                 }
                 if (ch == '{') {
@@ -84,6 +88,13 @@ public class IndentFile {
             output.write(ch);
             output.write(nextch);
             ch = (char)input.read();
+        } else {
+            while(ch != '\'' && ch!='"') {
+                output.write(ch);
+                ch=(char) input.read();
+             }
+             output.write(ch);
+             ch=(char) input.read();
         }
         return ch;
     }
