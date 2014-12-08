@@ -88,9 +88,11 @@ public class Course {
         Student s = (Student) student;
         System.out.println(s.getStudentname());
         //  System.out.println("\n enter subject :");
-        Object so = getMax(std, new StudentSubjectWiseMaximum("maths"));
+        StudentSubjectWiseMaximum stdsub = new StudentSubjectWiseMaximum("maths");
+        Object so = getMax(std, stdsub);
         Student st = (Student) so;
-        System.out.println(st.getStudentname());
+        System.out.println(st.getStudentname()+ " got highest marks in " + stdsub.subject + " marks is");
+        System.out.print(st.getMarksOfSubject(stdsub.subject));
     }
 
     public static Object getMax(Object[] obj, StudentInterface si) {
@@ -124,7 +126,7 @@ class StudentTotalMaximum implements StudentInterface {
 }
 
 class StudentSubjectWiseMaximum implements StudentInterface {
-    private String subject;
+    public String subject;
     public StudentSubjectWiseMaximum(final String sub) {
         this.subject = sub;
     }

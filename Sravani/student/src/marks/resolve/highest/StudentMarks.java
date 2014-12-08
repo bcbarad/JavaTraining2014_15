@@ -59,6 +59,7 @@ class Student {
         for (int j = 0; j < this.allMarks.length; j++) {
             if (subname.equals(this.allMarks[j].subname)) {
                 marks = this.allMarks[j].submarks;
+                break;
             }
         }
         return marks;
