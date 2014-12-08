@@ -19,7 +19,8 @@
 
     <target name="run" depends="compile">
         <java classname="com.vl.training.sample.Indentation">
-            <arg value="${file}"/>
+            <arg value="${file1}"/>
+            <arg value="${file2}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
