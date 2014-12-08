@@ -27,19 +27,24 @@ public final class FileIndent {
                         f1.write(' ');
                     }
                 }
-                else if ((line.charAt(i) == '/') && (line.charAt( i + 1) == '*')) {
-                    int len = 2, temp = i;
+                else if ((line.charAt(i) == '/') && (line.charAt( i + 1) == '/')) {
+                    int len = i + 2, temp = i;
                     boolean check = false;
                     for ( int j = i + 2; j < line.length(); j++) {
                         len++;
-                        if ((line.charAt(j) == '*') && (line.charAt( j + 1) == '/')){
+                        if ((line.charAt(j) == '/') && (line.charAt( j + 1) == '/')){
+                            i = j - 1;
+                            check = true;
+                            break;
+                        }
+                        if ((line.charAt(j) == '\n')) {
                             i = j - 1;
                             check = true;
                             break;
                         }
                     }
                     if (check) {
-                        for (; temp <  len - 1; temp++) {
+                        for (; temp <  len; temp++) {
                             f1.write(line.charAt(temp));
                         }
                     }
