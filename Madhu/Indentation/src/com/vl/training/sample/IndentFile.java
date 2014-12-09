@@ -1,4 +1,4 @@
-//package com.vl.training.sample;
+package com.vl.training.sample;
 import java.io.*; 
 public class IndentFile {
     private IndentFile() {
@@ -53,6 +53,7 @@ public class IndentFile {
             }
         } catch (IOException ie) {
             System.out.println(ie);
+            throw ie;
         }  finally {
             if (input != null) {
                 input.close();
