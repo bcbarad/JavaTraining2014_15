@@ -90,7 +90,7 @@ public class IndentFile {
             output.write(nextch);
             ch = (char)input.read();
         } else {
-            while(ch != '\'' && ch!='"') {
+            while(ch != '\'' || ch!='"') {
                 output.write(ch);
                 ch=(char) input.read();
              }
