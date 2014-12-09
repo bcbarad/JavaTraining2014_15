@@ -20,17 +20,17 @@ public class MarksAssessment {
         //Finding the Student who secured maximum Total
         MaximumTotalFinder  maxTotalFinder = new MaximumTotalFinder();
         Student maxTotal = (Student) getMaximum(student, maxTotalFinder);
-        System.out.println("Maximum marks are scored by " + maxTotal.getName() + "with marks: " + maxTotal.getTotal());
+        System.out.println("Maximum marks are scored by " + maxTotal.getName() + " with marks: " + maxTotal.getTotal());
 
         //Find the Student who secured the highest marks in a given subject
         SubjectMaximumFinder subMaximumFinder = new SubjectMaximumFinder();
         String subject = sc.next();
         subMaximumFinder.setSubject(subject);
         Student subjectMax = (Student) getMaximum(student, subMaximumFinder);
-        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMax.getName() + "with marks: " + subjectMax.getMarks(subject));
+        System.out.println("Maximum marks in " + subject + " is obtained by " + subjectMax.getName() + " with marks: " + subjectMax.getMarks(subject));
     }
 
-    public Object getMaximum(Object[] object, Searchable search) {
+    public static Object getMaximum(Object[] object, Searchable search) {
 
         Object max = object[0];
         for(int i = 1; i < object.length; i++) {
@@ -50,9 +50,7 @@ class MaximumTotalFinder implements Searchable {
     public Object getMax(Object a, Object b) {
         Student s1 = (Student) a;
         Student s2 = (Student) b;
-        int m1 = s1.getTotal();
-        int m2 = s2.getTotal();
-        if (m1 < m2) {
+        if (s1.getTotal() < s2.getTotal()) {
                 return s2;
         }
         else {
@@ -83,7 +81,6 @@ class SubjectMaximumFinder implements Searchable {
 
 class Student {
     String name;
-    int total;
     Subject[] subject;
 
     static Student readMe(Scanner sc) {
@@ -101,7 +98,7 @@ class Student {
     }
 
     int getTotal() {
-        total =0;
+        int total =0;
         for (Subject i : subject)
              total += i.getMarks();
         return total;

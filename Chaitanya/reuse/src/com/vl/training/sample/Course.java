@@ -1,42 +1,41 @@
 package com.vl.training.sample;
 import java.util.Scanner;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 interface Searchable {
-    boolean max(Object o1,Object o2);
+    boolean max(Object o1, Object o2);
 }
 class TotalMaxHighest implements Searchable {
-   public boolean max(Object o1, Object o2) {
-       Student student1 = (Student)o1;
-       Student student2 = (Student)o2;
-       if (student1.total <= student2.total) {
-           return true;
-       }
-       else {
-           return false;
-       }
+    public boolean max(final Object o1, final Object o2) {
+        Student student1 = (Student) o1;
+        Student student2 = (Student) o2;
+        if (student1.total <= student2.total) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 class SubjectHighest implements Searchable {
-    String str = "";
-    public SubjectHighest(String sname) {
+    private String str = "";
+    public SubjectHighest(final String sname) {
         str = sname;
     }
-    public boolean max(Object o1, Object o2) {
-        Student st1 = (Student)o1;
-        Student st2 = (Student)o2;
+    public boolean max(final Object o1, final Object o2) {
+        Student st1 = (Student) o1;
+        Student st2 = (Student) o2;
         if (st1.getSubjectMarks(str) <= st2.getSubjectMarks(str)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 }
 public final class Course extends TotalMaxHighest {
-    public int noofsubjects, noofstudents;
-    public Student[] student;
-    public static Scanner sc;
-    public static void main(final String[] args) throws FileNotFoundException{
+    private int noofsubjects, noofstudents;
+    private Student[] student;
+    private static Scanner sc;
+    public static void main(final String[] args) throws FileNotFoundException {
         int n;
         Course c = new Course();
         sc = new Scanner(new File(args[0]));
@@ -47,29 +46,30 @@ public final class Course extends TotalMaxHighest {
             c.student[ i ] = Student.readme(sc, c.noofsubjects);
         }
         TotalMaxHighest tmh = new TotalMaxHighest();
-        Object o = c.getMax(c.student,tmh);
-        Student st = (Student)o;
-        System.out.println("max marks of student"+st.sname+"is"+st.total);
+        Object o = c.getMax(c.student, tmh);
+        Student st = (Student) o;
+        System.out.println("max marks of student" + st.sname + "is" + st.total);
         String sname = sc.next();
         SubjectHighest sh = new SubjectHighest(sname);
-        Object s = c.getMax(c.student,sh);
-        Student st2 = (Student)s;
-        System.out.println("Student "+st2.sname+" Highest marks in subject"+sname+" is "+st2.getSubjectMarks(sname));
+        Object s = c.getMax(c.student, sh);
+        Student st2 = (Student) s;
+        System.out.println("Student " + st2.sname + " Highest marks in subject"
+            + sname + " is " + st2.getSubjectMarks(sname));
     }
-    Object getMax(Object[] object,Searchable s) {
+    Object getMax(final Object[] object, final Searchable s) {
         Object max = object[0];
-            for (int i = 1; i < object.length; i++) {
-                if (s.max(max, object[i])) {
-                    max = object[i];
-                }
+        for (int i = 1; i < object.length; i++) {
+            if (s.max(max, object[i])) {
+                max = object[i];
             }
-            return max;
-        }    
+        }
+        return max;
+    }
 }
 class Student {
     public String sname;
     public Score[] allmarks;
-    public int n;
+    private int n;
     public int total;
     static String[] names;
     static Student readme(final Scanner sc, final int ns) {
@@ -82,10 +82,10 @@ class Student {
             st.allmarks[i] = Score.readme(sc);
             temp = temp + st.allmarks[i].marks;
         }
-         st.total = temp;
+        st.total = temp;
         return st;
     }
-    int getSubjectMarks(String sub) {
+    int getSubjectMarks(final String sub) {
         for (int i = 0; i < allmarks.length; i++) {
             if (sub.equals(allmarks[i].subname)) {
                 return allmarks[i].marks;
