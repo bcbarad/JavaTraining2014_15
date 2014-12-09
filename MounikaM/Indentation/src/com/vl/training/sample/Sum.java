@@ -1,16 +1,16 @@
-package com.vl.trainig.sample;
-import java.util.Scanner;
+package com.vl.training.sample;
 
-public class Sum {
-           public static void main(String[] args)               {
-           int sum = 0;
-        Scanner sc = new Scanner(System.in);
-           int num1 = sc.nextInt();
- while (num1 != 0) {
-                     sum = num1 + sum;
-                     num1 = num1 - 1;
+public class Sum{
+public static void main(String[] args) { // { in main method defination
+            String s = " { $ file}";
+            char c = '{';
+       int num1 = 0, sum = 0;
+       while(num1 != 10){  /* performing sum of first 9 numbers using
+                              while loop*/
+     sum = sum + num1;
+       }
+       System.out.println(c);
+System.out.println(sum);
+System.out.println(s);
+               }
 }
-}
-   }
-
-
