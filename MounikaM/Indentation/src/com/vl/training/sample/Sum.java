@@ -9,5 +9,8 @@ public static void main(String[] args) { // { in main method defination
                               while loop*/
      sum = sum + num1;
        }
+       System.out.println(c);
+System.out.println(sum);
+System.out.println(s);
                }
 }

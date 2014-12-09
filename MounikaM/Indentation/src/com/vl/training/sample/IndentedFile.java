@@ -8,5 +8,8 @@ public class Sum{
                               while loop*/
             sum = sum + num1;
         }
+        System.out.println(c);
+        System.out.println(sum);
+        System.out.println(s);
     }
 }
