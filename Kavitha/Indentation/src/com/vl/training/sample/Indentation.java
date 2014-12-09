@@ -1,5 +1,5 @@
 package com.vl.training.sample;
-import java.io.*;
+import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -25,10 +25,11 @@ public class Indentation {
         try {
             FileInputStream fis = new FileInputStream(f);
             char current, next, nextchar;
+            boolean flag = false;
             int depth = 0;
             while (fis.available() > 0) {
                 current = (char) fis.read();
-                if (current == ' ') {
+                if (current == ' ' && !flag) {
                     System.out.print(current);
                 }
                 while (current == ' ') {
@@ -39,15 +40,14 @@ public class Indentation {
                     depth += 1;
                     displaySpace(depth);
                     current = (char) fis.read();
+                    if (current == '\n') {
+                        flag = true;
+                    }
                     continue;
                 } else if (current == '}') {
                     depth -= 1;
                     displaySpace(depth);
                     System.out.print(current);
-                    continue;
-                } else if (current == ';') {
-                    System.out.print(current);
-                    displaySpace(depth);
                     continue;
                 } else if (current == '/') {
                     displaySpace(depth);
@@ -59,6 +59,8 @@ public class Indentation {
                             next = (char) fis.read();
                             System.out.print(next);
                         }
+                        flag = true;
+                        displaySpace(depth);
                         continue;
                     }
                     if (next == '*') {
@@ -78,6 +80,30 @@ public class Indentation {
                         System.out.print(nextchar);
                         continue;
                     }
+                } else if (current == '\'') {
+                    System.out.print(current);
+                    current = (char) fis.read();
+                    while (current != '\n') {
+                        if (current == '{' || current == '}') {
+                            System.out.print(current);
+                        }
+                        current = (char) fis.read();
+                        System.out.print(current);
+                    }
+                    displaySpace(depth);
+                    continue;
+                }
+                if (current == '\"') {
+                    System.out.print(current);
+                    current = (char) fis.read();
+                    if (current == '{' || current == '}') {
+                        System.out.print(current);
+                        while (current != '\"') {
+                            current = (char) fis.read();
+                            System.out.print(current);
+                        }
+                    }
+                    continue;
                 } else {
                     System.out.print(current);
                 }
