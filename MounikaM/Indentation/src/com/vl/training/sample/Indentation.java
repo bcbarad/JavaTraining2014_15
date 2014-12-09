@@ -22,18 +22,18 @@ public class Indentation {
         } catch (FileNotFoundException nfe) {
             System.err.println(" Source file not present: Please give Corect file name");
         } catch (IOException io) {
-            System.err.println(io.getMessage());
+            System.err.println(io);
         }
 
     }
     public void indentMethod(File file1, File file2) throws IOException {
         FileReader reader = null;
         FileWriter writer = null;
+        int a = 0, depth = 0;
+        char c;
+        boolean isSpace = false;
+        boolean isBracesinSpecialSymbols = false;
         try {
-            int a = 0, depth = 0;
-            char c;
-            boolean isSpace = false;
-            boolean isBracesinSpecialSymbols = false;
             reader = new FileReader(file1);
             writer = new FileWriter(file2);
 
