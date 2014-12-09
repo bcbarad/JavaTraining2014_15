@@ -19,6 +19,7 @@
     <target name="run" depends="compile">
         <java classname="com.vl.training.sample.FileIndentation">
             <arg value="${val1}"/>
+            <arg value="Output.txt"/>
                 <classpath>
                     <pathelement path="${classes.dir}"/>
                 </classpath>
