@@ -1,6 +1,10 @@
-void main(){
-string a;
-void print(){
-int b;kldsfh
+public static void main() {
+int a;
+//dsafksafjd { kl;}  jkdfsl
+String b;
+/*create kldfja {kasdfj}} jdsfkja*/
+static c() {
+char a = '{';
+String brace = "{";
 }
 }
