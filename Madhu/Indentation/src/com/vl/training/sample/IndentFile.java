@@ -53,6 +53,7 @@ public class IndentFile {
             }
         } catch (IOException ie) {
             System.out.println(ie);
+            throw ie;
         }  finally {
             if (input != null) {
                 input.close();
