@@ -3,16 +3,14 @@ package com.vl.sf.core;
 import java.io.*;
 
 public class UnIndentToIndent {
-    public static void printSpaces(int depth, FileOutputStream out)
-                throws IOException {
+    public static void printSpaces(int depth, FileOutputStream out) throws IOException {
         out.write('\n');
 	for (int i = 0; i < depth; i++) {
 	    out.write(' ');
 	}
     }
 
-    public static void getIndented(FileInputStream in, FileOutputStream out)
-		throws IOException {
+    public static void getIndented(FileInputStream in, FileOutputStream out) throws IOException {
         int current;
 	int depth = 0;
 	boolean checkNewLine = false;
@@ -23,10 +21,9 @@ public class UnIndentToIndent {
 	    } else if (current == '/') {
 	        out.write(current);
 		if ((current = in.read()) == '/') {// logic for single line comment
-		    out.write(current);
-		    while ((current = in.read()) != '\n') {
+		    do{
 		        out.write(current);
-		    }
+		    }while ((current = in.read()) != '\n'); 
 		    out.write(current);
 		} else if (current == '*') {// logic for multiline line comment
 		    out.write(current);
