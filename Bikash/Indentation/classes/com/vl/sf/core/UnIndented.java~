@@ -1,7 +1,0 @@
-//package com.vl.sf.core;
-class UnIndented{
-        public static void main(String[] args)
-{
-    System.out.println("Hi");
-            }
-    }
