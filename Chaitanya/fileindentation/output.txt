@@ -1,0 +1,12 @@
+class Cname {
+    void method1() {
+        
+    }/*{System.out.println("hai hello"); //System.out.println("hello Comment");
+System.out.println();*/    
+    str ='{';
+    str1 = "{}{";
+    class method1{
+        void
+    }
+}
+
