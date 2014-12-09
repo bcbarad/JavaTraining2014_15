@@ -20,6 +20,7 @@
     <target name="run" depends="compile">
         <java classname="com.vl.training.sample.IndentFile">
             <arg value="${val1}"/>
+            <arg value="output.txt"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

@@ -1,55 +1,61 @@
 package com.vl.training.sample;
-import java.io.*;      
-public class FileIndentation { 
-    static char space=' ';    
-    public static void main(String args[])throws IOException {    
-        FileInputStream fin=new FileInputStream("/home/sowjanya/PrjTest/JavaTraining2014_15 /Sowjanya/Indentation/src/com/vl/training/sample/Example.java");  
-        FileOutputStream fout=new FileOutputStream("/home/sowjanya/PrjTest/JavaTraining2014_15 /Sowjanya/Indentation/src/com/vl/training/sample/Output.java",true);  
-        int i=0;
-        byte[] b=new byte[fin.available()];
-        int depth=0;     
-        fin.read(b);
-   try {
-        for(int p=0;p<b.length-1;p++) {
-            char ch=(char)b[p];
-            fout.write(ch);
-            if (ch=='{') {    
-                depth+=4;
-                print(depth,fout);
-                /*for(int j=0;j<depth;j++) {
-                    fout.write(space);
-                }*/
-            }
-            char ch1=(char)b[p+1];
-            if (ch1=='}') {
-                depth-=4;
-                print(depth,fout);
-                /*for(int k=0;k<depth;k++) {
-                    fout.write(space);    
-                }*/  
-                fout.write(ch);                
-            } 
-            if(ch=='\n') {
-                print(depth,fout);
-                /*for(int k=0;k<depth;k++) {
-                    fout.write(space);    
-                }*/
-            } 
-            if(ch==' ') {
-               fout.write(ch);
-            }                      
+import java.io.*;
+final public class FileIndentation {
+    public static void main(final String[] args) throws IOException {
+        //check to see whether user entered command line arguments or not
+        if (args.length==0) {
+            System.err.println("pass any text file as input to indent");
+            return;
         }
-   }catch (IOException e) {
+        try {
+            FileIndentation.doingIndentation(args);
+        } catch(Exception e) {
             e.printStackTrace();
         }
-        finally {
-            fin.close();
-            fout.close();
-        }
-    }  
-    public static void print(int depth,FileOutputStream fout) throws IOException {
-        for(int j=0;j<depth;j++) {
-            fout.write(space);
-        } 
     }
-}    
+    public static void doingIndentation(final String[] args) throws IOException {
+        FileInputStream fin = null;
+        FileOutputStream fout = null;
+        try {
+            fin = new FileInputStream(args[0]);
+            fout = new FileOutputStream("Output.java");
+            int c,depth = 0,space = 0;
+            while ((c = fin.read()) != -1) {
+                char ch = (char)c;
+                if (ch == '{'){
+                    depth++;
+                    fout.write(ch);   
+                } else if (ch == '}') {
+                    depth--;
+                    printSpaces(depth,fout);
+                    fout.write(ch);
+                } else if (ch == ' ') {
+                    fout.write(ch);
+                } else if (ch == '\n') {
+                    fout.write(ch);
+                    space = 1;
+                } else {      
+                    if (space == 1) {
+                        printSpaces(depth,fout);
+                        space = 0;
+                    }              
+                    fout.write(ch);
+                }
+                
+            }  
+        } catch(Exception e) {
+            System.out.println(e);
+            throw e; 
+        } finally {
+            if (fin != null)
+                fin.close();
+            if (fout != null)
+                fout.close();
+        }           
+    }
+    public static void printSpaces(int depth , FileOutputStream fout) throws IOException {
+        for (int i=0;i<4*depth;i++) { 
+             fout.write(' ');
+        }    
+    }
+}
