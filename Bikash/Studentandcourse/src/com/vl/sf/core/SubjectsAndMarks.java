@@ -23,3 +23,22 @@ public class SubjectsAndMarks {
 		return mark;
 	}
 }
+
+
+
+
+
+
+
+class Marks {
+    String subname="";
+    int submarks=0;
+    public Marks readMe(final Scanner sc) {
+         Marks m=new Marks();
+         System.out.println("enter the subject name:");
+         subname=sc.next();
+         System.out.println("enter the"+subname+"marks");
+         submarks=sc.nextInt();
+         return m;  
+    }
+}
