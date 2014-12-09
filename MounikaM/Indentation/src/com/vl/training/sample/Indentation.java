@@ -80,7 +80,7 @@ public class Indentation {
                         writer.write(ch);
                         ch = (char) reader.read();
                         char nextc = (char) reader.read();
-                        while (ch != '*' && nextc != '/') {
+                        while (ch != '*' || nextc != '/') {
                             ch = nextc;
                             nextc = (char) reader.read();
                             writer.write(ch);

@@ -81,7 +81,7 @@ public class IndentFile {
             output.write(ch);
             ch = (char) input.read();
             char nextch=(char)input.read();
-            while(ch!='*' && nextch!='/') {
+            while(ch!='*' || nextch!='/') {
                 output.write(ch);
                 ch = nextch;
                 nextch = (char)input.read();
