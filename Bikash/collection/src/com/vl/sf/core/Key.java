@@ -6,18 +6,17 @@ public class Key{
         this.s=s;
         this.n=n;
     }
-	public boolean equals(Object obj) {
-		if(obj instanceof Key){
-			Key k=(Key)obj;
-			if(this.s.equals(k.s) && this.n==k.n){
-				return true;
-			}
-		}
-		return false;
-	}
-	public int hashCode() {
-		return super.hashCode();
-	}
-    
+    public boolean equals(Object obj){
+        if(obj instanceof Key){
+            Key k=(Key)obj;
+            if(this.s.equals(k.s) && this.n==k.n){
+                return true;
+            }
+        }
+        return false;
+    }
+    public int hashCode(){
+        return super.hashCode();
+    }
 }
 
