@@ -18,8 +18,9 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.indentation.FindIndentation">
-            <arg value="${val}" />
+        <java classname="com.vl.training.indentation.Indentation">
+            <arg value="${val1}" />
+            <arg value="${val2}" />
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
