@@ -1,10 +1,8 @@
 package com.vl.training.sample;
-import java.util.HashMap;
-import java.util.Map;
 
 class StudentKey {
-    String sname;
-    int sRollNo;
+    public String sname;
+    public int sRollNo;
 
     public StudentKey(String name, int rollNo) {
         this.sname = name;
@@ -12,10 +10,10 @@ class StudentKey {
     }
     public boolean equals(Object obj) {
         boolean n = false;
-        if(obj == null) {
-            return false;
+        if (obj == null) {
+            n = false;
         }
-        else if ( obj  instanceof StudentKey ) {
+        if (obj  instanceof StudentKey) {
             StudentKey std = (StudentKey) obj;
 
             if (this.sRollNo == std.sRollNo) {

@@ -147,7 +147,7 @@
         <module name="InnerAssignment"/>
         <module name="MagicNumber">
          <property name="tokens" value="NUM_INT"/>
-         <property name="ignoreNumbers" value="1000, 100, 11,19,10,10000,20,1,0"/>
+         <property name="ignoreNumbers" value="12,98"/>
         </module>
         <module name="MissingSwitchDefault"/>
         <module name="RedundantThrows"/>
