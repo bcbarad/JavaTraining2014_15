@@ -2,6 +2,8 @@ public static void main(String [] args) {
             System.out.println("Hello"){
                     System.out.println(i);
 //System.out.print(next){;
+ String name='{';
+ String abc"}";
 /* public static void fun()
 System.out.println("hai");*/
                                     }

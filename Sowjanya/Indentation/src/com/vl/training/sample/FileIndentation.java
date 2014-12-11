@@ -12,7 +12,7 @@ final public class FileIndentation {
         try {
             //pass args[0] as input file
             FileInputStream fin = new FileInputStream(args[0]);
-            //pass args[1] as input file
+            //pass args[1] as output file
             FileOutputStream fout = new FileOutputStream(args[1]);
             //do indentation by calling method
             FileIndentation.doingIndentation(fin , fout);
@@ -60,6 +60,14 @@ final public class FileIndentation {
                             }
                             fout.write(nextch2);
                         }
+                    } else if (ch == '\'') {
+                        fout.write(ch);
+                        ch = (char) fin.read();
+                        while (ch != '\'') {
+                            fout.write(ch);
+                            ch = (char) fin.read(); 
+                        }
+                        fout.write(ch);               
                     } else if (ch == '"') {
                         fout.write(ch);
                         ch = (char) fin.read();

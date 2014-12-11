@@ -39,12 +39,11 @@ public final class FileIndent {
                     fw.write(a);
                 } else if ((a == '\'') || (a == '"')) {
                     fw.write(a);
-                    b = fr.read();
-                    while ((b != '\'') && (b != '"')) {
-                        fw.write(b);
+                    do {
                         b = fr.read();
+                        fw.write(b);
                     }
-                    fw.write(b);
+                    while ((b != '\'') && (b != '"'));
                 } else {
                     if (a == '/') {
                         b = fr.read();
