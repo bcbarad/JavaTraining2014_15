@@ -16,15 +16,16 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
+
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.FileIndentation">
-            <arg value="${val1}"/>
-            <arg value="Output.txt"/>
-                <classpath>
-                    <pathelement path="${classes.dir}"/>
-                </classpath>
+        <java classname="com.vl.sf.core.CustomObjectPutMapper">
+           <!-- <arg value="${val1}"/>
+             <arg value="${val2}"/>-->
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
         </java>
-    </target>	
+    </target>
 
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
