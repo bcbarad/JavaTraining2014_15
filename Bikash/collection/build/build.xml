@@ -18,9 +18,9 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Indentation">
-            <arg value="${val1}"/>
-            <arg value="${val2}"/>
+        <java classname="com.vl.sf.core.CustomObjectPutMapper">
+           <!-- <arg value="${val1}"/>
+             <arg value="${val2}"/>-->
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

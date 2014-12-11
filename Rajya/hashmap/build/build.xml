@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
  
-<project name="Sample" basedir="." default="run">
+<project name="hashmap" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -18,15 +18,13 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Indentation">
-            <arg value="${val1}"/>
-            <arg value="${val2}"/>
+        <java classname="com.vl.training.hashmap.HashCodeExample">
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
         </java>
     </target>
-
+    
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
