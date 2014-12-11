@@ -8,8 +8,8 @@ class Key {
         this.s = s;
         this.n = n;
     }
-    public String hashcode() {
-        return s;
+    public int hashCode() {
+        return s.hashCode();
     }
     public boolean equals( Object obj) {
         if (obj instanceof Key) {
