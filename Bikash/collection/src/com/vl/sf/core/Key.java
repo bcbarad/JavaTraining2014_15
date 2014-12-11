@@ -16,8 +16,7 @@ public class Key{
         return false;
     }
     public int hashCode(){
-        int hash=5;
-        return (int) this.n * s.hashCode()*hash;
+        return (int) this.n * s.hashCode();
     }
 }
 
