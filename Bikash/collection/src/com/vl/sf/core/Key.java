@@ -16,7 +16,7 @@ public class Key{
         return false;
     }
     public int hashCode(){
-        return super.hashCode();
+        return n;
     }
 }
 
