@@ -18,9 +18,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.FileIndent">
-            
-            <classpath>
+        <java classname="com.vl.training.sample.Student">
+           <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
         </java>

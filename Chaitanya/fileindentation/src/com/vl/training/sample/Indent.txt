@@ -1,8 +1,0 @@
-class Cname{
-    void method1(){
-        System.out.println("hai hello");
-    }
-}
-class Dname{
-    void
-}

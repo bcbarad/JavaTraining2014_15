@@ -1,66 +1,102 @@
 package com.vl;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 public class Indentation {
-    public static void main(String[] args)throws IOException {
-        Indentation i = new Indentation();
-            i.unIndentToIndent();
-    }
-    public static void unIndentToIndent() {
-        FileReader in = null;
-        FileWriter out = null;
-        boolean space = false;
+    public static void main(String[] args) throws IOException {
         try {
-            in = new FileReader("Source.java");
-            out = new FileWriter("dest.java");
-            int a, depth = 0;
-            char ch;
-            while ((a = in.read()) != -1) {
-                ch = (char) a;
-                if (ch == '{') {
-                    depth = depth + 4;
-                    out.write(ch);
+        FileReader Source = null;
+        FileWriter Dest = null;
+        if (args.length == 2) {
+            Source = new FileReader(args[0]);
+            Dest = new FileWriter(args[1]);
+            Indentation.unIndentToIndent(Source, Dest);
+        } else {
+            System.out.println("enter source and destination files");
+        }
+        } catch(FileNotFoundException e) {
+           System.out.println("file not found");
+        } catch(IOException e) {
+            System.out.println(e);
+        }
+    }
+    public static void unIndentToIndent(FileReader Source, FileWriter Dest) throws IOException {
+        boolean space = false;
+        boolean flag = false;
+        int a, depth = 0;
+        char current;
+        try {
+        while ((a = Source.read()) != -1) {
+            current = (char) a;
+            if (current == '{') {
+                depth = depth + 4;
+                Dest.write(current);
+            } else if (current == '}') {
+                depth = depth - 4;
+                Indentation.indent(depth, Dest);
+                Dest.write(current);
+            } else if (current == ' ') {
+                if (!space) {
+                    Dest.write(' ');
                 }
-                else if (ch == '}') {
-                    depth = depth - 4;
-                    out.write('\n');
-                    indent(depth, out);
-                    out.write(ch);
+            } else if(current == '\n') {
+                    Dest.write(current);
+                    space = true;
+            } else if (space) {
+                Indentation.indent(depth, Dest);
+                space = false;
+                Dest.write(current);
+            } else if (current == '/') {
+                Dest.write(current);
+                current = (char) Source.read();
+                while ( current != '\n') {
+                    Dest.write(current);
+                    current = (char) Source.read();
                 }
-                else if (ch == ' ') {
-                    if (!space) {
-                        out.write(ch);
+                Dest.write(current);
+                space = true;
+            } else if (current == '*') {
+                Dest.write(current);
+                current = (char) Source.read();
+                char next = (char) Source.read();
+                while ((current == '*') || (next != '/')) {
+                    Dest.write(current);
+                    current = next;
+                    next = (char) Source.read();
+                }
+                Dest.write(current);
+                Dest.write(next);
+                current = (char) Source.read();
+            } else if(current == '\'' || current == '"') {
+                    Dest.write(current);
+                    current = (char) Source.read();
+                    while (current != '\n') {
+                        Dest.write(current);
+                        current = (char) Source.read();
                     }
-                }
-                else {
-                    if(ch == '\n') {
-                        out.write(ch);
-                        for(int index = 0; index < depth; index++) {
-                            out.write(' ');
-                            space = true;
-                        }
-                    } else {
-                        out.write(ch);
-                    }
-                }
+                    Dest.write(current);
+                    space = true;
+            } else {
+                Dest.write(current);
             }
+        }
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
         finally {
-            try {
-                in.close();
-                out.close();
+            if (Source != null) {
+                Source.close();
             }
-            catch (IOException e) {
-                e.printStackTrace();
+            if (Source != null) {
+                Dest.close();
             }
         }
     }
-    public static void indent(int depth, FileWriter out)throws IOException {
+    public static void indent(int depth, FileWriter Dest) throws IOException {
         for (int index = 0; index < depth; index++) {
-            out.write(' ');
+            Dest.write(' ');
         }
     }
 }
