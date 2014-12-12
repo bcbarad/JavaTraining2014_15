@@ -30,23 +30,24 @@ public class Employee implements Comparable<Employee> {
                itr.remove();
            }
        }
-   } 
-    public static void main(final String args[]) {
-        List<Employee> list = new ArrayList<Employee>();
-        list.add(new Employee("mouni", 21));
-        list.add(new Employee("abc", 20));
-        list.add(new Employee("xyz", 24));
-        Collections.sort(list);
-        System.out.println(list);
-        for (Employee ee : list) {
-            System.out.println("employee name is"  + ee.getName()  +  "age is"  + ee.getAge());
-        }
-        Scanner sc = new Scanner(System.in);
-        System.out.println("provide the years");
-        int years = sc.nextInt();
-        removeOverAge(list, years);
-        for(Employee e1 : list) {
-            System.out.println("employee name is" +e1.getName() + "age is" +e1.getAge());
-        }
+   }
+   public static void display(final List<Employee> list) {
+       for (Employee ee : list) {
+           System.out.println("employee name is" +   ee.getName() + "age is"  +ee.getAge());
+       }
+   }
+   public static void main(final String args[]) {
+       List<Employee> list = new ArrayList<Employee>();
+       list.add(new Employee("mouni", 21));
+       list.add(new Employee("abc", 20));
+       list.add(new Employee("xyz", 24));
+       Collections.sort(list);
+       System.out.println(list);
+       display(list);
+       Scanner sc = new Scanner(System.in);
+       System.out.println("provide the years");
+       int years = sc.nextInt();
+       removeOverAge(list, years);
+       display(list);
     }
 }
