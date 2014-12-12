@@ -10,7 +10,7 @@ public class ListDemo {
 	public static void main(String[] args) {
 		List list = new ArrayList();
 		Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter "+args[1]+" employees name and age:");
+        	System.out.println("Enter "+args[1]+" employees name and age:");
 		addElements(list, scanner,Integer.parseInt(args[1]));
 		System.out.println(list);
 		removeOverAge(list, Integer.parseInt(args[0]));
