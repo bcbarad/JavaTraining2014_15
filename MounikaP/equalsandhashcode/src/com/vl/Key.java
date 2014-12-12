@@ -1,6 +1,6 @@
 package com.vl;
 import java.util.*;
-class Key {
+public class Key {
     public static int n;
     public static String s;
     public Key(String s, int n) {
