@@ -27,8 +27,6 @@ public class LogProcessing  {
                 else if(remarks.equals("W")){
                     log.put(acc, log.get(acc) - amount);
                 }
-                else
-                    System.out.println("Logger1");
             }
             for(Map.Entry m : log.entrySet()) {
                 System.out.println("Account no.: " + m.getKey() + "    Amount: " + m.getValue());
