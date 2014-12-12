@@ -1,5 +1,4 @@
 package com.vl;
-import java.util.*;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -24,14 +23,14 @@ public class Employee implements Comparable<Employee> {
         return myAge.compareTo(eAge);
     }
    public static void removeOverAge(final List<Employee> list, final int years) {
-        Iterator<Employee> itr = list.iterator();
-        while (itr.hasNext()) {
+       Iterator<Employee> itr = list.iterator();
+       while (itr.hasNext()) {
            Employee e = itr.next();
-            if (e.age > years) {
-                itr.remove();
-            }
-        }
-    } 
+           if (e.age > years) {
+               itr.remove();
+           }
+       }
+   } 
     public static void main(final String args[]) {
         List<Employee> list = new ArrayList<Employee>();
         list.add(new Employee("mouni", 21));
@@ -42,10 +41,10 @@ public class Employee implements Comparable<Employee> {
         for (Employee ee : list) {
             System.out.println("employee name is"  + ee.getName()  +  "age is"  + ee.getAge());
         }
-            Scanner sc = new Scanner(System.in);
-            System.out.println("provide the years");
-            int years = sc.nextInt();
-            removeOverAge(list, years);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("provide the years");
+        int years = sc.nextInt();
+        removeOverAge(list, years);
         for(Employee e1 : list) {
             System.out.println("employee name is" +e1.getName() + "age is" +e1.getAge());
         }
