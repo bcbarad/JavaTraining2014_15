@@ -9,7 +9,7 @@ class Key {
         this.n = n;
     }
     public int hashCode() {
-        return s.hashCode();
+        return n + s.hashCode();
     }
     public boolean equals( Object obj) {
         if (obj instanceof Key) {
