@@ -1,6 +1,6 @@
 package com.vl;
 import java.util.*;
-class Hash {
+public class Hash {
     public static void f(Map m) {
         Key k1 = new Key("ABC", 100);
         String s = (String)m.get(k1);

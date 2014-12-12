@@ -12,7 +12,7 @@ class EmpTest {
     public boolean equals(final Object o) {
         if (o instanceof EmpTest) {
             EmpTest emp = (EmpTest) o;
-            if (this.empname.equals(emp.empname)) {
+            if (this.empname.equals(emp.empname) && this.salary == emp.salary) {
                 return true;
             }
         }
@@ -20,6 +20,6 @@ class EmpTest {
     }
     //@override
     public int hashCode() {
-        return empid + salary + empname.length();
+        return empid ;
     }
 }
