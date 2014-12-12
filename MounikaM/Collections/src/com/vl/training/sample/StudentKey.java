@@ -16,7 +16,7 @@ class StudentKey {
         if (obj  instanceof StudentKey) {
             StudentKey std = (StudentKey) obj;
 
-            if (this.sRollNo == std.sRollNo) {
+            if (this.sRollNo == std.sRollNo && this.sname.equals(std.sname)) {
                 n = true;
             }
         }
