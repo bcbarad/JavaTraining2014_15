@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class ListDemo {
 
@@ -18,13 +19,13 @@ public class ListDemo {
 	}
 
 	private static void removeOverAge(List list, int age) {
-		for (int index = 0; index < list.size(); index++) {
-			Object o = list.get(index);
+        ListIterator listr=list.listIterator();
+        while(listr.hasNext()){
+			Object o = listr.next();
 			if (o instanceof Emp) {
 				Emp e = (Emp) o;
 				if (e.getAge() > age) {
-					list.remove(e);
-					index--;
+					listr.remove();
 				}
 			}
 		}
