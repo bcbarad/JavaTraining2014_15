@@ -14,11 +14,19 @@ public class LogProcessing  {
             //Getting the file as input
             LogProcessing logProcessing = new LogProcessing();
             Scanner sc = new Scanner(new File(arr[0]));
-            logProcessing.processLog(sc);
+            HashMap<String, Long> log = (HashMap) logProcessing.processLog(sc);
+            logProcessing.printAccountDetails(log);
         }
     }
 
-    public void processLog(Scanner sc) {
+    public void printAccountDetails(HashMap<String, Long> log) {
+        System.out.println("Account\t Amount\n-----------------------------------");
+        for(Map.Entry m : log.entrySet()) {
+                System.out.println(m.getKey() + " \t " + m.getValue());
+            }
+    }
+
+    public Map processLog(Scanner sc) {
         HashMap<String, Long> log = new HashMap<String, Long>();
         while (sc.hasNext()) {
             String acc = sc.next();
@@ -35,8 +43,6 @@ public class LogProcessing  {
                 log.put(acc, value - amount);
             }
         }
-        for(Map.Entry m : log.entrySet()) {
-            System.out.println("Account no.: " + m.getKey() + "    Amount: " + m.getValue());
-        }
+        return log;
     }
 }
