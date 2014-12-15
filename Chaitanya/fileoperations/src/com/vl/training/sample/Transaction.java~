@@ -1,0 +1,67 @@
+//package com.vl.training.sample;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+public class Transaction {
+    public static void main(String[] args) {
+        try {
+            if (args.length > 0) {
+                Transaction t = new Transaction();
+                t.accountDetails(args[0]);
+            }
+            else {
+                System.out.println("enter two files as input");
+            }
+        }
+        catch (Exception io) {
+            io.printStackTrace();
+        }
+    }
+    void accountDetails(String args) throws IOException {
+        Scanner sc = new Scanner(new File(args));
+       // int amount = 0, size = 0;
+        Map m = new HashMap();
+        do {
+            String str = sc.nextLine();
+            String[] total = str.split(" ");
+            int curid = Integer.parseInt(total[0]);
+            int amount = Integer.parseInt(total[2]);
+            Insert i = new Insert(curid,amount);
+            m.put(i,amount);
+            System.out.println(m.put(i,amount));
+            } while (sc.hasNextLine());
+        //Set s = m.keySet();
+        //for (Object z :s) {
+            System.out.println(m);
+    }
+}
+class Insert {
+    int curid,amount;
+    Insert(int curid, int amount) {
+        this.curid = curid;
+        this.amount = amount;
+    }
+    public boolean equals(Object o) {
+        //System.out.println("hello");
+        if (o instanceof Insert) {
+            //System.out.println("hello");
+            Insert k = (Insert) o;
+            if (this.curid == k.curid) {
+                
+                k.amount = this.amount+ k.amount;
+                
+                //System.out.println(k.amount);
+                return true;
+            }
+        }
+            return false;
+    }
+    public int hashCode() {
+        System.out.println("hai");
+        return curid;
+    }
+}
