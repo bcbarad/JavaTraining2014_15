@@ -2,7 +2,7 @@ package com.vl.training.sample;
 import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
-final class Transactions {
+public final class Transactions {
     private Transactions() {
     }
     public static void main(final String[] args) {
@@ -22,6 +22,8 @@ final class Transactions {
     }
     public static void processingDetails(final BufferedReader br) throws IOException {
         String sCurrentLine = " ";
+        float sum = 0;
+        boolean temp = false;
         Map<String, Float> m = new HashMap<String, Float>();
         while ((sCurrentLine = br.readLine()) != null) {
             String[] field = sCurrentLine.split("\t");
@@ -33,13 +35,16 @@ final class Transactions {
                 m.put(accountnumber , balance);
             } else {
                 if (transtype.equals("D")) {
-                    float sum = amount + balance;
-                    m.put(accountnumber , sum);
+                    sum = amount + balance;
+                    temp = true;
                 }
                 if (transtype.equals("W")) {
-                    float sum = amount - balance;
-                    m.put(accountnumber , sum);
+                    sum = amount - balance;
+                    temp = true;
                 }
+            }
+            if (temp) {
+                m.put(accountnumber , sum);
             }
         }
         printDetails(m);
