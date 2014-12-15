@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 public class EmpAge {
     public static void main(final String[] args) {
-        List all = new ArrayList();
-        all.add(new EmpAge("A", 25));
-        all.add(new EmpAge("B", 30));
-        all.add(new EmpAge("C", 60));
-        all.add(new EmpAge("D", 30));
-        all.add(new EmpAge("E", 50));
-        EmpAge e = new EmpAge("F", 40);
-        int age = Integer.parseInt(args[0]);
-        e.removeOverAge(all, age);
+        if( args.length == 1) {
+            List all = new ArrayList();
+            all.add(new EmpAge("A", 25));
+            all.add(new EmpAge("B", 30));
+            all.add(new EmpAge("C", 60));
+            all.add(new EmpAge("D", 30));
+            all.add(new EmpAge("E", 50));
+            EmpAge e = new EmpAge("F", 40);
+            int age = Integer.parseInt(args[0]);
+            e.removeOverAge(all, age);
+        }
+        else {
+            System.out.println("give one command line argument");
+        }
     }
     private String name;
     private int age;
