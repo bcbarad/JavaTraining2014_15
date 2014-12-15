@@ -38,16 +38,16 @@ public class AccountDetails {
 						deposit = true;
 					}// else
 				}// else if
-
+	
 				if (deposit) {
 					map.put(accNo, balance);
 				}
-
+	
 			}// if
 		}// while
 		return map;
 	}
-
+	
 	public static void main(String[] args) {
 		try {
 			BufferedReader bReader = new BufferedReader(new FileReader(
@@ -64,7 +64,7 @@ public class AccountDetails {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	
 	}
 }
 
