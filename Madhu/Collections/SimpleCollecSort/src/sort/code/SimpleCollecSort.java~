@@ -1,0 +1,10 @@
+import java.util.*;
+public class SimpleCollecSort {
+     public static void main(String args[]) {
+      String init[] = { "One", "Two", "Three", "Four", "Five", "Six" };
+      List list = new ArrayList(Arrays.asList(init)); 
+      System.out.println("List value before: "+list);
+      Collections.sort(list);
+      System.out.println("List value after sort: "+list);
+   }
+}
