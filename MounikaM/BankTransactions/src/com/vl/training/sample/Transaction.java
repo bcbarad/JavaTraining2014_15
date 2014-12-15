@@ -9,36 +9,27 @@ import java.util.Set;
 public class Transaction {
     public Map<String, Float> accountCalculation(Scanner sc) {
         Map<String, Float> hm = new HashMap<String, Float>();
-        Float amount = null;
-        Float money2 = null;
-        float f, money1;
         while (sc.hasNext()) {
             String accid = sc.next();
             String typeofTransaction = sc.next();
-            float money = sc.nextFloat();
+            Float money = sc.nextFloat();
+            Float amount = hm.get(accid);
 
-            if (hm.get(accid) == null) {
+            if (amount == null) {
                 if (typeofTransaction.equals("W")) {
                     System.out.println("There is No money to draw from " + accid + " Account");
                 } else {
-                    amount = (Float) money;
-                    hm.put(accid, amount);
+                    hm.put(accid, money);
                 }
             } else {
                 if (typeofTransaction.equals("D")) {
-                    amount = hm.get(accid);
-                    f = amount.floatValue();
-                    money1 = f + money;
-                    money2 = (Float) money1;
-                    hm.put(accid, money2);
+                    money = amount + money;
+                    hm.put(accid, money);
                 }
                 if (typeofTransaction.equals("W")) {
-                    amount = hm.get(accid);
-                    f = amount.floatValue();
-                    if (money < f) {
-                        money1 = f - money;
-                        money2 = (Float) money1;
-                        hm.put(accid, money2);
+                    if (money < amount) {
+                        money = amount - money;
+                        hm.put(accid, money);
                     } else {
                         System.out.println(" There is no sufficient money to withdrawl from " + accid + " Account");
                     }
