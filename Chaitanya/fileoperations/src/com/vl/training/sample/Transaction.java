@@ -29,29 +29,32 @@ public class Transaction {
                 int curid = Integer.parseInt(total[0]);
                 String type = total[1];
                 int amount = Integer.parseInt(total[2]);
-                //Insert i = new Insert(curid,amount);
+                boolean check = false;
                 if (!m.containsKey(curid) && type.equals("D")) {
-                   // System.out.println("hello");
-                    m.put(curid, amount);
-                } else if (m.containsKey(curid) && type.equals("D")) {
-                    int temp = (Integer) m.get(curid);
-                    amount = temp + amount;
-                    //System.out.println(amount);
-                    m.put(curid, amount);
-                } else if (m.containsKey(curid) && type.equals("W")) {
-                    int temp = (Integer) m.get(curid);
-                    amount = temp - amount;
-                    if (amount < 0) {
-                        System.out.println("No sufficient funds");
-                    } else {
-                        m.put(curid, amount);
-                        //System.out.println(amount);
-                    }
-                } else {
-                    System.out.println("No sufficient Funds");
+                     check = true;
                 }
-               // System.out.println(m);
-            } else {
+                else if (m.containsKey(curid)) {
+                    int temp = (Integer) m.get(curid);
+                    if ( type.equals("D")) {
+                        amount = temp + amount;
+                        check = true;
+                    } else if (type.equals("W")) {
+                        amount = temp - amount;
+                        if (amount < 0) {
+                            check = false;
+                            System.out.println("No sufficient funds");
+                        } else {
+                           check = true;
+                        }
+                    } else {
+                        System.out.println("No sufficient Funds");
+                    }
+                }
+                if (check) {
+                    m.put(curid, amount);
+                }
+             }
+             else {
                 System.out.println("cannot find a value");
             }
         }
@@ -65,7 +68,7 @@ public class Transaction {
         }
     }
    /* public int hashCode() {
-        System.out.println("hello");
+        //System.out.println("hello");
         return 1;
     }*/
 }
