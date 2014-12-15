@@ -6,8 +6,8 @@ import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.Set;
 import java.io.FileNotFoundException;
-public class Bank {
-    public static void main(String args[]) {
+public final class Bank {
+    public static void main(final String[] args) {
         try {
             if (args.length == 1) {
                 Scanner sc = new Scanner(new File(args[0]));
@@ -20,7 +20,7 @@ public class Bank {
             e.printStackTrace();
         } 
     }
-    public static Map customerDepositAndWithdrawl(Scanner sc) {
+    public static Map customerDepositAndWithdrawl(final Scanner sc) {
        Map<String, Integer> cusTransactionAmt = new HashMap<String, Integer>();
        while (sc.hasNext()) {
        String cusId = sc.next();
@@ -42,7 +42,7 @@ public class Bank {
        }
        return cusTransactionAmt;
     }
-    public static void display(Map cusTransactionAmt) {
+    public static void display(final Map cusTransactionAmt) {
         Set<Entry<String, Integer>> cus = cusTransactionAmt.entrySet();
         System.out.println("cusID"   + "    " + "amount");
         System.out.println("-----------------------------");
