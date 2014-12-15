@@ -14,6 +14,7 @@ public final class Transaction {
 
     static Map processTransaction(final Scanner sc) {
         Map<String, Float> allTrans = new HashMap<String, Float>();
+        //reading values from a file
         while (sc.hasNext()) {
             String accId = sc.next();
             String mode = sc.next();
@@ -24,6 +25,7 @@ public final class Transaction {
             } else {
                 if (mode.equals("deposit")) {
                     Float sum = value + amount;
+                    //add key-value pairs to hashmap
                     allTrans.put(accId, sum);
                 }
                 if (mode.equals("withdraw")) {
@@ -37,6 +39,7 @@ public final class Transaction {
 
     static void printResult(final Map allTrans) {
         System.out.println("AccNo  Amount");
+        //getting value for the given key form hashmap
         Set<Entry<String, Float>> entries = allTrans.entrySet();
         for (Entry<String, Float> ent : entries) {
             System.out.println(ent.getKey() + "    " + ent.getValue());
