@@ -18,29 +18,30 @@ public final class Bank {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } 
+        }
     }
     public static Map customerDepositAndWithdrawl(final Scanner sc) {
-       Map<String, Integer> cusTransactionAmt = new HashMap<String, Integer>();
-       while (sc.hasNext()) {
-       String cusId = sc.next();
-       String status = sc.next();
-       Integer amt = sc.nextInt();
-       Integer totAmt = cusTransactionAmt.get(cusId);
-       if (totAmt == null) {
-           cusTransactionAmt.put(cusId, amt);
-       } else {
-           if (status.equals("D")) {
-               Integer preAmt = totAmt + amt;
-               cusTransactionAmt.put(cusId, preAmt);
-           }
-           if (status.equals("w")) {
-               Integer preAmt = totAmt - amt;
-               cusTransactionAmt.put(cusId, preAmt);
-               }
-           }
-       }
-       return cusTransactionAmt;
+        Map<String, Integer> cusTransactionAmt = new HashMap<String, Integer>();
+        while (sc.hasNext()) {
+            String cusId = sc.next();
+            String status = sc.next();
+            Integer amt = sc.nextInt();
+            Integer totAmt = cusTransactionAmt.get(cusId);
+            if (totAmt == null) {
+                cusTransactionAmt.put(cusId, amt);
+            } else {
+                if (status.equals("D")) {
+                    Integer preAmt = totAmt + amt;
+                    cusTransactionAmt.put(cusId, preAmt);
+                } else {
+                    if (status.equals("w")) {
+                        Integer preAmt = totAmt - amt;
+                        cusTransactionAmt.put(cusId, preAmt);
+                    }
+                }
+            }
+        }
+        return cusTransactionAmt;
     }
     public static void display(final Map cusTransactionAmt) {
         Set<Entry<String, Integer>> cus = cusTransactionAmt.entrySet();
