@@ -1,0 +1,6 @@
+100 deposit 1000
+101 deposit 2000
+104 deposit 1000
+100 withdraw 500
+104 deposit 3000
+A101 deposit 200
