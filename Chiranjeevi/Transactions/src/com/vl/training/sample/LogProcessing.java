@@ -12,25 +12,37 @@ public class LogProcessing  {
             return;
         } else {
             //Getting the file as input
+            LogProcessing logProcessing = new LogProcessing();
             Scanner sc = new Scanner(new File(arr[0]));
-            HashMap<String, Long> log = new HashMap<String, Long>();
-            while (sc.hasNext()) {
-                String acc = sc.next();
-                String remarks = sc.next();
-                long amount = sc.nextLong();
-                if (!log.containsKey(acc)){
-                    log.put(acc, amount);
-                }
-                else if(remarks.equals("D")){
-                    log.put(acc, log.get(acc) + amount);
-                }
-                else if(remarks.equals("W")){
-                    log.put(acc, log.get(acc) - amount);
-                }
+            HashMap<String, Long> log = (HashMap) logProcessing.processLog(sc);
+            logProcessing.printAccountDetails(log);
+        }
+    }
+
+    public void printAccountDetails(HashMap<String, Long> log) {
+        System.out.println("Account\t Amount\n-----------------------------------");
+        for(Map.Entry m : log.entrySet()) {
+                System.out.println(m.getKey() + " \t " + m.getValue());
             }
-            for(Map.Entry m : log.entrySet()) {
-                System.out.println("Account no.: " + m.getKey() + "    Amount: " + m.getValue());
+    }
+
+    public Map processLog(Scanner sc) {
+        HashMap<String, Long> log = new HashMap<String, Long>();
+        while (sc.hasNext()) {
+            String acc = sc.next();
+            String remarks = sc.next();
+            long amount = sc.nextLong();
+            Long value = log.get(acc);
+            if (value == null){
+                log.put(acc, amount);
+            }
+            else if(remarks.equals("D")){
+                log.put(acc, value + amount);
+            }
+            else if(remarks.equals("W")){
+                log.put(acc, value - amount);
             }
         }
+        return log;
     }
 }
