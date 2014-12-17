@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="Sample" basedir="." default="run">
+<project name="comparator" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -17,16 +17,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.subsets.CountSets">
-            <arg line = "150 1 2 5 10 20 50 100"/>
-      <!--- <arg value="150"/>
-            <arg value="1"/>
-            <arg value="2"/>
-            <arg value="5"/>
-            <arg value="10"/>
-            <arg value="20"/>
-            <arg value="50"/>
-            <arg value="100"/> -->
+        <java classname="comparator.person.age.Test2">
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

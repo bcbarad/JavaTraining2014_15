@@ -18,8 +18,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.MySample">
-            <arg value="225"/>
+        <java classname="com.vl.training.subsets.CountSets">
+            <arg line="${array}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -29,7 +29,6 @@
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
-        
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">
