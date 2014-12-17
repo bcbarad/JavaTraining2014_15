@@ -1,0 +1,91 @@
+//package com.vl.training.sample;
+import java.util.*;
+import java.util.Map;
+import java.util.Map.Entry;
+public class Company {
+    String cname;
+    String url;
+    int nodept;
+    Department[] alldepartments;
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        Company c = new Company();
+        Department d = new Department();
+        Employee e = new Employee();
+        Object o = c.getCompany(sc);
+        System.out.println(o);  
+    }
+    public Company getCompany(Scanner sc) {
+        Company c = new Company();
+        System.out.println("enter company name");
+        c.cname = sc.next();
+        System.out.println("enter company url");
+        c.url = sc.next();
+        System.out.println("enter no of departments");
+        c.nodept = sc.nextInt();
+        c.alldepartments = new Department[c.nodept];
+        Map<Company , Department> mc = new HashMap<Company , Department>();
+        for (int i = 0; i < c.alldepartments.length; i++) {
+            c.alldepartments[i] = Department.getDepartment(sc);
+            mc.put(c,c.alldepartments[i]);
+            Department d1 = mc.get(c);
+            if(d1 != null) {
+                System.out.println("\n");
+                System.out.print("department name : " + d1.dname + "\t");
+                System.out.print("hod name : " + d1.dhod + "\t");
+                System.out.println("no of employees : " + d1.noemp + "\t");
+            }
+        }
+        Department d = new Department();
+        Map<Department , Employee> md = new HashMap<Department , Employee>();
+        for (int i = 0; i < d.allemployees.length; i++) {
+            d.allemployees[i] = Employee.getEmployee(sc);
+            md.put(d,d.allemployees[i]);
+            Employee e1 = md.get(d);
+            if(e1 != null) {
+                System.out.println("\n");
+                System.out.print("Emp Name : " + e1.ename + "\t");
+                System.out.print("Emp_ID : " + e1.eid + "\t");
+                System.out.print("Salary : " + e1.sal + "\t");
+                System.out.println("Manager ID : " + e1.mngr_id + "\t");
+            }
+        } 
+        return c;
+    }
+}
+class Department {
+    String dname;
+    String dhod;
+    int noemp;
+    static Employee[] allemployees;
+    public static Department getDepartment(Scanner sc) {
+        Department d = new Department();
+        System.out.println("enter department name");
+        d.dname = sc.next();
+        System.out.println("enter hod name");
+        d.dhod = sc.next();
+        System.out.println("enter no of employees");
+        d.noemp = sc.nextInt();
+        d.allemployees = new Employee[d.noemp];       
+        return d;
+   }
+}
+class Employee {
+    String ename;
+    int eid;
+    float sal;
+    int mngr_id;
+    public static Employee getEmployee(Scanner sc) {
+        Employee e = new Employee();
+        System.out.println("enter employee name");
+        e.ename = sc.next();
+        System.out.println("enter the employee id");
+        e.eid = sc.nextInt();
+        System.out.println("enter the employee sal");
+        e.sal = sc.nextInt();
+        System.out.println("enter the manager id");
+        e.mngr_id = sc.nextInt();
+        return e;
+    }
+}
+        
