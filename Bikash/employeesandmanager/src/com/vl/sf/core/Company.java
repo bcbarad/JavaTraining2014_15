@@ -16,14 +16,13 @@ public class Company {
 				employee = allEmployees.get(index);
 				displayManager(employee);
 				if (employee.getDirectReportees().size()>1) {
-					getNoOfDirectReportees(allEmployees.get(index));
+					getNoOfDirectReportees(employee);
 					System.out
 							.println("\n Direct reportees Structure is given below: ");
 					System.out.println("\t"
-							+ (allEmployees.get(index)).getName());
+							+ employee.getName());
 					System.out.print("\t=======");
-					displayDirectReporteesNames(allEmployees
-							.get(index));
+					displayDirectReporteesNames(employee);
 				}
 			}
 		}
