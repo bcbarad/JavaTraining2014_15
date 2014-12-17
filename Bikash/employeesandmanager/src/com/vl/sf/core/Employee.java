@@ -12,11 +12,12 @@ public class Employee {
 	protected Employee manager;
 	protected Date dob;
 
-	protected Employee(int id, String name, double salary, Department department) {
+	protected Employee(int id, String name, double salary, Department department,Date dob) {
 		this.id = id;
 		this.name = name;
 		this.salary = salary;
 		this.department = department;
+		this.dob=dob;
 	}
 
 	public Date getDob() {
