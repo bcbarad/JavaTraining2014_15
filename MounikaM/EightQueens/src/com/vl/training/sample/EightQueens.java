@@ -1,7 +1,7 @@
-package com.vl.training.sample;
+//package com.vl.training.sample;
 import java.lang.Math;
 import java.util.Scanner;
-public class EightQueens {
+/*public*/ class EightQueens {
     private static final int SIZE = 8;
     private static int[] board = new int[SIZE];
 
@@ -34,6 +34,7 @@ public class EightQueens {
     public static void main(String[] args) {
         int row = 0;
         int col = 0;
+        System.out.println(board[row]);
         position(row,col);
     }
 
