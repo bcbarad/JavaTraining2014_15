@@ -14,7 +14,7 @@ public class Organisation {
         }
     }
     static void createStructure(Scanner sc) {
-        
+
         Company c = Company.readCompany(sc);
         c.printHierarchy(c.ceo);
     }
@@ -43,61 +43,62 @@ class Company {
     }
     void printHierarchy(Employee ceo) {
          //Employee current = ceo;
-         for ( Employee e : ceo.directReportees){           
+         for ( Employee e : ceo.directReportees){
              System.out.println("Employee : " + e.getId() + "Name : " + e.getName() + " Manager ID : " + e.manager.getId());
              if (!e.directReportees.isEmpty()) {
                 printHierarchy(e);
              }
         }
- } 	
+    }
     static Company readCompany(Scanner sc) {
        Company com = new Company();
        com.name = sc.next();
        com.uri = sc.next();
        ceo = Employee.readEmployee(sc);
-       while(sc.hasNext()) { 
+       while(sc.hasNext()) {
          Employee emp = Employee.readEmployee(sc);
          String mgrId = sc.next();
          Employee mgr = com.getEmployee(mgrId,ceo);
-         mgr.directReportees.add(emp);
-         emp.manager = mgr;        
+         //mgr.addReportee(emp);
+         //mgr.directReportees.add(emp);
+         System.out.println("Employee Id : " + emp.getId() + " Manager Id :" +mgr.getId());//.getId());
+         emp.manager = mgr;
        }
-       
+
        return com;
     }
-    
+
     Employee getEmployee(final String empid, Employee current) {
-         if (current.getId() == empid) 
-              return current;
-         else {
-               Iterator<Employee> itr = current.directReportees.iterator();
-               while(itr.hasNext()){
-                  Employee e =itr.next();
-                  if (e.getId() == empid) {
-                        return e;
-                  } else {
-                        current = getEmployee(empid,e);
-                        if (current.getId() == empid)
-                                return current;
-                  }
-               }
-         }
-         return current;
+        if (current.getId() == empid)
+            return current;
+        else {
+            Iterator<Employee> itr = current.directReportees.iterator();
+            while(itr.hasNext()){
+                Employee e =itr.next();
+                if (e.getId() == empid) {
+                    return e;
+                } else {
+                    current = getEmployee(empid,e);
+                    if (current.getId() == empid)
+                        return current;
+                }
+            }
+        }
+        return current;
     }
 }
 
 class Employee {
     private String name;
-    String id;
+    private String id;
     private int salary;
     private Date dob;
     Employee manager;
     ArrayList<Employee> directReportees = new ArrayList<Employee>();
-    
     static Employee readEmployee(Scanner sc) {
      Employee emp = new Employee();
      emp.setId(sc.next());
-     emp.setName(sc.next());     
+     emp.setName(sc.next());
      emp.setSalary(sc.nextInt());
      emp.setDOB(sc.next());
      return emp;
@@ -134,6 +135,9 @@ class Employee {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    void addReportee(Employee emp) {
+        directReportees.add(emp);
     }
 
     Date getDOB() {
