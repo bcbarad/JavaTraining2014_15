@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+ 
 <project name="Sample" basedir="." default="run">
    <property file="build.properties"/>
 
@@ -15,27 +16,19 @@
             <fileset dir="${src.dir}" includes="**/*.java"/>
         </checkstyle>
     </target>
-
     <target name="run" depends="compile">
-        <java classname="com.vl.training.subsets.CountSets">
-            <arg line = "150 1 2 5 10 20 50 100"/>
-      <!--- <arg value="150"/>
-            <arg value="1"/>
-            <arg value="2"/>
-            <arg value="5"/>
-            <arg value="10"/>
-            <arg value="20"/>
-            <arg value="50"/>
-            <arg value="100"/> -->
-            <classpath>
-                <pathelement path="${classes.dir}"/>
-            </classpath>
+        <java classname="com.vl.training.sample.Company">
+            <arg value="225"/>
+                <classpath>
+                    <pathelement path="${classes.dir}"/>
+                </classpath>
         </java>
-    </target>
+    </target>	
 
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
+        
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">
