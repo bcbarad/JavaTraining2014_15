@@ -87,11 +87,10 @@ public class Company {
                     System.out.println(e2);
                     if (mid == e2.id) {
                         mid = e2.mid;
-                        e = e2;
                         count ++;
                     }
                 }
-                map.put(count, e);
+                map.put(count, e2);
             }
            // System.out.println(map);
         }
