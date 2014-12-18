@@ -4,6 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Employee {
+	@Override
+	public String toString() {
+		return id+" "+name+" "+salary+" "+dob;
+	}
+
 	private List<Employee> directReportees = new ArrayList<Employee>();
 	protected int id;
 	protected String name;
