@@ -2,6 +2,8 @@ package com.vl.training.organisation;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Date;
 import java.util.Iterator;
 import java.io.File;
@@ -25,15 +27,20 @@ public final class Organisation {
 
     static void createStructure(final Scanner sc) {
         Company c = Company.readCompany(sc);
+        System.out.println("CEO :" + c.ceo.getId());
         c.printHierarchy(c.ceo);
+//        c.longestReportingChain();
+        System.out.println("Chain Length :" +c.count + " Employee ID : " + c.longestReportee.getId());
     }
 }
 
 class Company {
 
-    static Employee ceo;
+    Employee ceo;
+    static Employee longestReportee = null;
     private String name;
     private String uri;
+    static int count = 0;
 
     void setName(final String name) {
         this.name = name;
@@ -52,10 +59,13 @@ class Company {
     }
 
     void printHierarchy(final Employee ceo) {
+        count =0;
         for (Employee e : ceo.directReportees) {
             System.out.println("Employee : " + e.getId() + " Name : " + e.getName() + " Manager ID : " + e.manager.getId());
             if (!e.directReportees.isEmpty()) {
                 printHierarchy(e);
+                count++;
+                longestReportee = e;
             }
         }
     }
@@ -64,11 +74,11 @@ class Company {
         Company com = new Company();
         com.name = sc.next();
         com.uri = sc.next();
-        ceo = Employee.readEmployee(sc);
+        com.ceo = Employee.readEmployee(sc);
         while (sc.hasNext()) {
             Employee emp = Employee.readEmployee(sc);
             String mgrId = sc.next();
-            Employee mgr = com.getEmployee(mgrId, ceo);
+            Employee mgr = com.getEmployee(mgrId, com.ceo);
             mgr.directReportees.add(emp);
             emp.manager = mgr;
         }
