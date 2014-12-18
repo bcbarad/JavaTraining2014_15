@@ -31,6 +31,7 @@ public class Company {
 			for (int index = 0; index < allEmployees.size(); index++) {
 				employee = allEmployees.get(index);
 				displayManager(employee);
+<<<<<<< HEAD
 				if (employee.getDirectReportees().size() > 1) {
 					System.out.println("\n The no. of Direct Reportees of "
 							+ employee.getName() + " is : "
@@ -38,6 +39,14 @@ public class Company {
 					System.out
 							.println("\n Direct reportees Structure is given below: ");
 					System.out.println("\t" + employee.getName());
+=======
+				if (employee.getDirectReportees().size()>1) {
+					getNoOfDirectReportees(employee);
+					System.out
+							.println("\n Direct reportees Structure is given below: ");
+					System.out.println("\t"
+							+ employee.getName());
+>>>>>>> cd2780440904f846613f41ec47b628902bca41dc
 					System.out.print("\t=======");
 					displayDirectReporteesNames(employee);
 				}

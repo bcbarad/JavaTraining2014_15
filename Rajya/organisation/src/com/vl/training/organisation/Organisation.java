@@ -1,32 +1,48 @@
 package com.vl.training.organisation;
-import java.util.*;
-import java.io.*;
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Date;
+import java.util.Iterator;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-public class Organisation {
-    public static void main(String[] arr) throws IOException {
-        if(arr.length != 1){
+
+public final class Organisation {
+
+    private Organisation() {
+    }
+
+    public static void main(final String[] arr) throws IOException {
+        if (arr.length != 1) {
             System.out.println("Input parameter should be exactly one");
             return;
-        }
-        else{
+        } else {
             Scanner sc = new Scanner(new File(arr[0]));
             createStructure(sc);
         }
     }
-    static void createStructure(Scanner sc) {
-        
+
+    static void createStructure(final Scanner sc) {
         Company c = Company.readCompany(sc);
+        System.out.println("CEO :" + c.ceo.getId());
         c.printHierarchy(c.ceo);
+//        c.longestReportingChain();
+        System.out.println("Chain Length :" +c.count + " Employee ID : " + c.longestReportee.getId());
     }
 }
 
 class Company {
-    static Employee ceo;
+
+    Employee ceo;
+    static Employee longestReportee = null;
     private String name;
     private String uri;
-    //Set<Department> department = new HashSet<Department>();
+    static int count = 0;
 
-    void setName(String name) {
+    void setName(final String name) {
         this.name = name;
     }
 
@@ -34,92 +50,97 @@ class Company {
         return name;
     }
 
-    void setUri(String uri) {
+    void setUri(final String uri) {
         this.uri = uri;
     }
 
     String getUri() {
         return uri;
     }
-    void printHierarchy(Employee ceo) {
-         //Employee current = ceo;
-         for ( Employee e : ceo.directReportees){           
-             System.out.println("Employee : " + e.getId() + "Name : " + e.getName() + " Manager ID : " + e.manager.getId());
-             if (!e.directReportees.isEmpty()) {
+
+    void printHierarchy(final Employee ceo) {
+        count =0;
+        for (Employee e : ceo.directReportees) {
+            System.out.println("Employee : " + e.getId() + " Name : " + e.getName() + " Manager ID : " + e.manager.getId());
+            if (!e.directReportees.isEmpty()) {
                 printHierarchy(e);
-             }
+                count++;
+                longestReportee = e;
+            }
         }
- } 	
-    static Company readCompany(Scanner sc) {
-       Company com = new Company();
-       com.name = sc.next();
-       com.uri = sc.next();
-       ceo = Employee.readEmployee(sc);
-       while(sc.hasNext()) { 
-         Employee emp = Employee.readEmployee(sc);
-         String mgrId = sc.next();
-         Employee mgr = com.getEmployee(mgrId,ceo);
-         mgr.directReportees.add(emp);
-         emp.manager = mgr;        
-       }
-       
-       return com;
     }
-    
-    Employee getEmployee(final String empid, Employee current) {
-         if (current.getId() == empid) 
-              return current;
-         else {
-               Iterator<Employee> itr = current.directReportees.iterator();
-               while(itr.hasNext()){
-                  Employee e =itr.next();
-                  if (e.getId() == empid) {
-                        return e;
-                  } else {
-                        current = getEmployee(empid,e);
-                        if (current.getId() == empid)
-                                return current;
-                  }
-               }
-         }
-         return current;
+
+    static Company readCompany(final Scanner sc) {
+        Company com = new Company();
+        com.name = sc.next();
+        com.uri = sc.next();
+        com.ceo = Employee.readEmployee(sc);
+        while (sc.hasNext()) {
+            Employee emp = Employee.readEmployee(sc);
+            String mgrId = sc.next();
+            Employee mgr = com.getEmployee(mgrId, com.ceo);
+            mgr.directReportees.add(emp);
+            emp.manager = mgr;
+        }
+        return com;
+    }
+
+    Employee getEmployee(final String mgrid, final Employee current) {
+        if (current.getId().equals(mgrid)) {
+            return current;
+        } else {
+            if (current.directReportees == null) {
+                return null;
+            } else {
+                Iterator<Employee> itr = current.directReportees.iterator();
+                while (itr.hasNext()) {
+                    Employee e = itr.next();
+                    Employee foundEmp = getEmployee(mgrid, e);
+                    if (foundEmp != null) {
+                        return foundEmp;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
 
 class Employee {
+
     private String name;
-    String id;
+    private String id;
     private int salary;
     private Date dob;
     Employee manager;
     ArrayList<Employee> directReportees = new ArrayList<Employee>();
-    
-    static Employee readEmployee(Scanner sc) {
-     Employee emp = new Employee();
-     emp.setId(sc.next());
-     emp.setName(sc.next());     
-     emp.setSalary(sc.nextInt());
-     emp.setDOB(sc.next());
-     return emp;
+
+    static Employee readEmployee(final Scanner sc) {
+        Employee emp = new Employee();
+        emp.setId(sc.next());
+        emp.setName(sc.next());
+        emp.setSalary(sc.nextInt());
+        emp.setDOB(sc.next());
+        return emp;
     }
 
-    void setName(String name) {
-        this.name = name;
+    void setName(final String ename) {
+        this.name = ename;
     }
 
     String getName() {
         return name;
     }
 
-    void setId(String id) {
-        this.id = id;
+    void setId(final String eid) {
+        this.id = eid;
     }
 
     String getId() {
         return id;
     }
 
-    void setSalary(int salary) {
+    void setSalary(final int salary) {
         this.salary = salary;
     }
 
@@ -127,7 +148,7 @@ class Employee {
         return salary;
     }
 
-    void setDOB(String dateInString) {
+    void setDOB(final String dateInString) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         try {
             dob = (Date) formatter.parse(dateInString);
