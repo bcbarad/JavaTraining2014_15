@@ -56,7 +56,7 @@ public class Employee {
 
 	public int getDepth(Employee manager) {
 		for (int index = 0; index < manager.getNoOfDirectReportees(); index++) {
-			directReportees = manager.getDirectReportees(manager);
+			List <Employee> directReportees = manager.getDirectReportees(manager);
 			if (maxDepth < depth) {
 				maxDepth = depth;
 				depth = 0;
