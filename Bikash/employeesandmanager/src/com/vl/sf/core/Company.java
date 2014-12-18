@@ -155,11 +155,11 @@ public class Company {
 		Company company = null;
 		try {
 			companyDetails = new BufferedReader(new FileReader(
-					"companydetails.txt"));
+					args[0]));
 			departmentDetails = new BufferedReader(new FileReader(
-					"departmentdetails.txt"));
+					args[1]));
 			employeeDetails = new BufferedReader(new FileReader(
-					"employeedetails.txt"));
+					args[2]));
 
 			companyDetails.readLine();
 			departmentDetails.readLine();
