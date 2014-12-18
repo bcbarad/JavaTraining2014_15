@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 
 public class Company {
-	private Map<String,Department> departments =new HashMap<String, Department>();
+	private Map<String, Department> departments = new HashMap<String, Department>();
 	private List<Employee> allEmployees = new ArrayList<Employee>();
 	public static String name;
 	public static String url;
 	public static Employee CEO;
 
-	public Map<String,Department> getDepartments() {
+	public Map<String, Department> getDepartments() {
 		return departments;
 	}
 
-	public void setDepartments(Map<String,Department> departments) {
+	public void setDepartments(Map<String, Department> departments) {
 		this.departments = departments;
 	}
 
@@ -31,7 +31,6 @@ public class Company {
 			for (int index = 0; index < allEmployees.size(); index++) {
 				employee = allEmployees.get(index);
 				displayManager(employee);
-<<<<<<< HEAD
 				if (employee.getDirectReportees().size() > 1) {
 					System.out.println("\n The no. of Direct Reportees of "
 							+ employee.getName() + " is : "
@@ -39,14 +38,6 @@ public class Company {
 					System.out
 							.println("\n Direct reportees Structure is given below: ");
 					System.out.println("\t" + employee.getName());
-=======
-				if (employee.getDirectReportees().size()>1) {
-					getNoOfDirectReportees(employee);
-					System.out
-							.println("\n Direct reportees Structure is given below: ");
-					System.out.println("\t"
-							+ employee.getName());
->>>>>>> cd2780440904f846613f41ec47b628902bca41dc
 					System.out.print("\t=======");
 					displayDirectReporteesNames(employee);
 				}
@@ -77,11 +68,16 @@ public class Company {
 	public List<Employee> getAllEmployees() {
 		return allEmployees;
 	}
-	public Employee getEmployee(int empId){
-		
+
+	private Employee getManager(int empId) {
+		for (int index = 0; index < allEmployees.size(); index++) {
+			Employee manager = allEmployees.get(index);
+			if (empId == manager.id) {
+				return manager;
+			}
+		}
 		return null;
 	}
-
 
 	public static int getNoOfDirectReportees(Employee manager) {
 		return manager.getNoOfDirectReportees();
@@ -111,12 +107,12 @@ public class Company {
 			String[] allData = record.split(",");
 			i = 0;
 			for (int j = 0; j < allData.length; j++) {
-				company.departments.put(allData[i],new Department(allData[i++]));
+				company.departments.put(allData[i],
+						new Department(allData[i++]));
 			}
 		}
-		System.out.println(company.departments);
-		CEO = new Employee(ceoId, ceoName, 00,
-				company.departments.get(0), new Date(ceoDob));
+		CEO = new Employee(ceoId, ceoName, 00, company.departments.get(0),
+				new Date(ceoDob));
 		company.allEmployees.add(CEO);
 		while ((record = employeeDetails.readLine()) != null) {
 			String[] allData = record.split(",");
@@ -130,10 +126,15 @@ public class Company {
 				String dept = allData[i++];
 				String design = allData[i++];
 				String dob = allData[i++];
-				company.allEmployees.add(new Employee(empId,empName,empSalary,company.departments.get(dept),new Date(dob)));
+				Employee manager = company.getManager(mngId);
+				Employee employee = new Employee(empId, empName, empSalary,
+						company.departments.get(dept), new Date(dob));
+				company.allEmployees.add(employee);
+				if (manager != null) {
+					manager.setReporteeAndManagerDetails(employee);
+				}
 			}
 		}
-		System.out.println(company.allEmployees);
 		return company;
 	}
 
