@@ -6,39 +6,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 public class CompanyInfo {
     public static void main(String[] args) throws FileNotFoundException {
-
         CompanyInfo cinfo = new CompanyInfo();
         Scanner sc = new Scanner(new File(args[0]));
-
         Company c = new Company();
-
         Company cc = c.companyDetails(sc);
         c.longestChain(cc);
     }
 }
-class Company {
+class Company {    
     String name;
     int ceoid;
     ArrayList<Department> dlist;
     Company c;
     int noofdepartments;
     public Company companyDetails(Scanner sc) {
-
         c = new Company();
-
         c.dlist = new ArrayList();
-
-
-
-
         Department dl = new Department();
-
         c.noofdepartments = sc.nextInt();
         for (int i = 0; i < c.noofdepartments; i++) {
             Department d = new Department();
             Department d1 = d.getDepartment(sc);
             c.dlist.add(d1);
-
         }
         return c;
     }
@@ -53,7 +42,6 @@ class Company {
                   //System.out.println("count is "+count);
               }
           }
-
     }
     public void searchReporties(int empid,Company c,int j,int count) {
         Department d;
@@ -66,15 +54,13 @@ class Company {
                     count++;
                     System.out.print(e.eid+"-->");
                     searchReporties(e.managerid, c,j,count);                   
-                    System.out.print("\n");
+                    System.out.print("\n");                  
                     break;
                  }
              } 
             break;
         }
     }
-
-    
 }
 class Department {
     String name,hodname;
@@ -86,25 +72,21 @@ class Department {
          d.elist = new ArrayList();
         d.name = sc.next();
         d.hodname = sc.next();
-
         d.noofemployees = sc.nextInt();
         for (int i = 0; i < d.noofemployees; i++) {
             Employee e = new Employee();
             Employee e1 = e.getEmployee(sc);
             d.elist.add(e1);
-
         }
-       
         return d;
     }
- }
+}
 class Employee {
     int eid,salary,managerid;
     String name;
     Employee e;
     public Employee getEmployee(Scanner sc) {
         e = new Employee();
-
         e.eid = sc.nextInt();
         e.salary = sc.nextInt();
         e.managerid = sc.nextInt();
