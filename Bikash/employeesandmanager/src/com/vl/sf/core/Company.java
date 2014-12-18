@@ -31,7 +31,7 @@ public class Company {
 			for (int index = 0; index < allEmployees.size(); index++) {
 				employee = allEmployees.get(index);
 				displayManager(employee);
-				if (employee.getDirectReportees().size() > 1) {
+				if (employee.getDirectReportees().size() > 0) {
 					System.out.println("\n The no. of Direct Reportees of "
 							+ employee.getName() + " is : "
 							+ getNoOfDirectReportees(employee));
@@ -41,6 +41,10 @@ public class Company {
 					System.out.print("\t=======");
 					displayDirectReporteesNames(employee);
 				}
+			}
+			for (int index = 1; index <=allEmployees.get(0).getNoOfDirectReportees(); index++) {
+				employee = allEmployees.get(index);
+				printDepth(employee);
 			}
 		}
 	}
@@ -57,7 +61,7 @@ public class Company {
 
 	public static void displayDirectReporteesNames(Employee manager) {
 		List<Employee> directReportees = manager.getDirectReportees();
-		if (directReportees != null & directReportees.size() > 0) {
+		if (directReportees != null && directReportees.size() > 0) {
 			for (int index = 0; index < manager.getNoOfDirectReportees(); index++) {
 				System.out.println("\n\t-> "
 						+ directReportees.get(index).getName());
@@ -135,7 +139,13 @@ public class Company {
 				}
 			}
 		}
+		// System.out.println(company.allEmployees);
 		return company;
+	}
+
+	public static void printDepth(Employee manager) {
+		System.out.println("\n The Depth of the Manager " + manager.getName()
+				+ " is : " + manager.getDepth(manager));
 	}
 
 	public static void main(String[] args) {
