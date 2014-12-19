@@ -73,7 +73,7 @@ public class Company {
 		return allEmployees;
 	}
 
-	private Employee getManager(int empId) {
+	private Employee getManagerById(int empId) {
 		for (int index = 0; index < allEmployees.size(); index++) {
 			Employee manager = allEmployees.get(index);
 			if (empId == manager.id) {
@@ -96,6 +96,10 @@ public class Company {
 		String ceoName = null;
 		int ceoId = 0;
 		String ceoDob = null;
+		String[] date;
+		int day=0;
+		int month=0;
+		int year = 0;
 		while ((record = companyDetails.readLine()) != null) {
 			String[] allData = record.split(",");
 			i = 0;
@@ -105,6 +109,10 @@ public class Company {
 				ceoName = allData[i++];
 				ceoId = Integer.parseInt(allData[i++]);
 				ceoDob = allData[i++];
+				date=company.dateSplitter(ceoDob);
+				day=Integer.parseInt(date[0]);
+				month=Integer.parseInt(date[1]);
+				year=Integer.parseInt(date[2]);
 			}
 		}
 		while ((record = departmentDetails.readLine()) != null) {
@@ -116,7 +124,8 @@ public class Company {
 			}
 		}
 		CEO = new Employee(ceoId, ceoName, 00, company.departments.get(0),
-				new Date(ceoDob));
+				new Date(year, month-1, day));
+		System.out.println(CEO.getDob());
 		company.allEmployees.add(CEO);
 		while ((record = employeeDetails.readLine()) != null) {
 			String[] allData = record.split(",");
@@ -130,22 +139,41 @@ public class Company {
 				String dept = allData[i++];
 				String design = allData[i++];
 				String dob = allData[i++];
-				Employee manager = company.getManager(mngId);
+				date=company.dateSplitter(dob);
+				day=Integer.parseInt(date[0]);
+				month=Integer.parseInt(date[1]);
+				year=Integer.parseInt(date[2]);
+				Employee manager = company.getManagerById(mngId);
 				Employee employee = new Employee(empId, empName, empSalary,
-						company.departments.get(dept), new Date(dob));
+						company.departments.get(dept),new Date(year, month-1, day));
 				company.allEmployees.add(employee);
 				if (manager != null) {
 					manager.setReporteeAndManagerDetails(employee);
 				}
 			}
 		}
-		// System.out.println(company.allEmployees);
 		return company;
+	}
+	
+	public String[] dateSplitter(String date){
+		String[] all=date.split("/");
+		return all;
 	}
 
 	public static void printDepth(Employee manager) {
 		System.out.println("\n The Depth of the Manager " + manager.getName()
 				+ " is : " + manager.getDepth(manager));
+	}
+	
+	public static Employee getMaxAgeEmployee(List<Employee> allEmployee){
+		Employee maxAgeEmployee=allEmployee.get(0);
+		for (int index = 1; index <allEmployee.size(); index++) {
+			Employee nextEmployee=allEmployee.get(index);
+			if(maxAgeEmployee.getDob().compareTo(nextEmployee.getDob())>0){
+				maxAgeEmployee=nextEmployee;
+			}
+		}
+		return maxAgeEmployee;
 	}
 
 	public static void main(String[] args) {
@@ -174,6 +202,8 @@ public class Company {
 		if (company != null) {
 			List<Employee> allEmployees = company.getAllEmployees();
 			company.displayAllEmployeeDetails(allEmployees);
+			Employee maxAgeEmployee=company.getMaxAgeEmployee(allEmployees);
+			System.out.println(maxAgeEmployee.getName()+" is the max Age person of the company "+Company.name);
 		}
 
 	}
