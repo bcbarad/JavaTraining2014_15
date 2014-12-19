@@ -7,7 +7,7 @@ import java.util.List;
 public class Employee {
 	@Override
 	public String toString() {
-		return id + " " + name + " " + salary + " " + manager.id + "\n";
+		return id + " " + name + " " + salary + " " + dob + "\n";
 	}
 
 	private List<Employee> directReportees = new ArrayList<Employee>();
@@ -17,7 +17,7 @@ public class Employee {
 	private Department department;
 	private Employee manager;
 	private Date dob;
-	private int depth = 0;
+	//private int depth = 0;
 	private int maxDepth = 0;
 
 	public Employee(int id, String name, double salary, Department department,
@@ -40,7 +40,6 @@ public class Employee {
 	public String getName() {
 		return name;
 	}
-	
 
 	public Department getDepartment() {
 		return department;
@@ -50,26 +49,24 @@ public class Employee {
 		return manager;
 	}
 
-	public List<Employee> getDirectReportees(Employee manager) {
-		return directReportees;
-	}
-
-	public int getDepth(Employee manager) {
+	public static int getDepth(Employee manager) {
 		for (int index = 0; index < manager.getNoOfDirectReportees(); index++) {
-			List <Employee> directReportees = manager.getDirectReportees(manager);
-			if (maxDepth < depth) {
-				maxDepth = depth;
-				depth = 0;
-			}
-			if (directReportees.get(index).getNoOfDirectReportees() > 0) {
-				getDepth(directReportees.get(index));
-				depth++;
+			List<Employee> directReportees = manager.getDirectReportees();
+			if (directReportees.size() == 0) {
+				manager.maxDepth = 0;
 			} else {
-				break;
+				getDepth(directReportees.get(index));
+				manager.maxDepth=getDepth(directReportees.get(0));
+				for (int i = 1; i <directReportees.size(); i++) {
+					int temp=getDepth(directReportees.get(i));
+					if(manager.maxDepth<temp){
+						manager.maxDepth=temp;
+					}
+				}
+				manager.maxDepth++;
 			}
 		}
-		maxDepth++;
-		return maxDepth;
+		return manager.maxDepth;
 	}
 
 	protected void setReporteeAndManagerDetails(Employee employee) {
@@ -85,4 +82,5 @@ public class Employee {
 	public List<Employee> getDirectReportees() {
 		return directReportees;
 	}
+
 }
