@@ -11,6 +11,18 @@ public class Employee {
 	}
 
 	private List<Employee> directReportees = new ArrayList<Employee>();
+	public int getMaxDepth() {
+		return maxDepth;
+	}
+
+	public void setMaxDepth(int maxDepth) {
+		this.maxDepth = maxDepth;
+	}
+
+	public void setDirectReportees(List<Employee> directReportees) {
+		this.directReportees = directReportees;
+	}
+
 	protected int id;
 	private String name;
 	private double salary;
@@ -18,7 +30,7 @@ public class Employee {
 	private Employee manager;
 	private Date dob;
 	//private int depth = 0;
-	private int maxDepth = 0;
+	protected int maxDepth = 0;
 
 	public Employee(int id, String name, double salary, Department department,
 			Date dob) {
