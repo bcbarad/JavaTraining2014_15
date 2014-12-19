@@ -18,7 +18,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="company.code.CompanyInfo12">
+        <java classname="company.code.CompanyInformation">
             <arg value="${val1}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
