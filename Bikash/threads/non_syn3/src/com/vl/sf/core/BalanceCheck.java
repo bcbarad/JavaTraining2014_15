@@ -37,6 +37,11 @@ public class BalanceCheck implements Runnable {
 		th2.setName("Ashok");
 		th1.start();
 		th2.start();
+		try {
+            Thread.sleep(1000);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 	}
 
 }
