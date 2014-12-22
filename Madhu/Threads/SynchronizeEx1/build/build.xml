@@ -18,8 +18,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.CompanyInfo">
-            <arg value="${val1}"/>
+        <java classname="sync.code.SyncExample1">
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
