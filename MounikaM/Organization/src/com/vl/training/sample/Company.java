@@ -13,10 +13,10 @@ class Company {
     public Employee ceo;
     public List<Employee> allEmployees = new ArrayList<Employee>();
     public Map<String, Department> deptMap = new HashMap<String, Department>();
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
 
     public void readCompanyDetails(Scanner sc, Scanner s, Scanner scn) {
                                                                        // To read company and employee details.
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
         String name = null;
         int id = 0;
         double sal;
