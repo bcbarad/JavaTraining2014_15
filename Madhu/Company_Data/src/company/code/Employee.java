@@ -1,17 +1,29 @@
 package company.code;
-import java.util.*;
-import java.io.*;
-public class Employee {
-    int emp_id , manager_id , emp_age;
-    String emp_name;
-    double emp_salary;
-    public static Employee getEmployeeData(Scanner sc) {
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+class Employee {
+    public int empid;
+    public int empsalary;
+    public int empmanagerid;
+    public String empname;
+    public Date empdob;
+    public static  Employee getEmployee(Scanner sc) {     // method to get the employee details
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
         Employee empobj = new Employee();
-        empobj.emp_name = sc.next();
-        empobj.emp_id = sc.nextInt();
-        empobj.emp_salary = sc.nextDouble();
-        empobj.manager_id = sc.nextInt();
-        empobj.emp_age = sc.nextInt();
+        empobj.empid = sc.nextInt();
+        empobj.empsalary = sc.nextInt();
+        empobj.empmanagerid = sc.nextInt();
+        empobj.empname = sc.next();
+        try {
+            empobj.empdob = sdf.parse(sc.next());
+        } catch (Exception pe) {
+            System.out.print(pe);
+        }
         return empobj;
     }
 }
