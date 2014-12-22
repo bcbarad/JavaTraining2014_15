@@ -11,7 +11,7 @@ public class Employee {
     private int mid;
     private Department deptName;
     private Date dob;
-    List<Employee> alldirectrepotiees = new ArrayList<Employee>();
+    public List<Employee> alldirectrepotiees = new ArrayList<Employee>();
     //SimpleDateFormat sdf = new SimpleDateFormat(yyyy/mm/dd);
 
 
