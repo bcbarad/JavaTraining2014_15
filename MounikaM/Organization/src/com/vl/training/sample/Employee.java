@@ -1,9 +1,7 @@
 package com.vl.training.sample;
-import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.IOException;
+import java.util.Date;
 
 
 public class Employee {
@@ -11,19 +9,27 @@ public class Employee {
     private int eid;
     private double esal;
     private int mid;
-    public Employee manager;
-    List<Employee> alldirectrepotiees = new ArrayList<Employee>();
+    private Department deptName;
+    private Date dob;
+    public List<Employee> alldirectrepotiees = new ArrayList<Employee>();
+    //SimpleDateFormat sdf = new SimpleDateFormat(yyyy/mm/dd);
 
 
-    public Employee() { }
-    public Employee(String ename, int eid, double esal) {
+    public Employee() {
+    }
+    public Employee(final String ename, final int eid, final double esal, final Department deptName, final Date dob) {
         this.ename = ename;
         this.eid = eid;
         this.esal = esal;
+        this.deptName = deptName;
+        this.dob = dob;
     }
 
     public int getEmpid() {
         return eid;
+    }
+    public Date getDob() {
+        return dob;
     }
 
     public String getEname() {
@@ -31,6 +37,9 @@ public class Employee {
     }
     public Double getEsal() {
         return esal;
+    }
+    public Department getEdeptName() {
+        return deptName;
     }
 
 }
