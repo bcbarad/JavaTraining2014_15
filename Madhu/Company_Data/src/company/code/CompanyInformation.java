@@ -1,22 +1,22 @@
 package company.code;
-import java.util.*;
-import java.io.*;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 public class CompanyInformation {
-    Company companydata = new Company();
     public static void main(String[] args) throws FileNotFoundException {
-        if (args.length != 1) {
-            System.out.println("please provide the required arguments ");
-        } else {
+        CompanyInformation cinfo = new CompanyInformation();
+        if (args.length == 1) {
             Scanner sc = new Scanner(new File(args[0]));
-            CompanyInformation cominfo = new CompanyInformation();
-            cominfo.companydata = Company.getCompanyData(sc);
-            String department_name =  sc.next();
-            Employee long_emp = Company.getLongChainId(department_name , cominfo.companydata);     
-            System.out.println("the longet chain employee details: name--" + long_emp.emp_name +  "--employee id-- " + long_emp.emp_id + "--salary-- " + long_emp.emp_salary);
+            Company cc = Company.getCompanyDetails(sc);  // call the method to read the company details
+            Company.longestChain(cc);        // call the method to find the longest chain in the company
+            Company.getHighestAge(cc);       // call the method to find the highest age employee in company and each department
+        } else {
+            System.out.println(" Please provide the required input files ");
         }
     }
-    
 }
-
-
 
