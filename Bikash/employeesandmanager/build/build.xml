@@ -19,6 +19,9 @@
 
     <target name="run" depends="compile">
         <java classname="com.vl.sf.core.Company">
+            <arg value="${val1}"/>
+            <arg value="${val2}"/>
+            <arg value="${val3}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
