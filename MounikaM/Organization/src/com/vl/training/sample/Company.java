@@ -1,65 +1,61 @@
 package com.vl.training.sample;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Date;
 
-public class Company {
+class Company {
     private String cmpname;
     private String cmpurl;
     public Employee ceo;
     public List<Employee> allEmployees = new ArrayList<Employee>();
     public Map<String, Department> deptMap = new HashMap<String, Department>();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
 
     public void readCompanyDetails(Scanner sc, Scanner s, Scanner scn) {
                                                                        // To read company and employee details.
         String name = null;
         int id = 0;
         double sal;
-        int i = 0;
-        String[] date;
-        String dob = null;
+        Date dob = null;
         String deptName = null;
         String nextdeptName = null;
-        int day = 0;
-        int month = 0;
-        int year = 0;
-        cmpname = sc.next();
+
+        cmpname = sc.next();                   // Reading Company name and it's CEO and Company Url
         cmpurl = sc.next();
         name = sc.next();
         id = sc.nextInt();
         sal = sc.nextDouble();
-        dob = sc.next();
-        date = dateSplitter(dob);
-        day = Integer.parseInt(date[0]);
-        month = Integer.parseInt(date[1]);
-        year = Integer.parseInt(date[2]);
-        while (s.hasNext()) {
+        try {
+            dob = sdf.parse(sc.next());
+        } catch(Exception e ) {
+            System.err.println(e);
+        }
+        while (s.hasNext()) {                 // Reading Departments which are present in given company
             deptName = s.next();
             nextdeptName = s.next();
             deptMap.put(deptName, new Department(nextdeptName));
         }
-        ceo = new Employee(name, id, sal, deptMap.get(deptName), new Date(year, month - 1, day));
+        ceo = new Employee(name, id, sal, deptMap.get(deptName), dob);
         System.out.println("CEO : " + ceo.getEname());
         System.out.println("CEO dob:" + ceo.getDob());
         allEmployees.add(ceo);
 
-        while (scn.hasNext()) {
+        while (scn.hasNext()) {             // To read every department employees
             name = scn.next();
             id = scn.nextInt();
             sal = scn.nextDouble();
             deptName = scn.next();
-            dob = scn.next();
-            date = dateSplitter(dob);
-            day = Integer.parseInt(date[0]);
-            month = Integer.parseInt(date[1]);
-            year = Integer.parseInt(date[2]);
+            try {
+                dob = sdf.parse(scn.next());
+            } catch(Exception e ) {
+                System.err.println(e);
+            }
 
-            Employee e = new Employee(name, id, sal, deptMap.get(deptName), new Date(year, month - 1, day));
+            Employee e = new Employee(name, id, sal, deptMap.get(deptName), dob);
             int mid = scn.nextInt();
 
             Employee manager = getManager(mid);
@@ -72,11 +68,6 @@ public class Company {
 
         }
     }
-    public String[] dateSplitter(String date) {
-        String[] all = date.split("/");
-        return all;
-    }
-
     public String getCmpname() {
         return cmpname;
     }
@@ -85,11 +76,8 @@ public class Company {
     }
 
     public Employee getManager(int managerId) {               // To get find manager for given emplyee
-       // System.out.println("Looking for manager of : " + managerId);
-       // System.out.println("allEmployees.size(): " +allEmployees.size());
         for (int i = 0; i < allEmployees.size(); i++) {
             Employee e = allEmployees.get(i);
-           // System.out.println("Emp : " + e);
             if (managerId == e.getEmpid()) {
                 return e;
             }
@@ -98,7 +86,7 @@ public class Company {
         return null;
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         if (args.length >= 2) {
             try {
                 Employee emp;
@@ -107,7 +95,6 @@ public class Company {
                 Scanner sc1 = new Scanner(new File(args[1]));
                 Scanner sc2 = new Scanner(new File(args[2]));
                 Company c = new Company();
-                //Company cmpDetails = c.companyDetails(sc,sc1, sc2);
                 c.readCompanyDetails(sc, sc1,  sc2);
                 c.printAllDirectRepotiees(c.allEmployees);
                 emp = c.getMaxAge(c.allEmployees);
@@ -119,14 +106,13 @@ public class Company {
             } catch (FileNotFoundException nfe) {
                 System.err.println(nfe);
             }
-            //  c.printcompanyDetails(cmpDetails);
 
         } else {
             System.out.println("\n please enter  2 file names as argument");
         }
-    }
+    }*/
 
-    public void printAllDirectRepotiees(List<Employee> allEmployees) {
+    public void printAllDirectRepotiees(List<Employee> allEmployees) {         // To print all Employees in company and the number of reportiees for every employee
         for (Employee e : allEmployees) {
             if (e.alldirectrepotiees != null) {
                 System.out.println(e.getEname() + " has " + e.alldirectrepotiees.size()+ " direct repotiees");
@@ -136,29 +122,29 @@ public class Company {
         }
     }
 
-    public int getDepthofManager(Employee e) { // to get Longest chain for given employee/Manager
+    public int getNumberofDirectieesofEMP(Employee e) { // to get Longest chain for given employee/Manager
         int depth = 0;
-        int dept1 = 0;
-        int count = 0;
+        int storingDepth = 0;
+        int finalDepth = 0;
         if (e.alldirectrepotiees != null) {
             depth++;
             for (Employee emp  : e.alldirectrepotiees) {
-                dept1 = getDepthofManager(emp);
-                if (count < dept1) {
-                    count = dept1;
+                storingDepth = getNumberofDirectieesofEMP(emp);
+                if (finalDepth < storingDepth) {
+                    finalDepth = storingDepth;
                 }
             }
         }
-        return count + 1;
+        return finalDepth + 1;
     }
-    public Employee getLongestHod(List<Employee> allEmployees) { // To get To get highest chain among the all pthers
+    public Employee getLongestchainHod(List<Employee> allEmployees) { // To get To get highest chain among the all others
         Employee ceo = allEmployees.get(0);
         Employee emp = null;
-        int count = 0;
+        int empsUnderHod = 0;
         for (Employee e : ceo.alldirectrepotiees) {
-            int length = getDepthofManager(e);
-            if (count < length) {
-                count = length;
+            int length = getNumberofDirectieesofEMP(e);
+            if (empsUnderHod < length) {
+                empsUnderHod = length;
                 emp = e;
             }
         }
@@ -169,9 +155,7 @@ public class Company {
         Employee emp = allEmployees.get(0);
         for (int j = 1; j < allEmployees.size(); j++) {
             Employee nextEmp = allEmployees.get(j);
-           // System.out.println(nextEmp.getEname());
-           // System.out.println(nextEmp.getDob());
-            if ((emp.getDob().compareTo(allEmployees.get(j).getDob())) < 0) {
+            if ((emp.getDob().compareTo(allEmployees.get(j).getDob())) > 0) {
                 emp = nextEmp;
             }
         }
