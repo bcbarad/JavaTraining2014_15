@@ -1,0 +1,12 @@
+ABC 102 100000  1
+BCD  103   100000   1
+HJK  104  120000    1
+Mounika  7043  13500  104
+JyothiKiran 7032 13500 102
+Neeraja    7047  13500 03
+Kavya   7035     13530 7043
+AshaJyothi 7016   13456  7032
+Arundhathi 7015   12345 7047
+Divya      7022   12345 7043
+Mounika    7042   12333  7047
+
