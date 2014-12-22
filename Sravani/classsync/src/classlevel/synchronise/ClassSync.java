@@ -5,12 +5,24 @@ class A {
             System.out.print(i + " ");
         }
         System.out.println();
+        try {
+            // thread to sleep for 1000 milliseconds
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     synchronized void test2() {
         for (int i = 100; i < 150; i++) {
             System.out.print(i + " ");
         }
         System.out.println();
+        try {
+            // thread to sleep for 1000 milliseconds
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
 class B extends Thread {
@@ -40,5 +52,13 @@ public class ClassSync {
         b1.start();
         System.out.println("============");
         c1.start();
+        try {
+            b1.join();
+            c1.join();
+        }
+        catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("end of main");
     }
 }
