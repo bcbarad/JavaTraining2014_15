@@ -1,26 +1,37 @@
 package com.vl;
-class Variable {
-    private int a = 1;
-    synchronized void increment() {
-        a = a + 1;
-        System.out.println("a after incrementation" + a);
+class Print {
+    synchronized void print() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println("value" + i);
+            try {
+                Thread.sleep(200);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 class Thread1 extends Thread {
-    private Variable v;
-    public Thread1(final Variable v) {
-        this.v = v;
+    private Print p;
+    public Thread1(final Print p) {
+        this.p = p;
     }
     public void run() {
-        v.increment();
+        p.print();
     }
 }
 public class ThreadSample2 extends Thread {
     public static void main(final String[] args) {
-        Variable v = new Variable();
-        Thread1 t1 = new Thread1(v);
-        Thread1 t2 = new Thread1(v);
+        Print p = new Print();
+        Thread1 t = new Thread1(p);
+        Thread1 t1 = new Thread1(p);
+        t.start();
         t1.start();
-        t2.start();
+        try {
+            t.join();
+            t1.join();
+        } catch (Exception e) {
+            System.out.println("interrupted");
+        }
     }
 }
