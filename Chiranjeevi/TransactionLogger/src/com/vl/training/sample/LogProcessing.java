@@ -1,10 +1,10 @@
 package com.vl.training.sample;
 
-import java.io.*;
 import java.io.IOException;
-import java.io.File.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.io.File;
 import java.util.Scanner;
-import java.util.*;
 
 public class LogProcessing  {
     HashMap<String, Long> log = new HashMap<String, Long>();
