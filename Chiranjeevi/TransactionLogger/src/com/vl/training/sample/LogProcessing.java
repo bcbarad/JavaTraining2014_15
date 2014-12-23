@@ -35,11 +35,10 @@ public final class LogProcessing  {
             } else {
                 // code for creating individual thread for each input file found
                 final File file = f;
-                final TransactionLogger obj = new TransactionLogger();
                 Thread t = new Thread() {
                     public void run() {
                         try {
-                            obj.processLog(new Scanner(file), log);
+                            TransactionLogger.processLog(new Scanner(file), log);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
