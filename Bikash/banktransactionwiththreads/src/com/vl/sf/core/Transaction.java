@@ -71,7 +71,7 @@ public class Transaction extends Thread {
 		System.out.println("TRANSACTION SUMMARY");
 		System.out.println("===================");
 		while (iterator.hasNext()) {
-			Map.Entry<Integer, Bank> entry = (Entry<Integer, Bank>) iterator.next();
+			Map.Entry<Long, Bank> entry = (Entry<Long, Bank>) iterator.next();
 			System.out.println("Balance of "+entry.getKey()+" is : "+ entry.getValue().amount);
 		}
 	}
