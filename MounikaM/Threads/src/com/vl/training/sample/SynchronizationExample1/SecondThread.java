@@ -1,9 +1,9 @@
 package com.vl.training.sample.SynchronizationExample1;
 
 public class SecondThread extends Thread {
-    SynchronizationEx1 syn;
+    private SynchronizationEx1 syn;
 
-    public SecondThread(SynchronizationEx1 syn) {
+    public SecondThread(final SynchronizationEx1 syn) {
 
         this.syn = syn;
     }
