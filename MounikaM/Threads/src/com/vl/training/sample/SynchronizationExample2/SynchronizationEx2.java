@@ -5,12 +5,12 @@ package com.vl.training.sample;
 
 public class SynchronizationEx2 {
     public synchronized void display(int n) { // It is called with respect to FirstThread calss
-        for (int i = 0; i < n ; i++) {
+        for (int i = 0; i < n; i++) {
             System.out.println(i);
         }
     }
     public synchronized void displayGreeting(String s) { // It is called with respect to SecondThread classs
-        for (int i = 0; i < 10 ; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println(s);
         }
     }

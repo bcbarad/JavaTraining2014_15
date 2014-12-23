@@ -1,7 +1,7 @@
 package com.vl.training.sample.StaticSynchronization;
 
 public class StaticSynchronizationBlock {
-    public synchronized static void display(int n) {
+    public static synchronized void display(int n) {
         for (int i = 0; i < n; i++) {
             System.out.println(i);
         }
@@ -18,7 +18,7 @@ public class StaticSynchronizationBlock {
         try {
             ft.join();
             s.join();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.err.println(e);
         }
     }

@@ -4,7 +4,7 @@ package com.vl.training.sample.SynchronizationExample1;
 public class SynchronizationEx1 {
     public synchronized void multiplicationTable(int n) {
         int k = 0;
-        for ( int i = 1; i < 10; i++) {
+        for (int i = 1; i < 10; i++) {
             k = i * n;
             System.out.println(k);
         }
@@ -22,7 +22,7 @@ public class SynchronizationEx1 {
         try {
             threadt1.join();
             threadt2.join();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.err.println(e);
         }
     }

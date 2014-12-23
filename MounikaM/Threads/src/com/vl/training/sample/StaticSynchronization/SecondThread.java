@@ -1,9 +1,9 @@
 package com.vl.training.sample.StaticSynchronization;
 
 public class SecondThread extends Thread {
-    StaticSynchronizationBlock st;
+    private StaticSynchronizationBlock st;
 
-    public SecondThread(StaticSynchronizationBlock s){
+    public SecondThread(final StaticSynchronizationBlock s) {
         this.st = s;
     }
     public void run() {
