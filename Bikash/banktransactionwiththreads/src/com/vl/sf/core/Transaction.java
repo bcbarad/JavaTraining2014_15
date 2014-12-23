@@ -30,7 +30,7 @@ public class Transaction extends Thread {
 		}
 	}
 
-	public synchronized void setTotalAmountDetails(BufferedReader bReader)
+	public void setTotalAmountDetails(BufferedReader bReader)
 			throws IOException {
 		String record;
 		while ((record = bReader.readLine()) != null) {
@@ -40,19 +40,26 @@ public class Transaction extends Thread {
 				long accNo = Long.parseLong(temp[0]);
 				String transactionType = temp[1];
 				double amount = Double.parseDouble(temp[2]);
-				Account bank = storageFile.get(accNo);
+				Account value = storageFile.get(accNo);
 				/*
 				 * If there is no accounts previously and trying to deposit the
 				 * money then we are creating an account and deposit the amount
 				 */
-				if (bank == null) {
-					bank = new Account();
-					status = bank.deposit(amount);
-					if (status) {
-						storageFile.put(accNo, bank);
-					} else {
-						System.out
-								.println("We cannot open an account with Rs.000");
+				if (value == null) {
+					synchronized (storageFile) {
+						value = new Account();
+						if (transactionType.equals("d")
+								|| transactionType.equals("D")) {
+							status = value.deposit(amount);
+							if (!status) {
+								System.out
+										.println("Rs.000 is not possible to deposit in your account");
+							}else {
+								storageFile.put(accNo, value);
+							}
+						} else {
+							System.out.println(accNo + " Does not have account trying to withdraw Rs."+amount);
+						}
 					}
 				} else {
 					/*
@@ -66,17 +73,17 @@ public class Transaction extends Thread {
 					 * withdrawing the amount else the method returns false and
 					 * gives a insufficient balance message
 					 */
-					synchronized (bank) {
+					synchronized (value) {
 						if (transactionType.equals("d")
 								|| transactionType.equals("D")) {
-							status = bank.deposit(amount);
+							status = value.deposit(amount);
 							if (!status) {
 								System.out
 										.println("Rs.000 is not possible to deposit in your account");
 							}
 						} else if (transactionType.equals("w")
 								|| transactionType.equals("W")) {
-							status = bank.withdraw(amount);
+							status = value.withdraw(amount);
 							if (!status) {
 								System.out
 										.println(accNo
@@ -105,8 +112,8 @@ public class Transaction extends Thread {
 	public static void main(String[] args) {
 
 		try {
-			if (args.length == 3) {
-				File inputDirectory = new File("src/input");
+			if (args.length != 0) {
+				File inputDirectory = new File(args[0]);
 				File[] allFiles = inputDirectory.listFiles();
 				int fileLength = allFiles.length;
 				Transaction[] transactions = new Transaction[fileLength];
