@@ -68,6 +68,7 @@ class Bank implements Runnable {
             } else {
                 Scanner sc = new Scanner(new File(args[0]));
                 Bank b = new Bank();
+                b.crawlDirectoryAndProcessFiles(inputDir);
                 //ExecutorService executor = Executors.newFixedThreadPool(2);
                 //Processor p = new Processor(file);
                 //Thread t = new Thread(p);
