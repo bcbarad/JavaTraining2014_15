@@ -2,12 +2,14 @@ package com.vl.training.sample;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.File;
 import java.util.Scanner;
 
 public final class LogProcessing  {
     HashMap<String, Long> log = new HashMap<String, Long>();
+    ArrayList<Thread> tList = new ArrayList<Thread>();
 
     private LogProcessing() {
     }
@@ -19,6 +21,8 @@ public final class LogProcessing  {
         } else {
             LogProcessing lp = new LogProcessing();
             lp.processLog(new File(arr[0]));
+            lp.initializeThreads();
+            lp.joinThreads();
             lp.printAccountDetails();
         }
     }
@@ -44,12 +48,23 @@ public final class LogProcessing  {
                         }
                     }
                 };
-                t.start();
-                try {
-                    t.join();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                tList.add(t);
+            }
+        }
+    }
+
+    public void initializeThreads() {
+        for (Thread t : tList) {
+            t.start();
+            System.out.println("Thread " + t.getId() + "started");
+        }
+    }
+    public void joinThreads(){
+        for (Thread t : tList) {
+            try {
+                t.join();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -68,10 +83,17 @@ public final class LogProcessing  {
 }
 
 class TransactionLogger extends Thread {
-    public static synchronized Map processLog(final Scanner sc,
+    static int n = 1;
+    public static Map processLog(final Scanner sc,
             final HashMap<String, Long> log) {
-
+        System.out.println("In thread : " + Thread.currentThread().getId());
         while (sc.hasNext()) {
+            try {
+                Thread.sleep(n*100);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("Processing Thread " + Thread.currentThread().getId());
             String acc = sc.next();
             String remarks = sc.next();
             long amount = sc.nextLong();
@@ -84,6 +106,7 @@ class TransactionLogger extends Thread {
                 amount = value - amount;
             }
             log.put(acc, amount);
+            n++;
         }
         return log;
     }
