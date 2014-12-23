@@ -15,18 +15,18 @@ public class LogProcessing  {
             return;
         } else {
             LogProcessing lp = new LogProcessing();
-            lp.fileWalk(new File(arr[0]));
+            lp.processLog(new File(arr[0]));
             lp.printAccountDetails();
         }
     }
 
-    public void fileWalk(File root) throws IOException {
+    public void processLog(File root) throws IOException {
         File[] fileList = root.listFiles();
         if (fileList == null)
             return;
         for (File f : fileList) {
             if (f.isDirectory()) { //traverse the directory untill files to be processed are found
-                fileWalk(f);
+                processLog(f);
             }
             else { // code for creating individual thread for each input file found
                 final File file = f;
@@ -34,7 +34,7 @@ public class LogProcessing  {
                 Thread t = new Thread() {
                     public void run() {
                         try {
-                            HashMap<String, Long> tlog = (HashMap) obj.processLog(new Scanner(file), log);
+                            obj.processLog(new Scanner(file), log);
                         } catch(Exception e) {
                             e.printStackTrace();
                         }
@@ -62,7 +62,7 @@ public class LogProcessing  {
 }
 
 class TransactionLogger extends Thread {
-    public static synchronized  Map processLog(Scanner sc, HashMap<String, Long> log) {
+    public static synchronized Map processLog(Scanner sc, HashMap<String, Long> log) {
         while (sc.hasNext()) {
             String acc = sc.next();
             String remarks = sc.next();
