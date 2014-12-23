@@ -116,7 +116,7 @@ public class Transaction extends Thread {
 
 		try {
 			if (args.length != 0) {
-				File inputDirectory = new File(args[0]);
+				File inputDirectory = new File(args[0]);//Give the folder name where the input files are availableas command line argument
 				File[] allFiles = inputDirectory.listFiles();
 				int fileLength = allFiles.length;
 				Transaction[] transactions = new Transaction[fileLength];
