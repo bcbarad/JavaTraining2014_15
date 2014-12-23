@@ -45,6 +45,8 @@ public class Transaction extends Thread {
 					status=bank.deposit(amount);
 					if(status){
 						storageFile.put(accNo, bank);
+					}else{
+						System.out.println("We cannot open an account with Rs.000 money");
 					}
 				} else {
 					synchronized (bank) {
