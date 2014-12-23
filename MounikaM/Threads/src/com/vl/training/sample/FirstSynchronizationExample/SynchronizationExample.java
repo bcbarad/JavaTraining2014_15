@@ -1,4 +1,4 @@
-package com.vl.training.sample.SynchronozationExample;
+package com.vl.training.sample.FirstSynchronizationExample;
 
 public class SynchronizationExample {
     public synchronized void display(int n) {

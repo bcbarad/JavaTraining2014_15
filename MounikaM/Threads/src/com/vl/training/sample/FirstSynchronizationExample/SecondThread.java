@@ -1,4 +1,4 @@
-package com.vl.training.sample.SynchronizationExample;
+package com.vl.training.sample.FirstSynchronizationExample;
 
 class SecondThread extends Thread {
     SynchronizationExample se;
@@ -6,6 +6,6 @@ class SecondThread extends Thread {
         this.se = se;
     }
     public void run() {
-        se.display(20);
+        se.display(10);
     }
 }
