@@ -1,6 +1,8 @@
 package com.vl.sf.core;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
@@ -11,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Transaction extends Thread {
 
-	protected static ConcurrentMap<Long, Bank> storageFile = new ConcurrentHashMap<Long, Bank>();
+	protected static ConcurrentMap<Long, Account> storageFile = new ConcurrentHashMap<Long, Account>();
 
 	private BufferedReader bReader = null;
 
@@ -28,7 +30,7 @@ public class Transaction extends Thread {
 		}
 	}
 
-	public static synchronized void setTotalAmountDetails(BufferedReader bReader)
+	public synchronized void setTotalAmountDetails(BufferedReader bReader)
 			throws IOException {
 		String record;
 		while ((record = bReader.readLine()) != null) {
@@ -38,13 +40,13 @@ public class Transaction extends Thread {
 				long accNo = Long.parseLong(temp[0]);
 				String transactionType = temp[1];
 				double amount = Double.parseDouble(temp[2]);
-				Bank bank = storageFile.get(accNo);
+				Account bank = storageFile.get(accNo);
 				/*
 				 * If there is no accounts previously and trying to deposit the
 				 * money then we are creating an account and deposit the amount
 				 */
 				if (bank == null) {
-					bank = new Bank();
+					bank = new Account();
 					status = bank.deposit(amount);
 					if (status) {
 						storageFile.put(accNo, bank);
@@ -93,43 +95,43 @@ public class Transaction extends Thread {
 		System.out.println("TRANSACTION SUMMARY");
 		System.out.println("===================");
 		while (iterator.hasNext()) {
-			Map.Entry<Long, Bank> entry = (Entry<Long, Bank>) iterator.next();
+			Map.Entry<Long, Account> entry = (Entry<Long, Account>) iterator
+					.next();
 			System.out.println("Balance of " + entry.getKey() + " is : "
 					+ entry.getValue().amount);
 		}
 	}
 
 	public static void main(String[] args) {
+
 		try {
 			if (args.length == 3) {
-
-				BufferedReader file1Reader = new BufferedReader(new FileReader(
-						args[0]));
-				file1Reader.readLine();
-				Transaction tran1 = new Transaction(file1Reader);
-
-				BufferedReader file2Reader = new BufferedReader(new FileReader(
-						args[1]));
-				file2Reader.readLine();
-				Transaction tran2 = new Transaction(file2Reader);
-
-				BufferedReader file3Reader = new BufferedReader(new FileReader(
-						args[2]));
-				file3Reader.readLine();
-				Transaction tran3 = new Transaction(file3Reader);
-				System.out.println("Thread one is going to start");
-				tran1.start();
-				System.out.println("Thread two is going to start");
-				tran2.start();
-				System.out.println("Thread three is going to start\n");
-				tran3.start();
-
-				Thread.sleep(1000);
-
+				File inputDirectory = new File("src/input");
+				File[] allFiles = inputDirectory.listFiles();
+				int fileLength = allFiles.length;
+				Transaction[] transactions = new Transaction[fileLength];
+				BufferedReader file1Reader = null;
+				for (int i = 0; i < fileLength; i++) {
+					file1Reader = new BufferedReader(
+							new FileReader(allFiles[i]));
+					file1Reader.readLine();
+					transactions[i] = new Transaction(file1Reader);
+					transactions[i].start();
+				}
+				for (int i = 0; i < fileLength; i++) {
+					transactions[i].join();
+				}
 				transactionSummary();
-			}else {
-				System.out.println("You have not given the Commandline argument values");
+			} else {
+				System.out
+						.println("You have not given the Commandline argument values");
 			}
+		} catch (FileNotFoundException fnf) {
+			fnf.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
