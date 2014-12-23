@@ -29,14 +29,12 @@ public class LogProcessing  {
                 fileWalk(f);
             }
             else { // code for creating individual thread for each input file found
-                System.out.println(f.getAbsoluteFile());
                 final File file = f;
                 final TransactionLogger obj = new TransactionLogger();
                 Thread t = new Thread() {
                     public void run() {
                         try {
-                            HashMap<String, Long> tlog = (HashMap) obj.processLog(new Scanner(file));
-                            log.putAll(tlog);
+                            HashMap<String, Long> tlog = (HashMap) obj.processLog(new Scanner(file), log);
                         } catch(Exception e) {
                             e.printStackTrace();
                         }
@@ -64,8 +62,7 @@ public class LogProcessing  {
 }
 
 class TransactionLogger extends Thread {
-    public static synchronized  Map processLog(Scanner sc) {
-        HashMap<String, Long> log = new HashMap<String, Long>();
+    public static synchronized  Map processLog(Scanner sc, HashMap<String, Long> log) {
         while (sc.hasNext()) {
             String acc = sc.next();
             String remarks = sc.next();
