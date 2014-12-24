@@ -12,9 +12,12 @@ final public class TransactionUsingThread {
     public static void main(final String[] args) throws IOException {
         String name = Thread.currentThread().getName();
         System.out.println("Thread : " + name + " Thread started ");
+        //reading directory as input file from commandline arguments
         File directory = new File(args[0]);
+        //storing list of files in an array named File
         File[] listfiles = directory.listFiles();
         Transaction t = new Transaction();
+        //creating an arry for threads with the size as no.of.files in the directory 
         ThreadTransaction[] tt = new ThreadTransaction[listfiles.length];
         System.out.print("no of files in the given directory : ");
         System.out.println(listfiles.length);
@@ -23,8 +26,9 @@ final public class TransactionUsingThread {
             if (filename.endsWith(".txt") || filename.endsWith(".TXT")) {
                 Scanner sc = new Scanner(listfiles[i]);
                 tt[i] = new ThreadTransaction(t , sc);
-                System.out.println("file " + i + " name : ");
+                System.out.print("file " + i + " name : ");
                 System.out.println(listfiles[i].getName());
+                //calling thread[i] for i th file
                 tt[i].start();
             }
         }
@@ -35,6 +39,7 @@ final public class TransactionUsingThread {
                 System.out.println(e);
             }
         }
+        //displaying the total transactions at end
         t.printDetails();
         System.out.println("main thread ended");
     }
@@ -47,12 +52,14 @@ class ThreadTransaction extends Thread {
         this.t = trans;
         this.sc = scan;
     }
+    //to print currently executing thread name
     public void printMsg() {
         Thread thread = Thread.currentThread();
         name = thread.getName();
         //System.out.println("name=" + name);
         System.out.println("Thread :" + name + "started");
     }
+    //thread starts from here
     public void run() {
         printMsg();
         try {
@@ -68,6 +75,7 @@ class Transaction {
     public  synchronized void doTransaction(final Scanner sc)
            throws IOException {
         boolean temp = false;
+        //System.out.println("accountnumber transtype  amount");
         while (sc.hasNext()) {
             String accountnumber = sc.next();
             System.out.print(accountnumber + "\t");
@@ -95,7 +103,6 @@ class Transaction {
                 m.put(accountnumber , balance);
             }
         }
-        //printDetails(m);
     }
     void printDetails() {
         System.out.println("account details after doing transaction");
