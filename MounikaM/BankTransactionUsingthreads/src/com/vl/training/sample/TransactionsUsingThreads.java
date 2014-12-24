@@ -43,36 +43,35 @@ class Transaction {
                     }
                 }
             }
+        } catch (FileNotFoundException e) {
+            System.err.println(e);
         }
-    } catch (FileNotFoundException e) {
-        System.err.println(e);
-    }
     return hm;
-}
-public static void updateAccount (int money, CurrentBalance amount, String typeofTransaction ) {
-    if (typeofTransaction.equals("W")) {
-        synchronized(amount) {
-            amount.withdraw(money);
+    }
+    public static void updateAccount (int money, CurrentBalance amount, String typeofTransaction ) {
+        if (typeofTransaction.equals("W")) {
+            synchronized(amount) {
+                amount.withdraw(money);
+            }
+        }
+        if (typeofTransaction.equals("D")) {
+            synchronized(amount) {
+                //System.out.println("\n enetring into 4");
+                amount.deposit(money);
+            }
         }
     }
-    if (typeofTransaction.equals("D")) {
-        synchronized(amount) {
-            //System.out.println("\n enetring into 4");
-            amount.deposit(money);
+
+
+    public static void printAccountDetails() {
+        Set<String> keys = hm.keySet();
+        // System.out.println("hg");
+        for (String k : keys) {
+            //   System.out.println(k);
+            // System.out.println(hm.get(k).amount);
+            System.out.println("account number: " + k + " Available balance " +hm.get(k).amount);
         }
     }
-}
-
-
-public static void printAccountDetails() {
-    Set<String> keys = hm.keySet();
-    // System.out.println("hg");
-    for (String k : keys) {
-        //   System.out.println(k);
-        // System.out.println(hm.get(k).amount);
-        System.out.println("account number: " + k + " Available balance " +hm.get(k).amount);
-    }
-}
 }
 public class TransactionsUsingThreads {
     public static void main(String[] args) {
