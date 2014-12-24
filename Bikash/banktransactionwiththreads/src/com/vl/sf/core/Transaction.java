@@ -47,18 +47,26 @@ public class Transaction extends Thread {
 				 */
 				if (value == null) {
 					synchronized (storageFile) {
-						value = new Account();
-						if (transactionType.equals("d")
-								|| transactionType.equals("D")) {
-							status = value.deposit(amount);
-							if (!status) {
-								System.out
-										.println("Rs.000 is not possible to deposit in your account");
-							}else {
-								storageFile.put(accNo, value);
+						/*Suppose two threads with same account are came at same time So 
+						 * May be after entering to the synchronized block one thread create a new account and putting the amount
+						 * after that second thread value object still containing null value
+						 * for avoiding this problem again need to check the value with same accNo 
+						 */
+						value = storageFile.get(accNo);
+						if (value == null) {
+							value = new Account();
+							if (transactionType.equals("d")
+									|| transactionType.equals("D")) {
+								status = value.deposit(amount);
+								if (!status) {
+									System.out
+											.println("Rs.000 is not possible to deposit in your account");
+								} else {
+									storageFile.put(accNo, value);
+								}
+							} else {
+								System.out.println(accNo + " Wrong user ");
 							}
-						} else {
-							System.out.println(accNo + " Does not have account trying to withdraw Rs."+amount);
 						}
 					}
 				} else {

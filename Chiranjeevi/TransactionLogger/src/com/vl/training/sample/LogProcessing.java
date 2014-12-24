@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.io.File;
 import java.util.Scanner;
 
 public final class LogProcessing  {
-    HashMap<String, Long> log = new HashMap<String, Long>();
+    Hashtable<String, Long> log = new Hashtable<String, Long>();
     ArrayList<Thread> tList = new ArrayList<Thread>();
     TransactionLogger tl = new TransactionLogger();
 
@@ -42,7 +43,6 @@ public final class LogProcessing  {
                 Thread t = new Thread() {
                     public void run() {
                         try {
-//                            TransactionLogger.processLog(new Scanner(file), log);
                             tl.processLog(new Scanner(file), log);
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -18,7 +18,7 @@
 
     <target name="run" depends="compile">
         <java classname="thread.transaction.ThreadTransaction">
-            <arg value="${input}"/>
+            <arg value="${val}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
