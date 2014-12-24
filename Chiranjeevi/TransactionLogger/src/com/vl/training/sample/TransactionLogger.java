@@ -10,15 +10,15 @@ class TransactionLogger extends Thread {
     public Map processLog(final Scanner sc,
             final Hashtable<String, Long> log) {
         while (sc.hasNext()) {
-            System.out.println("Log1 : In thread " + Thread.currentThread().getId());
+            System.out.print("Log1 : In thread " + Thread.currentThread().getId());
             String acc = sc.next();
             String remarks = sc.next();
             Long amount = sc.nextLong();
+            System.out.println(" Account : " + acc + "Amount : " + amount);
             //synchronizing on the Hashtable
-            synchronized(log) {
+            synchronized(acc) {
                 Long value = log.get(acc);
                 if (value == null) {
-                    // do nothing
                     value = amount;
                 } else {
                     if (remarks.equals("D")) {
