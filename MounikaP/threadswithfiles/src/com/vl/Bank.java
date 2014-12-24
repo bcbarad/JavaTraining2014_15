@@ -54,26 +54,35 @@ class Processor extends Thread {
 }
 public class Bank extends Thread {
     public static void main(String[] args) throws FileNotFoundException {
-        Processor p = null;
-        BankTransaction bt = new BankTransaction();
-        File dir = new File(args[0]);
-        File[] list = dir.listFiles();
-        Thread[] threads = new Thread[list.length];
-        for (int i = 0; i < list.length; i++) {
-            Scanner sc = new Scanner(list[i]);
-            System.out.println("file name:" + list[i].getName());
-            threads[i] = new Processor(bt, sc);
-            threads[i].start();
-            System.out.println("thread " + i +  "started");
-        }
-        for (int i = 0; i < list.length; i++) {
-            try {
-                threads[i].join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        try {
+            if (args.length != 1) {
+                Processor p = null;
+                BankTransaction bt = new BankTransaction();
+                File dir = new File(args[0]);
+                File[] list = dir.listFiles();
+                Thread[] threads = new Thread[list.length];
+                for (int i = 0; i < list.length; i++) {
+                    Scanner sc = new Scanner(list[i]);
+                    System.out.println("file name:" + list[i].getName());
+                    threads[i] = new Processor(bt, sc);
+                    threads[i].start();
+                    System.out.println("thread " + i +  "started");
+                }
+                for (int i = 0; i < list.length; i++) {
+                    try {
+                        threads[i].join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                bt.display();
             }
+            else {
+                System.out.println("pass file as arguments");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
         }
-        bt.display();
     }
 }
 
