@@ -5,19 +5,22 @@ import java.io.File;
 import java.util.Set;
 import java.io.FileNotFoundException;
 class Transaction {
-    synchronized void transactionProcess(Scanner sc) throws FileNotFoundException {
-        HashMap<String , Integer> map = new HashMap<String , Integer>();
+    HashMap<String , Integer> map = new HashMap<String , Integer>();
+    public void transactionProcess(Scanner sc) throws FileNotFoundException {
+        //HashMap<String , Integer> map = new HashMap<String , Integer>();
         while (sc.hasNext()) {
             String account = sc.next();
             String code = sc.next();
             Integer amount = sc.nextInt();
             Integer temp = map.get(account);
-            if (temp == null) {
-                map.put(account , amount);
-            } else if (code.equals("d")) {
-                map.put(account , (temp + amount));
-            } else if (code.equals("w")) {
-                map.put(account , (temp - amount));
+            synchronized(account) {
+                if (temp == null) {
+                    map.put(account , amount);
+                } else if (code.equals("d")) {
+                    map.put(account , (temp + amount));
+                } else if (code.equals("w")) {
+                    map.put(account , (temp - amount));
+                }
             }
         }
         try {
@@ -26,11 +29,10 @@ class Transaction {
         catch(Exception e) {
             System.out.println(e);
         }
-        Transaction.display(map);
     }
-    public static void display(final HashMap<String , Integer> map) {
-        Set set1 = map.entrySet();
-        System.out.println(set1);
+    public void display() {
+        //Set set1 = map.entrySet();
+        System.out.println(map);
     }
 }
 class C extends Thread {
@@ -51,15 +53,18 @@ class C extends Thread {
 }
 public class ThreadTransaction {
     public static void main(String[] args) throws FileNotFoundException{
-        File directory = new File("/home/sravani/JavaTraining2014_15/Sravani/threadTransaction/directory");
+        File directory = new File(args[0]);
         File[] listOfFiles = directory.listFiles();
+        Transaction t = new Transaction();
         C c1 = null;
         for(int i = 0; i < listOfFiles.length; i++) {
             Scanner sc = new Scanner(listOfFiles[i]);
-            Transaction t = new Transaction();
+            //Transaction t = new Transaction();
             c1 = new C(t , sc);
             System.out.println("file name:" + listOfFiles[i].getName());
             c1.start();
+        }
+        for (int i=0; i < listOfFiles.length; i++) {
             try {
                 c1.join();
             }
@@ -67,6 +72,7 @@ public class ThreadTransaction {
                 e.printStackTrace();
             }
         }
+        t.display();
         System.out.println("end of main");
     }
 }
