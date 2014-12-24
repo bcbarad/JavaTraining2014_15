@@ -22,64 +22,57 @@ class Transaction {
                 String typeofTransaction = sc.next();
                 int money = sc.nextInt();
                 CurrentBalance amount = null;
+                CurrentBalance balance = null;
                 amount = hm.get(accid);
-                if (amount == null ) {
-                    CurrentBalance balance = null;
-                    amount = hm.get(accid);
-                    //System.out.println("enetring into loop");
-                    synchronized(hm) {
-                        if (amount == null) {
-                            if (typeofTransaction.equals("W")) {
-                                money = 0 - money;
+                synchronized(hm) {
+                    if (amount == null) {
+                        if (typeofTransaction.equals("W")) {
+                            money = 0 - money;
+                            balance = new CurrentBalance(money);
+                        } else {
+                            if (typeofTransaction.equals("D")){
+                                money = 0 + money;
                                 balance = new CurrentBalance(money);
-                            } else {
-                                if (typeofTransaction.equals("D")){
-                                    money = 0 + money;
-                                    balance = new CurrentBalance(money);
-                                }
                             }
-                            hm.put(accid, balance);
-                            System.out.println("end of synchronization loop");
                         }
-                        else {
-                            updateAccount(money, amount, typeofTransaction);
-                        }
-                     }
-
-                } else {
-                    updateAccount(money, amount, typeofTransaction);
+                        hm.put(accid, balance);
+                        System.out.println("end of synchronization loop");
+                    }
+                    else {
+                        updateAccount(money, amount, typeofTransaction);
+                    }
                 }
             }
-        } catch (FileNotFoundException e) {
-            System.err.println(e);
         }
-        return hm;
+    } catch (FileNotFoundException e) {
+        System.err.println(e);
     }
-    public static void updateAccount (int money, CurrentBalance amount, String typeofTransaction ) {
-        if (typeofTransaction.equals("W")) {
-            synchronized(amount) {
-                //System.out.println("\n enetring into 3");
-                amount.withdraw(money);
-            }
-        }
-        if (typeofTransaction.equals("D")) {
-            synchronized(amount) {
-                //System.out.println("\n enetring into 4");
-                amount.deposit(money);
-            }
+    return hm;
+}
+public static void updateAccount (int money, CurrentBalance amount, String typeofTransaction ) {
+    if (typeofTransaction.equals("W")) {
+        synchronized(amount) {
+            amount.withdraw(money);
         }
     }
+    if (typeofTransaction.equals("D")) {
+        synchronized(amount) {
+            //System.out.println("\n enetring into 4");
+            amount.deposit(money);
+        }
+    }
+}
 
 
-    public static void printAccountDetails() {
-        Set<String> keys = hm.keySet();
-       // System.out.println("hg");
-        for (String k : keys) {
-         //   System.out.println(k);
-           // System.out.println(hm.get(k).amount);
-            System.out.println("account number: " + k + " Available balance " +hm.get(k).amount);
-        }
+public static void printAccountDetails() {
+    Set<String> keys = hm.keySet();
+    // System.out.println("hg");
+    for (String k : keys) {
+        //   System.out.println(k);
+        // System.out.println(hm.get(k).amount);
+        System.out.println("account number: " + k + " Available balance " +hm.get(k).amount);
     }
+}
 }
 public class TransactionsUsingThreads {
     public static void main(String[] args) {
@@ -115,7 +108,7 @@ public class TransactionsUsingThreads {
 class ListOfFiles implements Runnable {
     String fileName;
     Map<String, CurrentBalance> m;
-                //Transaction t = new Transaction();
+    //Transaction t = new Transaction();
     public ListOfFiles(String fileName) {
         this.fileName = fileName;
     }
