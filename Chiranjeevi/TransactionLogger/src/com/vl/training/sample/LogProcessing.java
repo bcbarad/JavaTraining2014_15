@@ -1,15 +1,17 @@
 package com.vl.training.sample;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.io.File;
 import java.util.Scanner;
 
 public final class LogProcessing  {
-    HashMap<String, Long> log = new HashMap<String, Long>();
+    Hashtable<String, Long> log = new Hashtable<String, Long>();
     ArrayList<Thread> tList = new ArrayList<Thread>();
+    TransactionLogger tl = new TransactionLogger();
 
     private LogProcessing() {
     }
@@ -21,7 +23,6 @@ public final class LogProcessing  {
         } else {
             LogProcessing lp = new LogProcessing();
             lp.processLog(new File(arr[0]));
-            lp.initializeThreads();
             lp.joinThreads();
             lp.printAccountDetails();
         }
@@ -42,23 +43,18 @@ public final class LogProcessing  {
                 Thread t = new Thread() {
                     public void run() {
                         try {
-                            TransactionLogger.processLog(new Scanner(file), log);
+                            tl.processLog(new Scanner(file), log);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 };
+                t.start();
                 tList.add(t);
             }
         }
     }
 
-    public void initializeThreads() {
-        for (Thread t : tList) {
-            t.start();
-            System.out.println("Thread " + t.getId() + "started");
-        }
-    }
     public void joinThreads(){
         for (Thread t : tList) {
             try {
@@ -79,35 +75,5 @@ public final class LogProcessing  {
         } else {
             System.out.println("Log is empty");
         }
-    }
-}
-
-class TransactionLogger extends Thread {
-    static int n = 1;
-    public static Map processLog(final Scanner sc,
-            final HashMap<String, Long> log) {
-        System.out.println("In thread : " + Thread.currentThread().getId());
-        while (sc.hasNext()) {
-            try {
-                Thread.sleep(n*100);
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-            System.out.println("Processing Thread " + Thread.currentThread().getId());
-            String acc = sc.next();
-            String remarks = sc.next();
-            long amount = sc.nextLong();
-            Long value = log.get(acc);
-            if (value == null) {
-                // do nothing
-            } else if (remarks.equals("D")) {
-                amount += value;
-            } else if (remarks.equals("W")) {
-                amount = value - amount;
-            }
-            log.put(acc, amount);
-            n++;
-        }
-        return log;
     }
 }
