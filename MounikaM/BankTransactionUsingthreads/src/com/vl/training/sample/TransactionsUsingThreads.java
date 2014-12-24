@@ -20,28 +20,44 @@ class Transaction {
             while (sc.hasNext()) {
                 String accid = sc.next();
                 String typeofTransaction = sc.next();
-                int money = sc.nextInt();
+                String m = sc.next().trim();
+                int money = Integer.parseInt(m);
                 CurrentBalance amount = null;
-                CurrentBalance balance = null;
+                //CurrentBalance balance = null;
                 amount = hm.get(accid);
+                if(amount == null) {
                 synchronized(hm) {
-                    if (amount == null) {
+                    CurrentBalance balance = hm.get(accid);
+                    if (balance == null) {
                         if (typeofTransaction.equals("W")) {
                             money = 0 - money;
+                            System.out.println(accid);
+                            System.out.println(money);
                             balance = new CurrentBalance(money);
                         } else {
                             if (typeofTransaction.equals("D")){
                                 money = 0 + money;
+                                System.out.println(accid);
+                                System.out.println("1 a " + money);
                                 balance = new CurrentBalance(money);
                             }
                         }
                         hm.put(accid, balance);
+                        System.out.println(accid);
+                        System.out.println(hm.get(accid).amount);
                         System.out.println("end of synchronization loop");
                     }
                     else {
-                        updateAccount(money, amount, typeofTransaction);
+                        System.out.println("HI");
+                        updateAccount(money, balance, typeofTransaction);
+                        System.out.println("Hellllo");
+                        System.out.println(balance.amount);
                     }
                 }
+
+                }  else {
+                     updateAccount(money,amount,typeofTransaction);
+              }
             }
         } catch (FileNotFoundException e) {
             System.err.println(e);
@@ -50,6 +66,7 @@ class Transaction {
     }
     public static void updateAccount (int money, CurrentBalance amount, String typeofTransaction ) {
         if (typeofTransaction.equals("W")) {
+            System.out.println("hello");
             synchronized(amount) {
                 amount.withdraw(money);
             }
