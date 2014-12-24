@@ -1,6 +1,6 @@
 package com.vl.sf.core;
 
-public class Bank {
+public class Account {
 	
 	protected double amount = 0;
 
