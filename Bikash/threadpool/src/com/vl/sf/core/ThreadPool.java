@@ -29,7 +29,7 @@ public class ThreadPool {
 
 	public void stop() {
 		try {
-			while (!taskQueue.isEmpty()) {
+			while (taskQueue.size() != 0) {
 				Thread.sleep(100);
 			}
 		} catch (InterruptedException ie) {
@@ -51,8 +51,11 @@ public class ThreadPool {
 		}
 	}
 
-	public static void init(File[] allFiles) throws IOException,
+	public static void init(String directory) throws IOException,
 			InterruptedException {
+		File inputDirectory = new File(directory);
+		File[] allFiles = inputDirectory.listFiles();
+
 		ThreadPool pool = new ThreadPool(2, 50);
 		BufferedReader file1Reader = null;
 		int fileLength = allFiles.length;
@@ -61,6 +64,7 @@ public class ThreadPool {
 			file1Reader.readLine();
 			pool.addTask(new Transaction(file1Reader));
 		}
+
 		pool.stop();
 	}
 
@@ -73,8 +77,8 @@ public class ThreadPool {
 					// method
 					Runnable r = (Runnable) taskQueue.take();
 					r.run();
-				} catch (InterruptedException e) {
-					// ignore
+				} catch (InterruptedException ie) {
+					//ie.printStackTrace();
 				}
 			}
 

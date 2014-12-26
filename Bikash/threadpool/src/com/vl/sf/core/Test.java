@@ -1,6 +1,5 @@
 package com.vl.sf.core;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -10,9 +9,8 @@ public class Test {
 
 		try {
 			if (args.length != 0) {
-				File inputDirectory = new File(args[0]);
-				File[] allFiles = inputDirectory.listFiles();
-				ThreadPool.init(allFiles);
+				//TODO:Give the directory as command line argument where all the files are available to read 
+				ThreadPool.init(args[0]);
 				Transaction.transactionSummary();
 			} else {
 				System.out
