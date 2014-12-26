@@ -14,6 +14,7 @@ class BankTransaction {
             Integer amt = sc.nextInt();
             Integer totAmt = cusTransactionAmt.get(cusId);
             synchronized(cusId) {
+                System.out.println("Entering for " + cusId + " hash code " + System.identityHashCode(cusId));
                 if (totAmt == null) {
                     cusTransactionAmt.put(cusId, amt);
                 } else {
@@ -25,6 +26,7 @@ class BankTransaction {
                         cusTransactionAmt.put(cusId, preAmt);
                     }
                 }
+            System.out.println("Leaving for " + cusId);
             }
         }
         return cusTransactionAmt;
