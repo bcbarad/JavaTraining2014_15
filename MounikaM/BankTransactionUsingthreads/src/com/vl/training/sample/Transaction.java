@@ -20,39 +20,32 @@ class Transaction {
                 String m = sc.next();
                 int money = Integer.parseInt(m);
                 CurrentBalance amount = null;
-                amount = hm.get(accid);
-                if (amount == null) {
-                    synchronized (hm) {
-                        amount = hm.get(accid);
-                        if (amount == null) {
-                            if (typeofTransaction.equals("W")) {
-                                System.out.println("enetring this loop when amonut is null and transaction type is withdraw");
-                                money = 0 - money;
+                synchronized(hm) {
+                    amount = hm.get(accid);
+                    if (amount == null) {
+                        if (typeofTransaction.equals("W")) {
+                            System.out.println("enetring this loop when amonut is null and transaction type is withdraw");
+                            money = 0 - money;
+                            //System.out.println(accid);
+                            //System.out.println(money);
+                            amount = new CurrentBalance(money);
+                        } else {
+                            if (typeofTransaction.equals("D")) {
+                                System.out.println("enetring this loop ehen amonut is null and transaction type is deposit");
+                                money = 0 + money;
                                 //System.out.println(accid);
                                 //System.out.println(money);
                                 amount = new CurrentBalance(money);
-                            } else {
-                                if (typeofTransaction.equals("D")) {
-                                    System.out.println("enetring this loop ehen amonut is null and transaction type is deposit");
-                                    money = 0 + money;
-                                    //System.out.println(accid);
-                                    //System.out.println(money);
-                                    amount = new CurrentBalance(money);
-                                }
                             }
-                            hm.put(accid, amount);
-                            System.out.println(accid);
-                            System.out.println(Thread.currentThread());
-                            //System.out.println(hm.get(accid).amount);
-                            System.out.println("end of synchronization loop");
-                        } else {
-                            System.out.println(Thread.currentThread());
-                            updateAccount(money, amount, typeofTransaction);
-                            System.out.println(amount.amount);
                         }
+                        hm.put(accid, amount);
+                        System.out.println(accid);
+                        System.out.println(Thread.currentThread());
+                        //System.out.println(hm.get(accid).amount);
+                        System.out.println("end of synchronization loop");
+                    } else {
+                        updateAccount(money, amount, typeofTransaction);
                     }
-                } else {
-                    updateAccount(money, amount, typeofTransaction);
                 }
             }
         } catch (FileNotFoundException e) {
