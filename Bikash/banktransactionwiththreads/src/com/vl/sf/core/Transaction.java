@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Transaction extends Thread {
 
-	protected static ConcurrentMap<Long, Account> storageFile = new ConcurrentHashMap<Long, Account>();
+	protected static ConcurrentMap<Long, Account> map = new ConcurrentHashMap<Long, Account>();
 
 	private BufferedReader bReader = null;
 
@@ -36,32 +36,44 @@ public class Transaction extends Thread {
 		while ((record = bReader.readLine()) != null) {
 			String[] temp = record.split(",");
 			if (temp.length != 0) {
-				boolean status = false;
 				long accNo = Long.parseLong(temp[0]);
 				String transactionType = temp[1];
 				double amount = Double.parseDouble(temp[2]);
-				Account value = storageFile.get(accNo);
+				Account account = map.get(accNo);
 				/*
 				 * If there is no accounts previously and trying to deposit the
-				 * money then we are creating an account and deposit the amount
+				 * money then it's creating an account and deposit the amount
 				 */
-				if (value == null) {
-					synchronized (storageFile) {
-						value = storageFile.get(accNo);
-						if (value == null) {
-							value = new Account();
+				if (account == null) {
+					synchronized (map) {
+						/*
+						 * Suppose two same account threads are came at same
+						 * time So May be after entering to the synchronized
+						 * block one thread create a new account and putting the
+						 * amount after that second thread account object still
+						 * containing null account for avoiding this problem
+						 * again need to check the account with same accNo
+						 */
+						account = map.get(accNo);
+						if (account == null) {
+							account = new Account();
 							if (transactionType.equals("d")
 									|| transactionType.equals("D")) {
-								status = value.deposit(amount);
-								if (!status) {
+
+								if (!account.deposit(amount)) {
 									System.out
 											.println("Rs.000 is not possible to deposit in your account");
 								} else {
-									storageFile.put(accNo, value);
-								}
+									map.put(accNo, account);
+								}// inner if else
 							} else {
-								System.out.println(accNo + " Wrong user ");
-							}
+								System.out.println(accNo
+										+ " Wrong user trying to withdraw Rs."
+										+ amount);
+							}// outer if else
+						} else {
+							depositAndWithdraw(accNo, account, transactionType,
+									amount);
 						}
 					}
 				} else {
@@ -76,32 +88,39 @@ public class Transaction extends Thread {
 					 * withdrawing the amount else the method returns false and
 					 * gives a insufficient balance message
 					 */
-					synchronized (value) {
-						if (transactionType.equals("d")
-								|| transactionType.equals("D")) {
-							status = value.deposit(amount);
-							if (!status) {
-								System.out
-										.println("Rs.000 is not possible to deposit in your account");
-							}
-						} else if (transactionType.equals("w")
-								|| transactionType.equals("W")) {
-							status = value.withdraw(amount);
-							if (!status) {
-								System.out
-										.println(accNo
-												+ " You have insufficient balance to withdraw Rs."
-												+ amount);
-							}
-						}// else if
+					synchronized (account) {
+						depositAndWithdraw(accNo, account, transactionType,
+								amount);
 					}// synchronized
 				}// else
 			}// if
 		}// while
 	}// setTotalAmountDetails
 
+	private static boolean depositAndWithdraw(long accNo, Account account,
+			String transactionType, double amount) {
+		boolean status = false;
+		if (transactionType.equals("d") || transactionType.equals("D")) {
+			status = account.deposit(amount);
+			if (!status) {
+				System.out
+						.println("Rs.000 is not possible to deposit in your account");
+			}
+		} else if (transactionType.equals("w") || transactionType.equals("W")) {
+			status = account.withdraw(amount);
+			if (!status) {
+				System.out.println(accNo
+						+ " You have insufficient balance to withdraw Rs."
+						+ amount);
+			}
+		}
+
+		return true;
+
+	}
+
 	public static void transactionSummary() {
-		Iterator<?> iterator = storageFile.entrySet().iterator();
+		Iterator<?> iterator = map.entrySet().iterator();
 		System.out.println("TRANSACTION SUMMARY");
 		System.out.println("===================");
 		while (iterator.hasNext()) {
@@ -116,7 +135,7 @@ public class Transaction extends Thread {
 
 		try {
 			if (args.length != 0) {
-				File inputDirectory = new File(args[0]);//Give the folder name where the input files are availableas command line argument
+				File inputDirectory = new File(args[0]);
 				File[] allFiles = inputDirectory.listFiles();
 				int fileLength = allFiles.length;
 				Transaction[] transactions = new Transaction[fileLength];
