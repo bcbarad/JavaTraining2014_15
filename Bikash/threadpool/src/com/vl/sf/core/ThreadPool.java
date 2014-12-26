@@ -11,7 +11,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class ThreadPool {
 	@SuppressWarnings("rawtypes")
-	private BlockingQueue taskQueue = null;
+	private static BlockingQueue taskQueue = null;
 	private List<Worker> workerThreads;
 	private boolean isStopped = false;
 
