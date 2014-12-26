@@ -28,6 +28,14 @@ public class ThreadPool {
 	}
 
 	public void stop() {
+		try {
+			while (!taskQueue.isEmpty()) {
+				Thread.sleep(100);
+			}
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
+
 		isStopped = true;
 		for (Thread workerThread : workerThreads) {
 			workerThread.interrupt();
@@ -52,9 +60,6 @@ public class ThreadPool {
 			file1Reader = new BufferedReader(new FileReader(allFiles[i]));
 			file1Reader.readLine();
 			pool.addTask(new Transaction(file1Reader));
-		}
-		while(taskQueue.size()!=0){
-			Thread.sleep(1000);
 		}
 		pool.stop();
 	}
