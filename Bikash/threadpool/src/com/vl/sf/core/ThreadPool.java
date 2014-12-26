@@ -53,6 +53,9 @@ public class ThreadPool {
 			file1Reader.readLine();
 			pool.addTask(new Transaction(file1Reader));
 		}
+		while(taskQueue.size()!=0){
+			Thread.sleep(1000);
+		}
 		pool.stop();
 	}
 
