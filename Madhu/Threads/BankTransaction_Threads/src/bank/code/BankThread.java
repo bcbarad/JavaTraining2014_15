@@ -1,134 +1,78 @@
-//package bank.code;
+package bank.code;
 import java.util.Hashtable;
-import java.util.Map.Entry;
-import java.util.Map;
-import java.util.Set;
 import java.util.Scanner;
 import java.io.File;
+import java.util.Set;
+import java.util.Map.Entry;
+import java.util.Map;
 import java.io.FileNotFoundException;
-public final class BankThread {
-    BankThread() {
-    }
-    
-    
-    public static void main(final String []args) throws FileNotFoundException {
-        Hashtable bankdata = new Hashtable();
-        if (args.length != 1) {
-            System.out.println("please provide the required arguments ");
-        } else {
-            File directory = new File(args[0]);
-            File[] fList = directory.listFiles();
-            Thread[] threads = new Thread[fList.length];
-            System.out.println(fList.length);
-            BankTransaction  bankobj = new BankTransaction();
-            for (int i=0 ; i < fList.length ;i++){
-                Scanner sc = new Scanner(fList[i]);
-                threads[i] = new BankTransactionThread(sc , bankobj , bankdata );
-                threads[i].start();
-                System.out.println("thread "+ i + " started ");        
-            }
-            for (int i=0 ; i < fList.length ;i++){
-                 try {
-                       threads[i].join();
-                } catch(Exception e) {
-                       e.printStackTrace();
+class BankTransaction {
+    Hashtable<Integer , Double> bankdata = new Hashtable<Integer , Double>();
+    public void transactionProcess(Scanner sc) throws FileNotFoundException {
+        while (sc.hasNext()) {
+            Integer customid = sc.nextInt();
+            String transtype = sc.next();
+            double amount = Double.parseDouble(sc.next());
+            Double totalamount = bankdata.get(customid);
+            synchronized(customid) {
+                if (totalamount == null) {
+                    if (transtype.equals("withdraw")) {   //check that is the initial transaction be withdraw, id yes then amount should be negative
+                        amount = 0 - amount;
+                    }
+                    bankdata.put(customid , amount);
+                } else if (transtype.equals("deposite")) {                 // this check and adds the amount to accountid
+                    bankdata.put(customid , (totalamount + amount));
+                } else if (transtype.equals("withdraw")) {                // this check and subtracts the amount from account id
+                    bankdata.put(customid , (totalamount - amount));
                 }
             }
         }
-        //System.out.println("thread ");
-        //BankTransaction b= new BankTransaction();
-       // BankThread bt = new BankThread();
-        BankThread.displayData(bankdata);
     }
-    public static void displayData(final Hashtable bankdata) {
-        Set<Map.Entry<Integer , Double>> set = bankdata.entrySet();
-        System.out.println("print");
-        for (Map.Entry<Integer , Double> bankm:set) {
-            System.out.println(bankm.getKey() + " " + bankm.getValue());
+    public void displayFinalAccountSummary() {       // this method displays the final amount of all accounts after completion of the all files
+        Set<Map.Entry<Integer , Double>> set= bankdata.entrySet();
+        System.out.println("\n Account-id   Amount");
+        for(Map.Entry<Integer , Double> bankm:set){
+            System.out.println(bankm.getKey()+"           "+bankm.getValue());
         }
     }
 }
-class BankTransaction {
-    BankTransaction() {
+class BankTransactionThread extends Thread {
+    BankTransaction transobj;
+    Scanner sc;
+    BankTransactionThread(BankTransaction transobj , Scanner sc) {
+        this.transobj = transobj;
+        this.sc = sc;
     }
-    public synchronized  Hashtable checkTransactions(final Scanner sc) {
-        Hashtable<Integer, Double> bankdata1 = new Hashtable<Integer , Double>();
-        while (sc.hasNext()) {
-            int customid = Integer.parseInt(sc.next());
-            String transtype = sc.next();
-            //System.out.println(transtype);
-            double amount = Double.parseDouble(sc.next());
-            Double totalamount = bankdata1.get(customid);
-            if (totalamount == null) {
-                bankdata1.put(customid , amount);
-            } else {
-                if (transtype.equals("withdraw")) {
-                    Double remainingAmount = totalamount - amount;
-                    bankdata1.put(customid , remainingAmount);
-                } else if (transtype.equals("deposite")) {
-                    Double total = amount + totalamount;
-                    bankdata1.put(customid , total);
-                }
-            }
-            //System.out.println(bankdata1.getKey() + " " + bankdata1.getValue());
+    public void run() {      // run the threads
+        try {
+            transobj.transactionProcess(sc);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+public class BankThread {
+    public static void main(String[] args) throws FileNotFoundException{
+        File directory = new File(args[0]);
+        File[] listOfFiles = directory.listFiles();
+        BankTransaction transobj = new BankTransaction();
+        Thread[] threads = new Thread[listOfFiles.length];
+        for (int i = 0; i < listOfFiles.length; i++) {                // loop can creates an array  of threads and starts those threads
+            Scanner sc = new Scanner(listOfFiles[i]);
+            threads[i] = new BankTransactionThread(transobj , sc);
+            threads[i].start();
+            System.out.println("thread "+ threads[i].getId() +" started");
+        }
+        for (int i=0; i < listOfFiles.length; i++) {                // this loop can join the threads , then the main thread waits until all child threads all complete
             try {
-                Thread.sleep(10);
-            } catch(Exception e) {
+                threads[i].join();
+            }
+            catch(InterruptedException e) {
                 e.printStackTrace();
             }
-          //return bankdata;
         }
-        return bankdata1;
-    }
-    
-}
-class  BankTransactionThread  extends Thread {
-    BankTransaction bankobj;// = new BankTransaction();
-    Scanner sc;
-    Hashtable<Integer, Double> bankdata1; //= new Hashtable<Integer , Double>();
-    BankThread bt= new BankThread();
-    BankTransactionThread(Scanner sc , BankTransaction bankobj , Hashtable bankdata) {
-           this.bankobj = bankobj;
-           //this.bankobj = new BankTransaction();
-           this.bankdata1 = bankdata;
-           this.sc = sc;
-    }
-    public void run() {
-            System.out.println("thread running ");
-            bankdata1 = bankobj.checkTransactions(sc);
-            Set<Map.Entry<Integer , Double>> set = bankdata1.entrySet();
-            for (Map.Entry<Integer , Double> bankm:set) {
-                System.out.println(bankm.getKey() + " " + bankm.getValue());
-            } 
-            System.out.println("-----------");
-            //bt.bankdata.putAll(bankdata1);
+        transobj.displayFinalAccountSummary ();
+        System.out.println("end of main");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

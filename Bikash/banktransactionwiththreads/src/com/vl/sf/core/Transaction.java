@@ -44,6 +44,7 @@ public class Transaction extends Thread {
 				 * If there is no accounts previously and trying to deposit the
 				 * money then it's creating an account and deposit the amount
 				 */
+<<<<<<< HEAD
 				if (account == null) {
 					synchronized (map) {
 						/*
@@ -57,6 +58,18 @@ public class Transaction extends Thread {
 						account = map.get(accNo);
 						if (account == null) {
 							account = new Account();
+=======
+				if (value == null) {
+					synchronized (storageFile) {
+						/*Suppose two threads with same account are came at same time So 
+						 * May be after entering to the synchronized block one thread create a new account and putting the amount
+						 * after that second thread value object still containing null value
+						 * for avoiding this problem again need to check the value with same accNo 
+						 */
+						value = storageFile.get(accNo);
+						if (value == null) {
+							value = new Account();
+>>>>>>> 8af6771428821cd9c001de65715bfec4b5a040d0
 							if (transactionType.equals("d")
 									|| transactionType.equals("D")) {
 
