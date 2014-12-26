@@ -13,7 +13,6 @@ public class Test {
 				File inputDirectory = new File(args[0]);
 				File[] allFiles = inputDirectory.listFiles();
 				ThreadPool.init(allFiles);
-				Thread.sleep(1000);
 				Transaction.transactionSummary();
 			} else {
 				System.out
