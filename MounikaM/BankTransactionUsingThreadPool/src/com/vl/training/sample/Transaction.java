@@ -51,8 +51,10 @@ class Transaction {
                         }
                     }
                 } else {
-                    updateAccount(money, amount, typeofTransaction);
-                    //System.out.println(accid);
+                    synchronized (amount) {
+                        updateAccount(money, amount, typeofTransaction);
+                        //System.out.println(accid);
+                    }
                 }
             }
         } catch (FileNotFoundException e) {
@@ -62,22 +64,18 @@ class Transaction {
     }
     public static void updateAccount(int money, CurrentBalance amount, String typeofTransaction) {
         if (typeofTransaction.equals("W")) {
-            synchronized(amount) {
-                //System.out.println("enetring to this loop");
-                System.out.println(Thread.currentThread());
-                amount.withdraw(money);
-                //System.out.println(amount.amount);
-                // System.out.println(accid);
-            }
+            //System.out.println("enetring to this loop");
+            System.out.println(Thread.currentThread());
+            amount.withdraw(money);
+            //System.out.println(amount.amount);
+            // System.out.println(accid);
         }
         if (typeofTransaction.equals("D")) {
-            synchronized(amount) {
-                //System.out.println("enetring to ");
-                System.out.println(Thread.currentThread());
-                amount.deposit(money);
-                //System.out.println(amount.amount);
-                //System.out.println(accid);
-            }
+            //System.out.println("enetring to ");
+            System.out.println(Thread.currentThread());
+            amount.deposit(money);
+            //System.out.println(amount.amount);
+            //System.out.println(accid);
         }
     }
     public static void printAccountDetails() {
