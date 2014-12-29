@@ -18,8 +18,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.sf.core.Transaction">
-             <arg value="${val1}"/>
+        <java classname="sync.code.SyncExample3">
+            <arg value="${val1}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

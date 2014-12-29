@@ -5,10 +5,15 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
+import java.io.FileReader;
+import java.io.BufferReader;
 
 public class Transaction {
-    public Map<String, Float> accountCalculation(Scanner sc) {
+    public Map<String, Float> accountCalculation(File filename) {
         Map<String, Float> hm = new HashMap<String, Float>();
+        FileReader fr = new FileReader(filename);
+        BufferReader br = new BufferReader(fr);
+        Scanner sc = new Scanner(br);
         while (sc.hasNext()) {
             String accid = sc.next();
             String typeofTransaction = sc.next();
@@ -38,7 +43,7 @@ public class Transaction {
         }
         return hm;
     }
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         Map<String, Float> hm;
         try {
             Scanner sc = new Scanner(new File(args[0]));
@@ -52,7 +57,7 @@ public class Transaction {
         } catch (IOException io) {
             System.err.println(io);
         }
-    }
+    }*/
     public void printHashMap(Map<String, Float> hm) {
         Set<String> keys = hm.keySet();
         for (String id : keys) {

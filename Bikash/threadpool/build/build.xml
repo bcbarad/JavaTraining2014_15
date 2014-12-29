@@ -18,9 +18,10 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.sf.core.Transaction">
-             <arg value="${val1}"/>
+        <java classname="com.vl.sf.core.Test">
+            <arg value="${directory}"/>
             <classpath>
+            
                 <pathelement path="${classes.dir}"/>
             </classpath>
         </java>

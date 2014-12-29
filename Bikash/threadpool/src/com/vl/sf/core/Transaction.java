@@ -119,51 +119,19 @@ public class Transaction extends Thread {
 
 	}
 
+
+	@SuppressWarnings("unchecked")
 	public static void transactionSummary() {
 		Iterator<?> iterator = map.entrySet().iterator();
-		System.out.println("TRANSACTION SUMMARY");
+		System.out.println("\nTRANSACTION SUMMARY");
 		System.out.println("===================");
 		while (iterator.hasNext()) {
-			Map.Entry<Long, Account> entry = (Entry<Long, Account>) iterator
-					.next();
+			Map.Entry<Long, Account> entry = ((Entry<Long, Account>) iterator
+					.next());
 			System.out.println("Balance of " + entry.getKey() + " is : "
 					+ entry.getValue().amount);
 		}
 	}
-
-	public static void main(String[] args) {
-
-		try {
-			if (args.length != 0) {
-				File inputDirectory = new File(args[0]);
-				File[] allFiles = inputDirectory.listFiles();
-				int fileLength = allFiles.length;
-				Transaction[] transactions = new Transaction[fileLength];
-				BufferedReader file1Reader = null;
-				for (int i = 0; i < fileLength; i++) {
-					file1Reader = new BufferedReader(
-							new FileReader(allFiles[i]));
-					file1Reader.readLine();
-					transactions[i] = new Transaction(file1Reader);
-					transactions[i].start();
-				}
-				for (int i = 0; i < fileLength; i++) {
-					transactions[i].join();
-				}
-				transactionSummary();
-			} else {
-				System.out
-						.println("You have not given the Commandline argument values");
-			}
-		} catch (FileNotFoundException fnf) {
-			fnf.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (InterruptedException ie) {
-			ie.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 }
 

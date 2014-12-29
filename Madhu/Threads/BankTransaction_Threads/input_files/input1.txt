@@ -1,0 +1,10 @@
+100 deposite 2000
+101 deposite 3000
+100 withdraw 1000
+102 deposite 3000
+101 withdraw 500
+103 deposite 6000
+102 withdraw 200
+103 withdraw 2500
+100 withdraw 600
+

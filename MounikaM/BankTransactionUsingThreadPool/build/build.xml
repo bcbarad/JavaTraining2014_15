@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
+
 <project name="Sample" basedir="." default="run">
    <property file="build.properties"/>
 
@@ -18,8 +18,9 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.sf.core.Transaction">
-             <arg value="${val1}"/>
+        <java classname="com.vl.training.sample.TransactionsUsingThreadPool">
+            <arg value="${file}"/>
+            <arg value ="${num}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -29,7 +30,7 @@
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
-        
+
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">
