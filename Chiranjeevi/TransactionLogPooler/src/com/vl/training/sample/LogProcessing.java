@@ -31,7 +31,7 @@ public final class LogProcessing {
             lp.service = Executors.newFixedThreadPool(noOfThreads);
             lp.processLog(new File(arr[0]));
             lp.service.shutdown();
-            lp.service.awaitTermination(10000, TimeUnit.SECONDS);
+            lp.service.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
             lp.printAccountDetails();
             } catch (Exception e) {
                 e.printStackTrace();
