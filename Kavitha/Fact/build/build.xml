@@ -19,7 +19,7 @@
 
     <target name="run" depends="compile">
         <java classname="com.vl.training.sample.Fact">
-            <arg value="${val1}"/>
+            <arg value="225"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -39,3 +39,4 @@
     </target>
 
 </project>
+

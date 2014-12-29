@@ -1,6 +1,4 @@
 package com.vl.training.sample;
-
-
 import java.util.Scanner;
 public class Paran {
 public static void main(String[] args) {
