@@ -1,6 +1,8 @@
 package com.vl.sf.core;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
@@ -11,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Transaction extends Thread {
 
-	protected static ConcurrentMap<Long, Bank> storageFile = new ConcurrentHashMap<Long, Bank>();
+	protected static ConcurrentMap<Long, Account> map = new ConcurrentHashMap<Long, Account>();
 
 	private BufferedReader bReader = null;
 
@@ -28,80 +30,137 @@ public class Transaction extends Thread {
 		}
 	}
 
-	public static synchronized void setTotalAmountDetails(BufferedReader bReader)
+	public void setTotalAmountDetails(BufferedReader bReader)
 			throws IOException {
 		String record;
 		while ((record = bReader.readLine()) != null) {
 			String[] temp = record.split(",");
-			//System.out.println(record+"\n");
 			if (temp.length != 0) {
-				boolean status=false;
 				long accNo = Long.parseLong(temp[0]);
 				String transactionType = temp[1];
 				double amount = Double.parseDouble(temp[2]);
-				Bank bank = storageFile.get(accNo);
-				if (bank == null) {
-					bank = new Bank();
-					status=bank.deposit(amount);
-					if(status){
-						storageFile.put(accNo, bank);
-					}else{
-						System.out.println("We cannot open an account with Rs.000 money");
+				Account account = map.get(accNo);
+				/*
+				 * If there is no accounts previously and trying to deposit the
+				 * money then it's creating an account and deposit the amount
+				 */
+				if (account == null) {
+					synchronized (map) {
+						/*
+						 * Suppose two same account threads are came at same
+						 * time So May be after entering to the synchronized
+						 * block one thread create a new account and putting the
+						 * amount after that second thread account object still
+						 * containing null account for avoiding this problem
+						 * again need to check the account with same accNo
+						 */
+						account = map.get(accNo);
+						if (account == null) {
+							account = new Account();
+							if (transactionType.equals("d")
+									|| transactionType.equals("D")) {
+
+								if (!account.deposit(amount)) {
+									System.out
+											.println("Rs.000 is not possible to deposit in your account");
+								} else {
+									map.put(accNo, account);
+								}// inner if else
+							} else {
+								System.out.println(accNo
+										+ " Wrong user trying to withdraw Rs."
+										+ amount);
+							}// outer if else
+						} else {
+							depositAndWithdraw(accNo, account, transactionType,
+									amount);
+						}
 					}
 				} else {
-					synchronized (bank) {
-						if (transactionType.equals("d")
-								|| transactionType.equals("D")) {
-							status=bank.deposit(amount);
-						} else if (transactionType.equals("w")
-								|| transactionType.equals("W")) {
-							status=bank.withdraw(amount);
-							if(!status){
-								System.out.println(accNo+" You have insufficient balance to withdraw Rs."+amount);
-							}
-						}//else if
+					/*
+					 * If the account is exist and trying to do a transaction
+					 * then here checking the deposit amount, if the deposit
+					 * amount is 000 then the deposit method returns false. else
+					 * it's depositing the amount by locking the object of
+					 * deposit and withdraw method If user wants to withdraw the
+					 * amount withdraw method checks the the given amount should
+					 * not greater that the balanced amount then it's
+					 * withdrawing the amount else the method returns false and
+					 * gives a insufficient balance message
+					 */
+					synchronized (account) {
+						depositAndWithdraw(accNo, account, transactionType,
+								amount);
 					}// synchronized
-				}//else
+				}// else
 			}// if
 		}// while
-	}//setTotalAmountDetails
+	}// setTotalAmountDetails
+
+	private static boolean depositAndWithdraw(long accNo, Account account,
+			String transactionType, double amount) {
+		boolean status = false;
+		if (transactionType.equals("d") || transactionType.equals("D")) {
+			status = account.deposit(amount);
+			if (!status) {
+				System.out
+						.println("Rs.000 is not possible to deposit in your account");
+			}
+		} else if (transactionType.equals("w") || transactionType.equals("W")) {
+			status = account.withdraw(amount);
+			if (!status) {
+				System.out.println(accNo
+						+ " You have insufficient balance to withdraw Rs."
+						+ amount);
+			}
+		}
+
+		return true;
+
+	}
 
 	public static void transactionSummary() {
-		Iterator<?> iterator = storageFile.entrySet().iterator();
+		Iterator<?> iterator = map.entrySet().iterator();
 		System.out.println("TRANSACTION SUMMARY");
 		System.out.println("===================");
 		while (iterator.hasNext()) {
-			Map.Entry<Long, Bank> entry = (Entry<Long, Bank>) iterator.next();
-			System.out.println("Balance of "+entry.getKey()+" is : "+ entry.getValue().amount);
+			Map.Entry<Long, Account> entry = (Entry<Long, Account>) iterator
+					.next();
+			System.out.println("Balance of " + entry.getKey() + " is : "
+					+ entry.getValue().amount);
 		}
 	}
 
 	public static void main(String[] args) {
+
 		try {
-			BufferedReader file1Reader = new BufferedReader(new FileReader(
-					args[0]));
-			file1Reader.readLine();
-			Transaction tran1 = new Transaction(file1Reader);
-
-			BufferedReader file2Reader = new BufferedReader(new FileReader(
-					args[1]));
-			file2Reader.readLine();
-			Transaction tran2 = new Transaction(file2Reader);
-
-			BufferedReader file3Reader = new BufferedReader(new FileReader(
-					args[2]));
-			file3Reader.readLine();
-			Transaction tran3 = new Transaction(file3Reader);
-			System.out.println("Thread one is going to start");
-			tran1.start();
-			System.out.println("Thread two is going to start");
-			tran2.start();
-			System.out.println("Thread three is going to start\n");
-			tran3.start();
-			
-			Thread.sleep(1000);
-			
-			transactionSummary();
+			if (args.length != 0) {
+				File inputDirectory = new File(args[0]);
+				File[] allFiles = inputDirectory.listFiles();
+				int fileLength = allFiles.length;
+				Transaction[] transactions = new Transaction[fileLength];
+				BufferedReader file1Reader = null;
+				for (int i = 0; i < fileLength; i++) {
+					file1Reader = new BufferedReader(
+							new FileReader(allFiles[i]));
+					file1Reader.readLine();
+					transactions[i] = new Transaction(file1Reader);
+					transactions[i].start();
+				}
+				for (int i = 0; i < fileLength; i++) {
+					transactions[i].join();
+				}
+				transactionSummary();
+			} else {
+				System.out
+						.println("You have not given the Commandline argument values");
+			}
+		} catch (FileNotFoundException fnf) {
+			fnf.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,22 +1,24 @@
 package com.vl.training.sample;
 import java.io.*;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 interface Searchable {
-    boolean maximum(Object o1, Object o2); 
+    boolean maximum(Object o1, Object o2);
 }
 
 class Totmax implements Searchable {
-    public boolean maximum(Object o1, Object o2) {
+    public boolean maximum(final Object o1, final Object o2) {
         int count = 0;
         Student s1 = new Student();
         Student s2 = new Student();
-        s1 = (Student)o1;
-        s2 = (Student)o2;
-        if(s1.total > s2.total) {
+        s1 = (Student) o1;
+        s2 = (Student) o2;
+        if (s1.total > s2.total) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -24,15 +26,15 @@ class Totmax implements Searchable {
 
 class SubjectMax implements Searchable {
     String subject = "";
-    public SubjectMax(String subject) {
+    public SubjectMax(final String subject) {
         this.subject = subject;
     }
-    public boolean maximum(Object o1, Object o2) {
+    public boolean maximum(final Object o1, final Object o2) {
         Student s1 = new Student();
         Student s2 = new Student();
-        s1 = (Student)o1;
-        s2 = (Student)o2;
-        if(s1.getMarks(subject) > s2.getMarks(subject)) {
+        s1 = (Student) o1;
+        s2 = (Student) o2;
+        if (s1.getMarks(subject) > s2.getMarks(subject)) {
             return true;
         } else {
             return false;
@@ -43,30 +45,29 @@ class SubjectMax implements Searchable {
 public class StudentInfo {
     public static void main(final String []args) throws FileNotFoundException {
         Scanner scn = new Scanner(new File(args[0]));
-	Course c = Course.readMe(scn);
-	Course.display(c);
+        Course c = Course.readMe(scn);
+        Course.display(c);
         Object obj1 = c.getMax(c.allStudents, new Totmax());
-        Student std1 = (Student)obj1;
+        Student std1 = (Student) obj1;
         System.out.println("The highest total is : " + std1.total +  "  Secured by : " + std1.studentName);
         SubjectMax s = new SubjectMax("Java");
         Object obj2 = c.getMax(c.allStudents, s);
-        Student std2 = (Student)obj1;
+        Student std2 = (Student) obj1;
         System.out.println("The highest marks is: " + std2.marks + " Secured by: " + std2.studentName);
     }
-        
 }
 class Course {
-    static int numStudents; 
+    static int numStudents;
     Student []allStudents;
     static Course readMe(final Scanner scn) {
-        Course c = new Course();   
+        Course c = new Course();
 	//System.out.println("Enter no. of students:");
 	numStudents = scn.nextInt();
 	c.allStudents = new Student[numStudents];
 	for (int i = 0; i < numStudents; i++) {
 	    c.allStudents[ i ] = Student.readMe(scn);
 	}
-	return c; 
+	return c;
     }
     static void display(final Course c) {
         System.out.println(" StName \t SubName \t Marks");
@@ -76,14 +77,14 @@ class Course {
 	        System.out.println("\t\t" + c.allStudents[ j ].allScores[ k ].subName + "\t\t" + c.allStudents[ j ].allScores[ k ].marks);
 	    }
 	}
-}   
-    Object getMax(Object []allObjects, Searchable s) {
+    }
+    Object getMax(final Object []allObjects, final  Searchable s) {
         Object max = allObjects[0];
         int maxTotal = 0, temp = 0;
         boolean greater;
-        for(int i=0;i<allObjects.length;i++) {
-        greater = s.maximum(allObjects[i], max);
-            if(greater){
+        for (int i = 0; i < allObjects.length; i++) {
+            greater = s.maximum(allObjects[i], max);
+            if (greater) {
                 max = allObjects[i];
             }
         }
@@ -100,7 +101,7 @@ class Student {
     int marks = 0;
     static Student readMe(final Scanner scn) {
         Student s = new Student();
-	//System.out.println("Enter No of subjects:"); 
+	//System.out.println("Enter No of subjects:");
         numSubjs = scn.nextInt();
         //System.out.println("Enter student details");
 	//String details = scn.nextLine();
@@ -114,11 +115,11 @@ class Student {
         s.total = s.totalMarks;
         return s;
     }
-    int getMarks(String sName) {
-        
-        for(int i = 0; i<allScores.length; i++) {
-            if(sName.equals(allScores[ i ].subName))
+    int getMarks(final String sName) {
+        for (int i = 0; i < allScores.length; i++) {
+            if (sName.equals(allScores[ i ].subName)) {
                 marks = allScores[i].marks;
+            }
         }
         return marks;
     }

@@ -18,7 +18,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="bank.code.BankThread">
+        <java classname="bank.code.TransactionThreadsEx">
             <arg value="${val1}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
