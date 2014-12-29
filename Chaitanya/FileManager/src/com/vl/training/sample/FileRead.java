@@ -25,7 +25,7 @@ class FileRead {
                         m.put(curid, account);
                     }
                 } else {
-                    synchronized (account.curid) {
+                    synchronized (account) {
                         if (type.equals("D")) {
                             account.deposit(amount);
                         } else {
