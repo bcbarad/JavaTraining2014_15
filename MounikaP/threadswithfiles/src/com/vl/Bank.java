@@ -3,6 +3,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Map.Entry;
+<<<<<<< HEAD
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+=======
 import java.util.*;
 class BankTransaction {
     Map<String, Integer> cusTransactionAmt = new HashMap<String, Integer>();
@@ -54,10 +59,13 @@ class Processor extends Thread {
         //t.display();
     }
 }
+>>>>>>> 937ec75e4b3df2abae5030786e44aba68ee63d37
 public class Bank extends Thread {
-    public static void main(String[] args) throws FileNotFoundException {
+    BankTransaction bt = new BankTransaction();
+
+    public static void main(final String[] args) throws FileNotFoundException {
         try {
-            if (args.length != 1) {
+            if (args.length != 0) {
                 Processor p = null;
                 BankTransaction bt = new BankTransaction();
                 File dir = new File(args[0]);
@@ -77,9 +85,8 @@ public class Bank extends Thread {
                         e.printStackTrace();
                     }
                 }
-                bt.display();
-            }
-            else {
+                BankTransaction.display();
+            } else {
                 System.out.println("pass file as arguments");
             }
         } catch(Exception e) {
@@ -87,5 +94,3 @@ public class Bank extends Thread {
         }
     }
 }
-
-
