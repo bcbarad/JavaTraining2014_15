@@ -3,71 +3,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Map.Entry;
-<<<<<<< HEAD
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
-=======
-import java.util.*;
-class BankTransaction {
-    Map<String, Integer> cusTransactionAmt = new HashMap<String, Integer>();
-    public Map customerDepositAndWithdrawl(final Scanner sc) {
-        //Map<String, Integer> cusTransactionAmt = new HashMap<String, Integer>();
-        while (sc.hasNext()) {
-            String cusId = sc.next();
-            String status = sc.next();
-            Integer amt = sc.nextInt();
-            Integer totAmt = cusTransactionAmt.get(cusId);
-            synchronized(cusId) {
-                System.out.println("Entering for " + cusId + " hash code " + System.identityHashCode(cusId));
-                if (totAmt == null) {
-                    cusTransactionAmt.put(cusId, amt);
-                } else {
-                    if (status.equals("D")) {
-                        Integer preAmt = totAmt + amt;
-                        cusTransactionAmt.put(cusId, preAmt);
-                    } else if (status.equals("w")) {
-                        Integer preAmt = totAmt - amt;
-                        cusTransactionAmt.put(cusId, preAmt);
-                    }
-                }
-            System.out.println("Leaving for " + cusId);
-            }
-        }
-        return cusTransactionAmt;
-
-    }
-    public void display() {
-        Set<Entry<String, Integer>> cus = cusTransactionAmt.entrySet();
-        System.out.println("cusID"   + "    " + "amount");
-        System.out.println("-----------------------------");
-        for (Entry<String, Integer> c : cus) {
-            System.out.println(c.getKey() + "     " + c.getValue());
-        }
-        //System.out.println(cusTransactionAmt);
-    }
-}
-class Processor extends Thread {
-    private BankTransaction t;
-    Scanner sc;
-    public Processor(BankTransaction t, Scanner sc) {
-        this.t = t;
-        this.sc = sc;
-    }
-    public void run() {
-        t.customerDepositAndWithdrawl(sc);
-        //t.display();
-    }
-}
->>>>>>> 937ec75e4b3df2abae5030786e44aba68ee63d37
 public class Bank extends Thread {
-    BankTransaction bt = new BankTransaction();
-
     public static void main(final String[] args) throws FileNotFoundException {
         try {
             if (args.length != 0) {
                 Processor p = null;
-                BankTransaction bt = new BankTransaction();
+                Transaction bt = new Transaction();
                 File dir = new File(args[0]);
                 File[] list = dir.listFiles();
                 Thread[] threads = new Thread[list.length];
@@ -85,7 +29,7 @@ public class Bank extends Thread {
                         e.printStackTrace();
                     }
                 }
-                BankTransaction.display();
+                bt.display();
             } else {
                 System.out.println("pass file as arguments");
             }
