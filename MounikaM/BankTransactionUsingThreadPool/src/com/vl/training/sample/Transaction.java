@@ -20,7 +20,7 @@ class Transaction {
                 String m = sc.next();
                 int money = Integer.parseInt(m);
                 CurrentBalance amount = null;
-                synchronized(hm) {
+                synchronized (hm) {
                     amount = hm.get(accid);
                     if (amount == null) {
                         if (typeofTransaction.equals("W")) {
@@ -57,14 +57,14 @@ class Transaction {
     public static void updateAccount(int money, CurrentBalance amount, String typeofTransaction) {
         if (typeofTransaction.equals("W")) {
                //System.out.println("enetring to this loop");
-               System.out.println(Thread.currentThread());
+            System.out.println(Thread.currentThread());
                 //amount.withdraw(money);
                 //System.out.println(amount.amount);
                // System.out.println(accid);
         }
         if (typeofTransaction.equals("D")) {
                //System.out.println("enetring to ");
-               System.out.println(Thread.currentThread());
+            System.out.println(Thread.currentThread());
                 //amount.deposit(money);
                 //System.out.println(amount.amount);
                 //System.out.println(accid);

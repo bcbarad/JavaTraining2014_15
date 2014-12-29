@@ -11,19 +11,19 @@ public class TransactionsUsingThreadPool {
             int numofThreads = listofFiles.length;
             int numofThreadsinPool = Integer.parseInt(args[1]);
             System.out.println(numofThreads);
-            for (int i = 0 ; i < numofThreads; i++) {
-               System.out.println(listofFiles[i]);
+            for (int i = 0; i < numofThreads; i++) {
+                System.out.println(listofFiles[i]);
             }
             ListOfFiles[] lif = new ListOfFiles[numofThreads];
             ExecutorService executor = Executors.newFixedThreadPool(numofThreadsinPool);
             for (int i = 0; i < numofThreads; i++) {
                 if (listofFiles[i].isFile()) {
-                lif[i] = new ListOfFiles(listofFiles[i].getAbsolutePath());
-                executor.execute(lif[i]);
-               }
+                    lif[i] = new ListOfFiles(listofFiles[i].getAbsolutePath());
+                    executor.execute(lif[i]);
+                }
             }
             executor.shutdown();
-            while(!executor.isTerminated()) { // wait for all threads to finish
+            while (!executor.isTerminated()) { // wait for all threads to finish
             }
             Transaction.printAccountDetails();
         } else {
