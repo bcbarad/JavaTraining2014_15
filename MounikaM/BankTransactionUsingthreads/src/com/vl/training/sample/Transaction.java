@@ -55,14 +55,10 @@ class Transaction {
     }
     public static void updateAccount(int money, CurrentBalance amount, String typeofTransaction) {
         if (typeofTransaction.equals("W")) {
-            synchronized (amount) {
-                amount.withdraw(money);
-            }
+            amount.withdraw(money);
         }
         if (typeofTransaction.equals("D")) {
-            synchronized (amount) {
-                amount.deposit(money);
-            }
+            amount.deposit(money);
         }
     }
     public static void printAccountDetails() {

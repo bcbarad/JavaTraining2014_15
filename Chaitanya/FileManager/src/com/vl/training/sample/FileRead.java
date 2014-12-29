@@ -15,20 +15,24 @@ class FileRead {
                 int amount = (Integer.parseInt(total[2]));
                 Account account = (Account) m.get(curid);
                 if (account == null) {
-                    if (type.equals("D") || type.equals("d")) {
-                        account = new Account(curid, amount);
-                    } else {
-                        amount = 0 - amount;
-                        account = new Account(curid, amount);
+                    synchronized (m) {
+                        if (type.equals("D") || type.equals("d")) {
+                            account = new Account(curid, amount);
+                        } else {
+                            amount = 0 - amount;
+                            account = new Account(curid, amount);
+                        }
+                        m.put(curid, account);
                     }
-                    m.put(curid, account);
                 } else {
-                    if (type.equals("D")) {
-                        account.deposit(amount);
-                    } else {
-                        account.withdraw(amount);
+                    synchronized (account) {
+                        if (type.equals("D")) {
+                            account.deposit(amount);
+                        } else {
+                            account.withdraw(amount);
+                        }
+                        m.put(curid, account);
                     }
-                    m.put(curid, account);
                 }
             }
         } catch (Exception e) {
