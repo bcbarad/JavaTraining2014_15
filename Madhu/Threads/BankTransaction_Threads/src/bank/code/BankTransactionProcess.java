@@ -13,9 +13,9 @@ class BankTransactionProcess {
             Integer customid = sc.nextInt();
             String transtype = sc.next();
             double amount = Double.parseDouble(sc.next());
+            synchronized(bankdata) {
             Account totalamount = (Account) bankdata.get(customid);
             if (totalamount == null) {
-                synchronized(bankdata) {
                     if (transtype.equals("withdraw")) {  					//check that is the initial transaction be withdraw, id yes then amount should be negative
                         amount = 0 - amount;
                         totalamount = new Account(customid, amount);
@@ -23,18 +23,15 @@ class BankTransactionProcess {
                         totalamount = new Account(customid, amount);
                     }
                     bankdata.put(customid , totalamount);
-                }
             } else  {
-                synchronized(totalamount) {
                     if (transtype.equals("deposite")) {                 // this check and adds the amount to accountid
                         totalamount.deposit(amount);
                     } else if (transtype.equals("withdraw")) {                // this check and subtracts the amount from account id
                         totalamount.withdraw(amount);
                     }
-                    bankdata.put(customid , totalamount);
-
-                }	        
-            } 
+                    bankdata.put(customid , totalamount);	        
+            }
+          } 
         }
     }
     public void displayFinalAccountSummary() {       // this method displays the final amount of all accounts after completion of the all files
