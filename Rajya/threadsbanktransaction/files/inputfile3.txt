@@ -1,3 +1,4 @@
 100 deposit 500
 101 withdraw 1000
 104 withdraw 500
+a102 deposit 500
