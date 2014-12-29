@@ -17,7 +17,7 @@
         </checkstyle>
     </target>
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.TransactionUsingThread">
+        <java classname="com.vl.training.sample.TransactionUsingThreads">
             <arg value="${val1}"/>
                 <classpath>
                     <pathelement path="${classes.dir}"/>
