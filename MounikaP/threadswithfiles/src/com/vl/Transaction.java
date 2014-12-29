@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Scanner;
 class Transaction {
-    Map<String, Account> cusTransactionAmt = new HashMap<String, Account>();
+    static Map<String, Account> cusTransactionAmt = new HashMap<String, Account>();
     public Map customerDepositAndWithdrawl(final Scanner sc) {
         while (sc.hasNext()) {
             String cusId = sc.next();
@@ -32,5 +32,13 @@ class Transaction {
             }
         }
         return cusTransactionAmt;
+    }
+    public static void display() {
+        Set<Entry<String, Account>> cus = cusTransactionAmt.entrySet();
+        System.out.println("cusID"   + "    " + "amount");
+        System.out.println("-----------------------------");
+        for (Entry<String, Account> c : cus) {
+            System.out.println(c.getKey() + "     " + c.getValue().account);
+        }
     }
 }

@@ -29,7 +29,7 @@ public class Bank extends Thread {
                         e.printStackTrace();
                     }
                 }
-                bt.display();
+                Transaction.display();
             } else {
                 System.out.println("pass file as arguments");
             }
