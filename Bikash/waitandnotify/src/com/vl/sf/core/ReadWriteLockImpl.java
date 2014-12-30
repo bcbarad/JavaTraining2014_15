@@ -27,7 +27,7 @@ public class ReadWriteLockImpl implements ReadWriteLock {
 				System.out.println("U can read "
 						+ Thread.currentThread().getName());
 			} else {
-				System.out.println("waiting for reading "
+				System.out.println("waiting for writting "
 						+ Thread.currentThread().getName());
 				wait();
 				System.out.println("U can read "+ Thread.currentThread().getName());
