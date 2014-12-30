@@ -39,7 +39,7 @@ public class ReadWriteLockImpl implements ReadWriteLock {
 	public void releaseLock() {
 
 		synchronized (object) {
-			if (!isWritting) {
+			if (isWritting) {
 				System.out.println(Thread.currentThread().getName()+" read lock Realesed");
 				object.notifyAll();
 			} else {
