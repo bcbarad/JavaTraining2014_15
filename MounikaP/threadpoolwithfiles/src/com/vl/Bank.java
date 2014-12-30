@@ -6,7 +6,9 @@ import java.util.Map.Entry;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
-public class Bank extends Thread {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+public class Bank {
     public static void main(final String[] args) throws FileNotFoundException {
         try {
             if (args.length != 0) {
@@ -14,21 +16,17 @@ public class Bank extends Thread {
                 Transaction bt = new Transaction();
                 File dir = new File(args[0]);
                 File[] list = dir.listFiles();
-                Thread[] threads = new Thread[list.length];
+                ExecutorService executor = Executors.newFixedThreadPool(2);
                 for (int i = 0; i < list.length; i++) {
                     Scanner sc = new Scanner(list[i]);
                     System.out.println("file name:" + list[i].getName());
-                    threads[i] = new Processor(bt, sc);
-                    threads[i].start();
-                    System.out.println("thread " + i +  "started");
+                    p = new Processor(bt, sc);
+                    executor.execute(p);
                 }
-                for (int i = 0; i < list.length; i++) {
-                    try {
-                        threads[i].join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                executor.shutdown();
+                while (!executor.isTerminated()) {
                 }
+                System.out.println("finish all threads");
                 Transaction.display();
             } else {
                 System.out.println("pass file as arguments");
