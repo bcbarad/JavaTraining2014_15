@@ -1,65 +1,51 @@
 package com.vl.training.transaction;
+
 import java.util.Scanner;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.Map.Entry;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Set;
 import java.io.File;
 import java.io.FileNotFoundException;
 
 class ProcessTransaction extends Thread {
 
-    private Scanner sc;
-    private static Map<String, Float> allTransactions = new HashMap<String, Float>();
-
-    ProcessTransaction(final File file) throws FileNotFoundException {
-        sc = new Scanner(file);
-    }
-
-    public void run() {
-        Map<String, Float> m = ProcessTransaction.processlog(sc, allTransactions);
-        ProcessTransaction.printResult();
-    }
-
-    public static synchronized Map processlog(final Scanner sc, final Map<String, Float> allTrans) {
-        //reading values from a file
+    public void processLog(final Scanner sc,
+            final Hashtable<String, Account> log) {
         while (sc.hasNext()) {
-            String accId = sc.next();
+            String accNo = sc.next();
             String mode = sc.next();
-            Float amount = sc.nextFloat();
-            Float value = allTrans.get(accId);
-            if (value == null) {
-                allTrans.put(accId, amount);
-            } else {
-                if (mode.equals("deposit")) {
-                    amount = value + amount;
+            float amount = sc.nextFloat();
+            Account account = log.get(accNo);
+            //synchronizing on the Hashtable
+            System.out.println("Entering for " + accNo + " " + Thread.currentThread().getName());
+            if (account == null) {
+                synchronized (log) {
+                    if (log.get(accNo) == null) {
+                        account = new Account(accNo, amount);
+                        log.put(accNo, account);
+                    }
                 }
-                if (mode.equals("withdraw")) {
-                    amount = value - amount;
+            } else {//synchronizing on the account 
+                synchronized (account) {
+                    if (mode.equals("deposit")) {
+                        account.deposit(amount);
+                    } else if (mode.equals("withdraw")) {
+                        account.withdraw(amount);
+                    }
+                    log.put(accNo, account);
                 }
-                //add key-value pairs to hashmap
-                allTrans.put(accId, amount);
             }
-        }
-        return allTrans;
-    }
-
-    static void printResult() {
-        System.out.println("--------------");
-        System.out.println("AccNo  Amount");
-        System.out.println("--------------");
-        //getting value for the given key form hashmap
-        Set<Entry<String, Float>> entries = allTransactions.entrySet();
-        for (Entry<String, Float> ent : entries) {
-            System.out.println(ent.getKey() + "    " + ent.getValue());
+            System.out.println("Leaving for " + accNo + " " + Thread.currentThread().getName());
         }
     }
 }
 
 public final class Transaction {
 
-    private Transaction() {
-    }
+    private ArrayList<Thread> al = new ArrayList<Thread>();
+    private Hashtable<String, Account> allTrans = new Hashtable<String, Account>();
+    private ProcessTransaction pt = new ProcessTransaction();
 
     public void getFiles(final String str) throws FileNotFoundException {
         File folder = new File(str);
@@ -69,15 +55,41 @@ public final class Transaction {
                 if (file.isDirectory()) {
                     getFiles(file.getName());
                 } else {
-                    System.out.println("File name:" + file.getName());
-                    ProcessTransaction pt = new ProcessTransaction(file);
-                    pt.start();
-                    try {
-                        pt.join();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    final File f = file;
+                    Thread t = new Thread() {
+                        public void run() {
+                            try {
+                                pt.processLog(new Scanner(f), allTrans);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    t.start();
+                    al.add(t);
                 }
+            }
+        }
+    }
+
+    void printResult() {
+        System.out.println("--------------");
+        System.out.println("AccNo  Amount");
+        System.out.println("--------------");
+        //getting value for the given key form hashmap
+        Set<Entry<String, Account>> entries = allTrans.entrySet();
+        for (Entry<String, Account> ent : entries) {
+            Account ac = (Account) ent.getValue();
+            System.out.println(ac.getId() + "    " + ac.getAmount());
+        }
+    }
+
+    public void joinThreads() {
+        for (Thread t : al) {
+            try {
+                t.join();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -87,8 +99,11 @@ public final class Transaction {
             String folder = args[0];
             Transaction t = new Transaction();
             t.getFiles(folder);
+            t.joinThreads();
+            t.printResult();
         } else {
             System.out.println("Please provide one argument");
+            return;
         }
     }
 }

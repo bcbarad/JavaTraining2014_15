@@ -1,21 +1,18 @@
 package com.vl.training.sample;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.HashSet;
 import java.io.File;
 import java.util.Scanner;
-
-public final class LogProcessing  {
-    Hashtable<String, Long> log = new Hashtable<String, Long>();
+public final class LogProcessing {
+    Hashtable<String, Account> log = new Hashtable<String, Account>();
     ArrayList<Thread> tList = new ArrayList<Thread>();
     TransactionLogger tl = new TransactionLogger();
-
     private LogProcessing() {
     }
-
     public static void main(final String[] arr) throws IOException {
         if (arr.length != 1) {
             System.out.println("Required inputs not provided");
@@ -27,7 +24,6 @@ public final class LogProcessing  {
             lp.printAccountDetails();
         }
     }
-
     public void processLog(final File root) throws IOException {
         File[] fileList = root.listFiles();
         if (fileList == null) {
@@ -54,7 +50,6 @@ public final class LogProcessing  {
             }
         }
     }
-
     public void joinThreads(){
         for (Thread t : tList) {
             try {
@@ -64,13 +59,14 @@ public final class LogProcessing  {
             }
         }
     }
-
     public void printAccountDetails() {
+
         if (log != null) {
             System.out.println("Account\t Amount");
             System.out.println("\n-----------------------------------");
             for (Map.Entry m : log.entrySet()) {
-                System.out.println(m.getKey() + " \t " + m.getValue());
+                Account a = (Account) m.getValue();
+                System.out.println(a.getId() + " \t " + a.getAmount());
             }
         } else {
             System.out.println("Log is empty");
