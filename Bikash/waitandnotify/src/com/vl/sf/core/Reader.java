@@ -21,7 +21,7 @@ public class Reader implements Runnable {
 			readWriteLock.getReadLock();
 			reader = new BufferedReader(new FileReader(file));
 			System.out.println("Reading is going on "+Thread.currentThread().getName());
-			while ((line =reader.readLine()) != null) {
+			if ((line =reader.readLine()) != null) {
 				System.out.println(line);
 			}
 			System.out.println("Reading is over "+Thread.currentThread().getName());
