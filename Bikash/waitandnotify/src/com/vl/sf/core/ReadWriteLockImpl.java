@@ -2,14 +2,15 @@ package com.vl.sf.core;
 
 public class ReadWriteLockImpl implements ReadWriteLock {
 	private static boolean isWritting = false;
+	private Object object=ReadWriteLockImpl.class;
 
 	@Override
-	public synchronized void getWriteLock() throws InterruptedException {
-		synchronized (ReadWriteLockImpl.class) {
-			while (isWritting) {
+	public void getWriteLock() throws InterruptedException {
+		synchronized (object) {
+			if (isWritting) {
 				System.out.println("writting is going on waiting "
 						+ Thread.currentThread().getName());
-				ReadWriteLockImpl.class.wait();
+				object.wait();
 				System.out.println("waiting is over "
 						+ Thread.currentThread().getName());
 			}
@@ -19,46 +20,34 @@ public class ReadWriteLockImpl implements ReadWriteLock {
 		}
 
 	}
-
 	@Override
 	public void getReadLock() throws InterruptedException {
-		synchronized (this) {
+		synchronized (object) {
 			if (!isWritting) {
 				System.out.println("U can read "
 						+ Thread.currentThread().getName());
 			} else {
-				System.out.println("waiting for reading "
+				System.out.println("waiting for writting "
 						+ Thread.currentThread().getName());
-				wait();
-				System.out.println("U can read "+ Thread.currentThread().getName());
+				object.wait();
+				System.out.println("U can write "
+						+ Thread.currentThread().getName());
 			}
 		}
 
 	}
 
 	@Override
-	public synchronized void releaseLock() {
-		if (!isWritting) {
-			synchronized (this) {
-				if (!isWritting) {
-					notifyAll();
-				} else {
-					isWritting = false;
-					notifyAll();
-				}
-			}
+	public void releaseLock() {
 
-		} else {
-			synchronized (ReadWriteLockImpl.class) {
-				if (!isWritting) {
-					ReadWriteLockImpl.class.notifyAll();
-				} else {
-					isWritting = false;
-					ReadWriteLockImpl.class.notifyAll();
-				}
+		synchronized (object) {
+			if (!isWritting) {
+				object.notifyAll();
+			} else {
+				isWritting = false;
+				object.notifyAll();
 			}
 		}
-
 	}
 
 }
