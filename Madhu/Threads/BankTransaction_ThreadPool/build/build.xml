@@ -18,8 +18,9 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Indentation">
+        <java classname="bankpool.code.BankThreadPoolEx">
             <arg value="${val1}"/>
+            <arg value="${val2}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
-<project name="Sample" basedir="." default="run">
+<project name="threadTransaction" basedir="." default="run">
    <property file="build.properties"/>
 
    <!-- Checkstyle task -->
@@ -18,8 +17,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="com.vl.training.sample.Fact">
-            <arg value="225"/>
+        <java classname="thread.transaction.ThreadTransaction">
+            <arg value="${input}"/>
             <classpath>
                 <pathelement path="${classes.dir}"/>
             </classpath>
@@ -29,7 +28,6 @@
     <target name="init">
 		<mkdir dir="${classes.dir}"/>
     </target>
-        
 
     <!-- Cleanup -->
     <target name="clean" description="Remove all generated files">
@@ -39,4 +37,3 @@
     </target>
 
 </project>
-
