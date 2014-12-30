@@ -20,30 +20,38 @@ class Transaction {
                 String m = sc.next();
                 int money = Integer.parseInt(m);
                 CurrentBalance amount = null;
-                synchronized (hm) {
-                    amount = hm.get(accid);
-                    if (amount == null) {
-                        if (typeofTransaction.equals("W")) {
-                            System.out.println("enetring this loop when amonut is null and transaction type is withdraw");
-                            money = 0 - money;
-                            //System.out.println(accid);
-                            //System.out.println(money);
-                            amount = new CurrentBalance(money);
-                        } else {
-                            if (typeofTransaction.equals("D")) {
-                                System.out.println("enetring this loop ehen amonut is null and transaction type is deposit");
-                                money = 0 + money;
+                amount = hm.get(accid);
+                CurrentBalance balance = null;
+                if (amount == null) {
+                    synchronized (hm) {
+                        balance = hm.get(accid);
+                        if (balance == null) {
+                            if (typeofTransaction.equals("W")) {
+                                System.out.println("enetring this loop when amonut is null and transaction type is withdraw");
+                                money = 0 - money;
                                 //System.out.println(accid);
                                 //System.out.println(money);
-                                amount = new CurrentBalance(money);
+                                balance = new CurrentBalance(money);
+                            } else {
+                                if (typeofTransaction.equals("D")) {
+                                    System.out.println("enetring this loop ehen amonut is null and transaction type is deposit");
+                                    money = 0 + money;
+                                    //System.out.println(accid);
+                                    //System.out.println(money);
+                                    balance = new CurrentBalance(money);
+                                }
                             }
+                            hm.put(accid, balance);
+                            System.out.println(accid);
+                            System.out.println(Thread.currentThread());
+                        } else {
+                            updateAccount(money, balance, typeofTransaction);
+                            //System.out.println(hm.get(accid).amount);
+                            //System.out.println("end of synchronization loop");
                         }
-                        hm.put(accid, amount);
-                        System.out.println(accid);
-                        System.out.println(Thread.currentThread());
-                        //System.out.println(hm.get(accid).amount);
-                        //System.out.println("end of synchronization loop");
-                    } else {
+                    }
+                } else {
+                    synchronized (amount) {
                         updateAccount(money, amount, typeofTransaction);
                         //System.out.println(accid);
                     }
@@ -56,18 +64,18 @@ class Transaction {
     }
     public static void updateAccount(int money, CurrentBalance amount, String typeofTransaction) {
         if (typeofTransaction.equals("W")) {
-               //System.out.println("enetring to this loop");
+            //System.out.println("enetring to this loop");
             System.out.println(Thread.currentThread());
-                //amount.withdraw(money);
-                //System.out.println(amount.amount);
-               // System.out.println(accid);
+            amount.withdraw(money);
+            //System.out.println(amount.amount);
+            // System.out.println(accid);
         }
         if (typeofTransaction.equals("D")) {
-               //System.out.println("enetring to ");
+            //System.out.println("enetring to ");
             System.out.println(Thread.currentThread());
-                //amount.deposit(money);
-                //System.out.println(amount.amount);
-                //System.out.println(accid);
+            amount.deposit(money);
+            //System.out.println(amount.amount);
+            //System.out.println(accid);
         }
     }
     public static void printAccountDetails() {
