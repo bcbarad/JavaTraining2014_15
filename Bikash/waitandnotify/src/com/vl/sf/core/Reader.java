@@ -20,11 +20,11 @@ public class Reader implements Runnable {
 			readWriteLock = new ReadWriteLockImpl();
 			readWriteLock.getReadLock();
 			reader = new BufferedReader(new FileReader(file));
-			System.out.println("Reading is going on "+Thread.currentThread().getName());
-			if ((line =reader.readLine()) != null) {
+			System.out.println(Thread.currentThread().getName()+"'s Reading is started ");
+			while ((line =reader.readLine()) != null) {
 				System.out.println(line);
 			}
-			System.out.println("Reading is over "+Thread.currentThread().getName());
+			System.out.println(Thread.currentThread().getName()+"'s Reading is over ");
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
 		} catch (FileNotFoundException fnoe) {

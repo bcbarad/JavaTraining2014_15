@@ -2,17 +2,15 @@ package com.vl.sf.core;
 
 public class ReadWriteLockImpl implements ReadWriteLock {
 	private static boolean isWritting = false;
-	private Object object=ReadWriteLockImpl.class;
+	private static ReadWriteLock object = new ReadWriteLockImpl();
 
 	@Override
 	public void getWriteLock() throws InterruptedException {
 		synchronized (object) {
-			if (isWritting) {
-				System.out.println("writting is going on waiting "
-						+ Thread.currentThread().getName());
-				object.wait();
-				System.out.println("waiting is over "
-						+ Thread.currentThread().getName());
+			while (isWritting) {
+				System.out.println(Thread.currentThread().getName()+" is waiting for writting");
+				object.wait(100);
+				System.out.println(Thread.currentThread().getName()+"'s waiting is over ");
 			}
 			isWritting = true;
 			System.out.println(Thread.currentThread().getName()
@@ -20,6 +18,7 @@ public class ReadWriteLockImpl implements ReadWriteLock {
 		}
 
 	}
+
 	@Override
 	public void getReadLock() throws InterruptedException {
 		synchronized (object) {
@@ -27,17 +26,9 @@ public class ReadWriteLockImpl implements ReadWriteLock {
 				System.out.println("U can read "
 						+ Thread.currentThread().getName());
 			} else {
-				System.out.println("waiting for writting "
-<<<<<<< HEAD
-						+ Thread.currentThread().getName());
+				System.out.println(Thread.currentThread().getName()+" waiting for writting ");
 				object.wait();
-				System.out.println("U can write "
-						+ Thread.currentThread().getName());
-=======
-						+ Thread.currentThread().getName());
-				wait();
-				System.out.println("U can write "+ Thread.currentThread().getName());
->>>>>>> a02a16f9089d82799b9f6be0d228532abdffd18a
+
 			}
 		}
 
@@ -48,8 +39,10 @@ public class ReadWriteLockImpl implements ReadWriteLock {
 
 		synchronized (object) {
 			if (!isWritting) {
+				System.out.println(Thread.currentThread().getName()+" read lock Realesed");
 				object.notifyAll();
 			} else {
+				System.out.println(Thread.currentThread().getName()+" write lock Realesed ");
 				isWritting = false;
 				object.notifyAll();
 			}

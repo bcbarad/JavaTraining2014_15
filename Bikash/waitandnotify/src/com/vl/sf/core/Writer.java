@@ -18,11 +18,9 @@ public class Writer implements Runnable {
 			readWrite.getWriteLock();
 			PrintWriter out = new PrintWriter(new BufferedWriter(
 					new FileWriter(file, true)));
-			System.out.println("writing is going on "
-					+ Thread.currentThread().getName());
+			System.out.println(Thread.currentThread().getName()+" Writting is started ");
 			out.println("hello");
-			System.out.println("writing is over "
-					+ Thread.currentThread().getName());
+			System.out.println(Thread.currentThread().getName()+"'s writing is over ");
 			out.close();
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
