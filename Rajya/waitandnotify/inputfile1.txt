@@ -1,0 +1,7 @@
+100 deposit 1000
+101 deposit 2000
+104 deposit 1000
+103 withdraw 500
+hello
+hello
+hello
