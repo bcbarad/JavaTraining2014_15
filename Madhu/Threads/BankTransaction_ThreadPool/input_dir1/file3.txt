@@ -1,0 +1,5 @@
+7072 deposite 1000
+7073 deposite 1500
+7074 deposite 2000
+7072 withdraw 500
+7073 withdraw 900
