@@ -5,8 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 class ThreadPool {
-    public static void startThreads(File  directory) throws FileNotFoundException  {
-        ExecutorService executor = Executors.newFixedThreadPool(2);//creating a pool of 5 threads
+    public static void startThreads(File  directory , String count) throws FileNotFoundException  {
+        int threadcount = Integer.parseInt(count);
+        ExecutorService executor = Executors.newFixedThreadPool(threadcount);//creating a pool of 5 threads
         BankTransaction transobj = new BankTransaction();
         File[] listOfFiles = directory.listFiles();  
         for (int i = 0; i < listOfFiles.length; i++) { 
