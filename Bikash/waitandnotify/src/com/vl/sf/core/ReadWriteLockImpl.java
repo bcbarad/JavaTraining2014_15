@@ -27,7 +27,7 @@ public class ReadWriteLockImpl implements ReadWriteLock {
 						+ Thread.currentThread().getName());
 			} else {
 				System.out.println(Thread.currentThread().getName()+" waiting for writting ");
-				while(){
+				while(isWritting){
 					object.wait(100);
 				}
 			}
