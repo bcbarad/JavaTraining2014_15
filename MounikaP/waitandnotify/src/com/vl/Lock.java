@@ -12,11 +12,12 @@ public class Lock {
                 FileReadWrite f = new FileReadWrite(file);
                 for (int i = 0; i < 2; i++) {
                     threads[i] = new Thread(new ReadProcessor(f));
-                    threads[i].start();
-                    System.out.println("thread" + i + "started");
+                    //threads[i].start();
+                    //System.out.println("thread" + i + "started");
                     threads1[i] = new Thread(new WriteProcessor(f));
+                    threads[i].start();
                     threads1[i].start();
-                    System.out.println("thread " + i +  "started");
+                    //System.out.println("thread " + i +  "started");
 
                 }
                 /*p = new ReadProcessor(f);
