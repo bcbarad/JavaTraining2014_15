@@ -1,52 +1,36 @@
 package com.vl.sf.core;
 
-public class ReadWriteLockImpl implements ReadWriteLock {
-	private static boolean isWritting = false;
-	private static ReadWriteLock object = new ReadWriteLockImpl();
+public class ReadWriteLockImpl {
 
-	@Override
-	public void getWriteLock() throws InterruptedException {
-		synchronized (object) {
-			while (isWritting) {
-				System.out.println(Thread.currentThread().getName()+" is waiting for writting");
-				object.wait(100);
-				System.out.println(Thread.currentThread().getName()+"'s waiting is over ");
-			}
-			isWritting = true;
-			System.out.println(Thread.currentThread().getName()
-					+ " U can write now ");
+	private static int readers = 0;
+	private static int writers = 0;
+	private static int writeRequests = 0;
+
+	public static synchronized void getReadLock() throws InterruptedException {
+		while (writers > 0 || writeRequests > 0) {
+			ReadWriteLockImpl.class.wait();
 		}
-
+		readers++;
 	}
 
-	@Override
-	public void getReadLock() throws InterruptedException {
-		synchronized (object) {
-			if (!isWritting) {
-				System.out.println("U can read "
-						+ Thread.currentThread().getName());
-			} else {
-				System.out.println(Thread.currentThread().getName()+" waiting for writting ");
-				object.wait();
-
-			}
-		}
-
+	public synchronized static void getReadUnLock() {
+		readers--;
+		ReadWriteLockImpl.class.notifyAll();
 	}
 
-	@Override
-	public void releaseLock() {
+	public static synchronized void getWriteLock() throws InterruptedException {
+		writeRequests++;
 
-		synchronized (object) {
-			if (!isWritting) {
-				System.out.println(Thread.currentThread().getName()+" read lock Realesed");
-				object.notifyAll();
-			} else {
-				System.out.println(Thread.currentThread().getName()+" write lock Realesed ");
-				isWritting = false;
-				object.notifyAll();
-			}
+		while (readers > 0 || writers > 0) {
+			ReadWriteLockImpl.class.wait();
 		}
+		writeRequests--;
+		writers++;
+	}
+
+	public static synchronized void getWriteUnLock() {
+		writers--;
+		ReadWriteLockImpl.class.notifyAll();
 	}
 
 }
