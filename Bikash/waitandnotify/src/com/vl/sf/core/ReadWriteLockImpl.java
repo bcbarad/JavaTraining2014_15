@@ -3,10 +3,10 @@ package com.vl.sf.core;
 public class ReadWriteLockImpl {
 
 	private static int readers = 0;
-	private static int writers = 0;
+	private static boolean isWritting = false;
 
 	public static synchronized void getReadLock() throws InterruptedException {
-		while (writers > 0 ) {
+		while (isWritting ) {
 			ReadWriteLockImpl.class.wait();
 		}
 		readers++;
@@ -19,14 +19,14 @@ public class ReadWriteLockImpl {
 
 	public static synchronized void getWriteLock() throws InterruptedException {
 
-		while (readers > 0 || writers > 0) {
+		while (readers > 0 || isWritting) {
 			ReadWriteLockImpl.class.wait();
 		}
-		writers++;
+		isWritting=true;
 	}
 
 	public static synchronized void getWriteUnLock() {
-		writers--;
+		isWritting=false;
 		ReadWriteLockImpl.class.notifyAll();
 	}
 
