@@ -4,10 +4,9 @@ public class ReadWriteLockImpl {
 
 	private static int readers = 0;
 	private static boolean isWritting = false;
-	//private static int writeRequests = 0;
 
 	public static synchronized void getReadLock() throws InterruptedException {
-		while (isWritting /*|| writeRequests > 0*/) {
+		while (isWritting ) {
 			ReadWriteLockImpl.class.wait();
 		}
 		readers++;
@@ -19,12 +18,10 @@ public class ReadWriteLockImpl {
 	}
 
 	public static synchronized void getWriteLock() throws InterruptedException {
-		//writeRequests++;
 
 		while (readers > 0 || isWritting) {
 			ReadWriteLockImpl.class.wait();
 		}
-		//writeRequests--;
 		isWritting=true;
 	}
 
