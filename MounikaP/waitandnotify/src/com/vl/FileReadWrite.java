@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 class FileReadWrite {
@@ -30,10 +31,12 @@ class FileReadWrite {
     public void writeFile() throws InterruptedException, IOException, FileNotFoundException {
         try {
             rw.writeLock();
-            String content = "Hello";
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-            bw.append(content);
-            bw.close();
+             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
+            //String content = "Hello";
+            //BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+            //bw.append(content);
+            out.println("hello");
+            out.close();
         } finally {
             rw.releaseWriteLock();
         }
