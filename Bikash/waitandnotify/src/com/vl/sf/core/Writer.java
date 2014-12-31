@@ -13,21 +13,23 @@ public class Writer implements Runnable {
 	}
 
 	public void writeFile() {
-		ReadWriteLock readWrite = new ReadWriteLockImpl();
 		try {
-			readWrite.getWriteLock();
+			ReadWriteLockImpl.getWriteLock();
+			System.out.println("2");
 			PrintWriter out = new PrintWriter(new BufferedWriter(
 					new FileWriter(file, true)));
-			System.out.println(Thread.currentThread().getName()+" Writting is started ");
+			System.out.println(Thread.currentThread().getName()
+					+ " Writting is started ");
 			out.println("hello");
-			System.out.println(Thread.currentThread().getName()+"'s writing is over ");
+			System.out.println(Thread.currentThread().getName()
+					+ "'s writing is over ");
 			out.close();
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		} finally {
-			readWrite.releaseLock();
+			ReadWriteLockImpl.getWriteUnLock();
 		}
 	}
 

@@ -15,10 +15,8 @@ public class Reader implements Runnable {
 	public void readFile() {
 		String line;
 		BufferedReader reader = null;
-		ReadWriteLock readWriteLock = null;
 		try {
-			readWriteLock = new ReadWriteLockImpl();
-			readWriteLock.getReadLock();
+			ReadWriteLockImpl.getReadLock();
 			reader = new BufferedReader(new FileReader(file));
 			System.out.println(Thread.currentThread().getName()+"'s Reading is started ");
 			while ((line =reader.readLine()) != null) {
@@ -32,7 +30,7 @@ public class Reader implements Runnable {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		} finally {
-			readWriteLock.releaseLock();
+			ReadWriteLockImpl.getReadUnLock();
 		}
 	}
 

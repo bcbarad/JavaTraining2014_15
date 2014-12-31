@@ -11,7 +11,6 @@ public class Test {
 				threads[i].start();
 				threads1[i].start();
 			}
-
 			for (int i = 0; i < threads1.length; i++) {
 				try {
 					threads1[i].join();
