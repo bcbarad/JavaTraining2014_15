@@ -15,7 +15,6 @@ public class Writer implements Runnable {
 	public void writeFile() {
 		try {
 			ReadWriteLockImpl.getWriteLock();
-			System.out.println("2");
 			PrintWriter out = new PrintWriter(new BufferedWriter(
 					new FileWriter(file, true)));
 			System.out.println(Thread.currentThread().getName()
