@@ -6,34 +6,38 @@ interface RWLock {
     abstract public void releaseWriteLock() throws InterruptedException;
 }
 class ReadWriteLock implements RWLock {
-    private int readers = 0;
-    private int writers = 0;
+    private static int readers = 0;
+    private static boolean writers = false;
     private Object o = new Object();
     public void readLock() throws InterruptedException {
         synchronized(o) {
-            while (writers > 0) {
+            if (writers) {
                 o.wait();
             }
             readers++;
+            //writers = false;
         }
     }
     public void releaseReadLock() throws InterruptedException {
         synchronized(o) {
             readers--;
+            writers = true;
             o.notifyAll();
         }
     }
     public void writeLock() throws InterruptedException {
         synchronized(o) {
-            while ((readers > 0) || (writers > 0)) {
+            if ((readers > 0) || writers) {
                 o.wait();
             }
-            writers++;
+            writers = true;
+            //writers++;
         }
     }
     public void releaseWriteLock() throws InterruptedException {
         synchronized(o) {
-            writers--;
+            //writers--;
+            writers = false;
             o.notifyAll();
         }
     }
