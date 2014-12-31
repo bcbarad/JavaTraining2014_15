@@ -1,7 +1,7 @@
 package com.vl;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-class WriteProcessor extends Thread {
+class WriteProcessor implements Runnable {
     FileReadWrite f;
     public WriteProcessor(FileReadWrite f) {
         this.f = f;

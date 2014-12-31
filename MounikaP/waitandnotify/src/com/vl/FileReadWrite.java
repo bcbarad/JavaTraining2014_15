@@ -31,12 +31,12 @@ class FileReadWrite {
     public void writeFile() throws InterruptedException, IOException, FileNotFoundException {
         try {
             rw.writeLock();
-             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
-            //String content = "Hello";
-            //BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-            //bw.append(content);
-            out.println("hello");
-            out.close();
+            //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
+            String content = "Hello";
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+            bw.append(content);
+            //out.println("hello");
+            bw.close();
         } finally {
             rw.releaseWriteLock();
         }
