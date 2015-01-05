@@ -34,8 +34,8 @@ class FileReadWrite {
             //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
             String content = "Hello";
             BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-            bw.append(content);
-            System.out.println("hello");
+            bw.write(content);
+            //System.out.println("hello");
             bw.close();
         } finally {
             rw.releaseWriteLock();
