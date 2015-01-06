@@ -14,7 +14,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 public class LoginCredentialFilter implements Filter {
-	Properties properties = null;
+	Properties p = null;
 
 	@Override
 	public void destroy() {
@@ -23,10 +23,11 @@ public class LoginCredentialFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain filterChain) throws IOException, ServletException {
+		
         
 		System.out.println("in filter");
 		String password = null;
-		if ((password = properties.getProperty(request.getParameter("user"))) != null
+		if ((password = p.getProperty(request.getParameter("user"))) != null
 				&& password.equals(request.getParameter("password"))) {
 			filterChain.doFilter(request, response);
 		} else {
@@ -39,13 +40,12 @@ public class LoginCredentialFilter implements Filter {
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 	    try{
-	        properties = new Properties();
-            properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("filename.properties"));
+	        p = new Properties();
+            p.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("logindetails.properties"));
 	    }catch(FileNotFoundException fne){
 	        fne.printStackTrace();
 	    }catch(IOException ioe){
 	        ioe.printStackTrace();
 	    }
 	}
-
 }
