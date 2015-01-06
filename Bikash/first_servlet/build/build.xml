@@ -9,7 +9,7 @@
 	<!-- Creating class path for the servlet application-->
 	<path id="classpath">
 		<fileset dir="${servletlib.dir}">
-			<include name="**/servlet-api.jar" />
+			<include name="**${file.separator}servlet-api.jar" />
 		</fileset>		
 	</path>
 	
@@ -35,24 +35,25 @@
 	<target name="compile" description="Compile the task" depends="init">
 	    <mkdir dir="${classes.dir}" />
 		<javac srcdir="${src.dir}" destdir="${classes.dir}"
-			classpath="${servletlib.dir}/servlet-api.jar" />
+			classpath="${servletlib.dir}${file.separator}servlet-api.jar" />
 	</target>
 	
 	<!-- create war file for the application and storing in webapps of tomcat -->
 	<target name="webarc" depends="compile">
-		<war destfile="../${ant.project.name}.war" webxml="${xml.dir}/web.xml">			
+		<war destfile="..${file.separator}${ant.project.name}.war" webxml="${xml.dir}${file.separator}web.xml">			
 			<classes dir="${classes.dir}" />
+			<classes dir="..${file.separator}properties"/>
 			<fileset dir="${view.dir}">
-				<include name="**/*.jsp" />
-				<include name="**/*.html" />
-				<include name="**/*.htm" />
+				<include name="**${file.separator}*.jsp" />
+				<include name="**${file.separator}*.html" />
+				<include name="**${file.separator}*.htm" />
 			</fileset>
 		</war>
 	</target>
 	
 	<!-- Deploy the war file into the webapps folder of apache tomcat -->
 	<target name="deploy" depends="webarc">
-		<copy file="../${ant.project.name}.war" todir="${tomcat.dir}" />
+		<copy file="..${file.separator}${ant.project.name}.war" todir="${tomcat.dir}" />
 	</target>
 	
 	<!-- For starting the tomcat -->
@@ -60,10 +61,10 @@
 		<exec executable="${tomcat.bin}${file.separator}startup.sh"></exec>
 	</target>
 	
-	<!-- For short down the tomcat -->
+	<!-- For short down the tomcat 
 	<target name="stopTomcat">
 		<exec executable="${tomcat.bin}${file.separator}shutdown.sh"></exec>
-	</target>
+	</target>-->
 	
 	
 	<!-- For complition of task  -->
