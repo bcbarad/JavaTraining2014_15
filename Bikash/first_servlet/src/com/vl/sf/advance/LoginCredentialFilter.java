@@ -40,7 +40,7 @@ public class LoginCredentialFilter implements Filter {
 	public void init(FilterConfig arg0) throws ServletException {
 	    try{
 	        properties = new Properties();
-            properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("filename.properties"));
+            	properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("filename.properties"));
 	    }catch(FileNotFoundException fne){
 	        fne.printStackTrace();
 	    }catch(IOException ioe){
