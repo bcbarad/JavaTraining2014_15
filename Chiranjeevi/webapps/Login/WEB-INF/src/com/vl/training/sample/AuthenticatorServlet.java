@@ -32,12 +32,12 @@ public class AuthenticatorServlet extends HttpServlet {
                 }
                 if(flag){
                     //Authentic user
-                    response.sendRedirect("/ex/Profile");
+                    response.sendRedirect("/Profile");
                 } else {
                     //Invalid User
                     out.println("User details are invalid");
                     ck[0].setMaxAge(0);
-                    response.sendRedirect("/ex/Welcome");
+                    response.sendRedirect("/Welcome");
                     out.println("<font color=red>Either user name or password is wrong.</font>");
                 }
         }

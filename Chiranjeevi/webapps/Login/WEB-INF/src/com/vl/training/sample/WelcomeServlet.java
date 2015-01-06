@@ -15,7 +15,7 @@ public class WelcomeServlet extends HttpServlet {
                 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
                 "Transitional//EN\">\n";
             if(request.getCookies() != null) {
-                response.sendRedirect("//localhost:4040/ex/Profile");
+                response.sendRedirect("//localhost:4040/Login/Profile");
             }
             if(request.getParameter("status") != null){
             out.print("Error: " + request.getParameter("status") + "<br/>");
