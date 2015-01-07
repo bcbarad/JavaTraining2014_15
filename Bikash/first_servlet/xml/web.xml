@@ -3,10 +3,13 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
+	<listener>
+		<listener-class>com.vl.sf.advance.MyServletContextListener</listener-class>
+	</listener>
 	<display-name>Servlet</display-name>
 	<filter>
 		<filter-name>filter1</filter-name>
-		<filter-class>com.vl.sf.advance.LoginCredentialFilter</filter-class>
+		<filter-class>com.vl.sf.advance.URLCheckFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>filter1</filter-name>
