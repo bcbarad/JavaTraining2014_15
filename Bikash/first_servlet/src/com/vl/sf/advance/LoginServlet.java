@@ -16,7 +16,6 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
-		writer.print("Hi " + request.getParameter("user"));
 		String password = null;
 		Properties p = (Properties) getServletContext().getAttribute(
 				"propertiesFile");
@@ -24,6 +23,7 @@ public class LoginServlet extends HttpServlet {
 
 			if ((password = p.getProperty(request.getParameter("user"))) != null
 					&& password.equals(request.getParameter("password"))) {
+				writer.print("Hi " + request.getParameter("user"));
 				HttpSession session = request.getSession();
 				session.setAttribute("check", request.getParameter("user")
 						+ request.getParameter("password"));
