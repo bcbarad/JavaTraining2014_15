@@ -1,0 +1,59 @@
+<web-app>
+    <servlet>
+        <servlet-name>login</servlet-name>
+        <servlet-class>com.vl.training.sample.Login</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>logFilter</filter-name>
+        <filter-class>com.vl.training.sample.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>logFilter</filter-name>
+        <url-pattern>/Login</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>profile</servlet-name>
+        <servlet-class>com.vl.training.sample.Profile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/Profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>s1</servlet-name>
+        <servlet-class>com.vl.training.sample.AuthenticationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>s1</servlet-name>
+        <url-pattern>/authenticate</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.vl.training.sample.AuthenticationFilter</filter-class>
+        <init-param>
+            <param-name>avoid-urls</param-name>
+            <param-value>/Login</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/authenticate</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>com.vl.training.sample.Logout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+</web-app>

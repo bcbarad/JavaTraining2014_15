@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project default="create-war" name="${ant.project.name}" basedir=".">
+    <!--Getting properties from properties file-->
+    <property file="build.properties" />
+    <!--Creating class path for the servlet application-->
+    <path id="classpath">
+        <fileset dir="${servletlib.dir}">
+            <include name="**/servlet-api.jar" />
+        </fileset>
+    </path>
+    <!--clear the existing files and directory-->
+    <target name="clean">
+        <delete dir="${classes.dir}"/>
+        <delete file="${workDir}/${project.name}.war"/>
+        <delete file="${tomcat.dir}/${project.name}.war"/>
+        <delete dir="${tomcat.dir}/${project.name}"/>
+    </target>
+    <!--create directory to store class files-->
+    <target name="init" depends="clean">
+        <mkdir dir="${classes.dir}"/>
+        <copy file="${properties.dir}/${properties.file}" todir="${classes.dir}"/>
+    </target>
+    <!--Compile the java file -->
+    <target name="compile" depends="init">
+        <mkdir dir = "${classes.dir}"/>
+        <javac destdir="${classes.dir}" debug="on" optimize="on" includeantruntime="false" srcdir="${src.dir}">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+    <!--create war file for the application and storing in webapps of tomcat-->
+    <target name="create-war" depends="compile">
+        <war destfile="${workDir}/${project.name}.war" webxml="${xml.dir}/web.xml">
+            <lib dir="${lib.dir}" />
+            <classes dir="${classes.dir}" />
+            <fileset dir="${resource.dir}"><!--
+                <exclude name="build\*.*"/>-->
+                <include name="**\*.*"/>
+            </fileset>
+        </war>
+        <copy file="${workDir}/${project.name}.war" todir="${tomcat.dir}"/>
+    </target>
+    <!--for complition of task-->
+</project>
+
