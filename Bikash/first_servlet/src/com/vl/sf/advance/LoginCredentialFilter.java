@@ -41,9 +41,7 @@ public class LoginCredentialFilter implements Filter {
 	public void init(FilterConfig arg0) throws ServletException {
 	    try{
 	        p = new Properties();
-            p.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("logindetails.properties"));
-	        p = new Properties();
-            p.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("filename.properties"));
+            	p.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("logindetails.properties"));
 	    }catch(FileNotFoundException fne){
 	        fne.printStackTrace();
 	    }catch(IOException ioe){
