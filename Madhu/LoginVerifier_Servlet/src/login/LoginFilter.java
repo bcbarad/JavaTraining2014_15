@@ -13,8 +13,10 @@ public class LoginFilter extends HttpServlet implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(true);
         if(session.isNew()) {
-           out.print("filter started.............");           
-           chain.doFilter(request,response);      
+           out.print("filter started.............");          
+           //chain.doFilter(request, response);//sends request to next resource 
+           chain.doFilter(request,response);    
+           out.print("<br/>Total visitors "+(++count));    
            out.print("filter ended.............");
         } else {
             RequestDispatcher rd=request.getRequestDispatcher("index.html");  
