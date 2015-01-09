@@ -1,0 +1,36 @@
+<web-app>
+<servlet>
+  <servlet-name>Profile</servlet-name>  
+    <servlet-class>Profile</servlet-class>  
+  </servlet>  
+  
+  <servlet-mapping>  
+    <servlet-name>Profile</servlet-name>  
+    <url-pattern>/Profile</url-pattern>  
+  </servlet-mapping>
+<servlet>
+  <servlet-name>Logout</servlet-name>  
+    <servlet-class>Logout</servlet-class>  
+  </servlet>  
+  
+  <servlet-mapping>  
+    <servlet-name>Logout</servlet-name>  
+    <url-pattern>/Logout</url-pattern>  
+  </servlet-mapping>
+    <servlet>
+        <servlet-name>HelloWorldExample</servlet-name>
+        <servlet-class>HelloWorldExample</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HelloWorldExample</servlet-name>
+        <url-pattern>/HelloWorldExample</url-pattern>
+    </servlet-mapping>
+    <filter>  
+        <filter-name>f1</filter-name>  
+        <filter-class>Hello</filter-class>
+    </filter>  
+    <filter-mapping>  
+        <filter-name>f1</filter-name>  
+        <url-pattern>/HelloWorldExample</url-pattern>  
+    </filter-mapping>  
+</web-app>
