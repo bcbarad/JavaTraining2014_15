@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project1" default="startTomcat" basedir=".">
+	<!-- Getting properties from properties file--> 
+	<property file="build.properties" />
+	
+	<!-- Checkstyle task -->
+   <taskdef resource="checkstyletask.properties" classpath="${checkstyle.jar}"/>
+   
+	<!-- Creating class path for the servlet application-->
+	<path id="classpath">
+		<fileset dir="${servletlib.dir}">
+			<include name="**${file.separator}servlet-api.jar" />
+		</fileset>		
+	</path>
+	
+	<!-- clear the existing files and directory-->
+	<target name="clean" depends="">
+		<delete dir="${classes.dir}" />
+		<delete file="${ant.project.name}.war" />
+		<delete file="${tomcat.dir}${file.separator}${ant.project.name}.war" />
+		<delete dir="${tomcat.dir}${file.separator}${ant.project.name}" />
+	</target>
+	
+	<!--to run the ant under root user-->
+    <target name="init" depends="clean">
+       
+    </target>
+	
+	<!-- create directory to store class files  -->
+	<target name="prepare" depends="init">
+		<mkdir dir="${classes.dir}" />
+	</target>
+	
+	<!-- Compile the java file  -->
+	<target name="compile" description="Compile the task" depends="init">
+	    <mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}"
+			classpath="${servletlib.dir}${file.separator}servlet-api.jar" />
+	</target>
+	
+	<!-- create war file for the application and storing in webapps of tomcat -->
+	<target name="webarc" depends="compile">
+		<war destfile="..${file.separator}${ant.project.name}.war" webxml="${xml.dir}${file.separator}web.xml">			
+			<classes dir="${classes.dir}" />
+			<classes dir="..${file.separator}properties"/>
+			<fileset dir="${view.dir}">
+				<include name="**${file.separator}*.jsp" />
+				<include name="**${file.separator}*.html" />
+				<include name="**${file.separator}*.htm" />
+			</fileset>
+		</war>
+	</target>
+	
+	<!-- Deploy the war file into the webapps folder of apache tomcat -->
+	<target name="deploy" depends="webarc">
+		<copy file="..${file.separator}${ant.project.name}.war" todir="${tomcat.dir}" />
+	</target>
+	
+	<!-- For starting the tomcat -->
+	<target name="startTomcat" depends="deploy">
+		<exec executable="${tomcat.bin}${file.separator}startup.sh"></exec>
+	</target>
+	
+	<!-- For short down the tomcat 
+	<target name="stopTomcat">
+		<exec executable="${tomcat.bin}${file.separator}shutdown.sh"></exec>
+	</target>-->
+	
+	
+	<!-- For complition of task  -->
+	<target name="servlet" depends="webarc">
+		<echo message="application completed" />
+	</target>
+</project>

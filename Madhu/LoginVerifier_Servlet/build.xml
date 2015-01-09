@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="LoginVerifier_Servlet" default="war" basedir=".">
+<property environment="env" />
+<property name="webapp.name" value="LoginVerifier_Servlet" />
+<property name="webapp.dir" value="/home/madhusudhan/Web/apache-tomcat-8.0.15/webapps" />
+<property name="tomcat.lib" value="/home/madhusudhan/Web/apache-tomcat-8.0.15/lib" />
+<property name="ant.lib" value="/usr/share/ant/lib" />
+<property name="dist.dir" value="${basedir}/war" />
+<property name="webRoot.dir" value="${basedir}/LoginAuthenticate" />
+<property name="src.dir" value="${basedir}/src" />
+<property name="config.dir" value="${basedir}/LoginAuthenticate/WEB-INF/resources" />
+<property name="lib.dir" value="${webRoot.dir}/WEB-INF/lib" />
+<!--<property name="build.dir" value="${basedir}/build" />-->
+
+<!-- Init classpath -->
+<path id="project.classpath">
+<fileset dir="${lib.dir}">
+<include name="**/*.jar" />
+</fileset>
+<fileset dir="${tomcat.lib}">
+<include name="*.jar" />
+</fileset>
+<!-- ant lib  -->
+<fileset dir="${ant.lib}">
+<include name="*.jar" />
+</fileset>
+</path>
+
+<!-- get the source compile classpath in a printable form -->
+<pathconvert pathsep="${line.separator}|   |-- "
+property="echo.path.compile"
+refid="project.classpath">
+</pathconvert>
+
+<!-- show classpath jars -->
+<target name="print_classpath">
+<echo message="|-- compile classpath"/>
+<echo message="|   |"/>
+<echo message="|   |-- ${echo.path.compile}"/>
+</target>
+
+<target name="clear" description="Clear the project">
+<delete dir="${build.dir}" />
+<delete dir="${dist.dir}" />
+<delete file="${webapp.name}/${webapp.name}.war" />
+<delete dir="${webapp.name}/${webapp.name}" />
+</target>
+
+<target name="init" depends="clear" description="Init the directories">
+
+<mkdir dir="${dist.dir}" />
+</target>
+
+<target name="compile" depends="init" description="Compile source files">
+<echo message="begin compile..." />
+<javac srcdir="${src.dir}" destdir="${webRoot.dir}/WEB-INF/classes" 
+includeantruntime="false" nowarn="on" 
+target="1.7" deprecation="true" debug="true" 
+encoding="UTF-8" classpathref="project.classpath" 
+>
+<compilerarg line="-Xlint:unchecked" />
+<!-- <classpath refid="project.classpath" /> -->
+</javac>
+<copy todir="${build.dir}">
+<fileset dir="${src.dir}">
+<include name="**/*.xml" />
+<include name="**/*.properties" />
+<include name="**/*.sql" />
+</fileset>
+<fileset dir="${config.dir}">
+<include name="**/*.xml" />
+<include name="**/*.properties" />
+<include name="**/*.sql" />
+</fileset>
+</copy>
+<echo message="end compile..." />
+</target>
+
+<!--  
+<target name="pack" depends="compile"> 
+<jar jarfile="${build.dir}/${webapp.name}.jar"> 
+<fileset dir="${build.dir}/classes"> 
+<include name="**/*.class"/> 
+</fileset> 
+</jar> 
+</target> 
+-->
+
+<target name="war" depends="compile" description="Package the project as .war file.">
+<echo message="begin packing war..." />
+<war destfile="${dist.dir}/${webapp.name}.war" basedir="${webRoot.dir}" 
+webxml="${webRoot.dir}/WEB-INF/resources/web.xml">
+<lib dir="${lib.dir}" />
+<!--<classes dir="${build.dir}/classes" />-->
+<fileset dir="${webRoot.dir}">
+<include name="***.*" />
+</fileset>
+</war>
+<echo message="end war..." />
+</target>
+
+<target name="deploy" depends="war" description="Deploy the war to tomcat">
+<echo message="begin deploy..." />
+<copy file="${dist.dir}/${webapp.name}.war" todir="${webapp.dir}" />
+<echo message="end deploy..." />
+</target>
+
+</project>

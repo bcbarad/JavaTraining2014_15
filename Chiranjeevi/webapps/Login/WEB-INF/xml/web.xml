@@ -1,0 +1,37 @@
+<web-app>
+    <servlet>
+        <servlet-name>welcome</servlet-name>
+        <servlet-class>com.vl.training.sample.WelcomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>welcome</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>profile</servlet-name>
+        <servlet-class>com.vl.training.sample.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/Profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>s1</servlet-name>
+        <servlet-class>com.vl.training.sample.AuthenticatorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    <servlet-name>s1</servlet-name>
+    <url-pattern>/servlet1</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.vl.training.sample.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/servlet1</url-pattern>
+    </filter-mapping>
+</web-app>
