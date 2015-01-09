@@ -1,15 +1,7 @@
 <web-app>  
  <servlet>  
     <servlet-name>LoginServlet</servlet-name>  
-    <servlet-class>LoginServlet</servlet-class> 
-    <init-param>
-            <param-name>madhu</param-name>
-            <param-value>12345</param-value>
-        </init-param>
-        <init-param>
-            <param-name>Balu</param-name>
-            <param-value>67890</param-value>
-        </init-param>  
+    <servlet-class>login.LoginServlet</servlet-class>  
   </servlet>  
   
   <servlet-mapping>  
@@ -18,7 +10,7 @@
   </servlet-mapping>
 <servlet>
   <servlet-name>Profile</servlet-name>  
-    <servlet-class>Profile</servlet-class>  
+    <servlet-class>login.Profile</servlet-class>  
   </servlet>  
   
   <servlet-mapping>  
@@ -27,7 +19,7 @@
   </servlet-mapping>
 <servlet>
   <servlet-name>Logout</servlet-name>  
-    <servlet-class>Logout</servlet-class>  
+    <servlet-class>login.Logout</servlet-class>  
   </servlet>  
   
   <servlet-mapping>  
@@ -36,7 +28,7 @@
   </servlet-mapping>
  <filter>  
   <filter-name>f1</filter-name>  
-  <filter-class>LoginFilter</filter-class> 
+  <filter-class>login.LoginFilter</filter-class> 
   </filter>  
   <filter-mapping>  
   <filter-name>f1</filter-name>  

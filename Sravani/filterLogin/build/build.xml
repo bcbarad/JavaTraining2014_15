@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="LoginVerifier_Servlet" default="war" basedir=".">
+<project name="filterLogin" default="war" basedir=".">
 <property environment="env" />
-<property name="webapp.name" value="LoginVerifier_Servlet" />
-<property name="webapp.dir" value="/home/madhusudhan/Web/apache-tomcat-8.0.15/webapps" />
-<property name="tomcat.lib" value="/home/madhusudhan/Web/apache-tomcat-8.0.15/lib" />
+<property name="webapp.name" value="filterLogin" />
+<property name="webapp.dir" value="/home/sravani/tomcat/apache-tomcat-8.0.15/webapps" />
+<property name="tomcat.lib" value="/home/sravani/tomcat/apache-tomcat-8.0.15/lib" />
 <property name="ant.lib" value="/usr/share/ant/lib" />
 <property name="dist.dir" value="${basedir}/war" />
-<property name="webRoot.dir" value="${basedir}/LoginAuthenticate" />
+<property name="webRoot.dir" value="${basedir}/filterServlet" />
 <property name="src.dir" value="${basedir}/src/login" />
-<property name="config.dir" value="${basedir}/LoginAuthenticate/WEB-INF/resources" />
+<property name="config.dir" value="${basedir}/filterServlet/WEB-INF/resources" />
 <property name="lib.dir" value="${webRoot.dir}/WEB-INF/lib" />
 <!--<property name="build.dir" value="${basedir}/build" />-->
 
