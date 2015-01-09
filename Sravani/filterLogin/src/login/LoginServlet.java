@@ -6,6 +6,15 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 public class LoginServlet extends HttpServlet {
+    Properties properties = new Properties();
+    public void init(ServletConfig config) throws ServletException {
+            super.init(config);
+            try {
+            properties.load(getServletContext().getResourceAsStream("/WEB-INF/resources/login.properties"));
+         } catch(Exception ie) {
+             ie.printStackTrace();
+         }
+    }
     public void doPost(HttpServletRequest request , HttpServletResponse response)
         throws ServletException, IOException {
             PrintWriter out = response.getWriter();
@@ -15,9 +24,7 @@ public class LoginServlet extends HttpServlet {
             String password = request.getParameter("password");
             HttpSession session=request.getSession();
             session.setAttribute("name",uname); 
-            Properties properties = new Properties();
-            properties.load(getServletContext().getResourceAsStream("/WEB-INF/resources/login.properties"));
-            String pass = properties.getProperty(uname,password);
+            String pass = properties.getProperty(uname,"pass");
             if(pass.equals(password)){
                 RequestDispatcher rd=request.getRequestDispatcher("BirthdayServlet");
                 rd.forward(request, response);
