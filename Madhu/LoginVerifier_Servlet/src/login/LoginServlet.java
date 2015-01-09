@@ -1,3 +1,4 @@
+package login;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
@@ -10,17 +11,8 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();      
         Properties properties = new Properties();
         properties.load(getServletContext().getResourceAsStream("/WEB-INF/resources/login.properties"));
-        Enumeration e = properties.keys();
-        boolean flag = false;
-        while (e.hasMoreElements()) {
-            String key = (String) e.nextElement();
-            String value = properties.getProperty(key);
-            if ( key.equals(name) && value.equals(pass)) {
-                flag = true;
-                break;
-            }
-        }   
-        if (flag) { 
+        String password = properties.getProperty(name,pass);
+        if (pass.equals(password)) { 
             RequestDispatcher rd=request.getRequestDispatcher("Profile");
             rd.forward(request, response);
         } else{  
