@@ -1,0 +1,88 @@
+
+
+    <html>
+    <head>
+    <title>Registration Form</title>
+    <script type="text/javascript" src="validation.js">
+
+    </script>
+    </head>
+    <body bgcolor="#FFFFFF">
+    <form name="emp" action="" method="post">
+    <table align="center" width=40% width="100%" cellspacing="2" cellpadding="2" border="5">
+    <tr>
+    <td colspan="2" align="center"><b>Employee Registration Form.</b></td>
+    </tr>
+    <tr>
+    <td align="left" valign="top" width="41%">Employee Name<span style="color:red">*</span></td>
+     
+    <td width="57%"><input type="text" value="" name="emp_name" size="24"></td>
+    </tr>
+    <tr>
+    <td align="left" valign="top" width="41%">Employee ID<span style="color:red">*</span></td>
+    <td width="57%">
+    <input type="text" value="" name="id" onkeypress="return isNumberKey(event)" size="24"></td>
+    </tr>
+    <tr>
+    <td align="left" valign="top" width="41%">Address</td>
+     
+    <td width="57%"><textarea rows="4" maxlen="200" name="S2" cols="20"></textarea></td>
+    </tr
+    <tr >
+     
+    <td align="left" valign="top" width="41%">Contact Number</td>
+    <td width="57%">
+    <input type="text" value="" name="phone" size="24"></td>
+    </tr>
+    <tr >
+    <td align="left" valign="top" width="41%">Job Location</td>
+    <td width="57%"><select name="mydropdown">
+    <option value="Default">Odisha</option>
+    <option value="Chennai">Andhra Pradesh</option>
+    <option value="Bangalore">Bangalore</option>
+    <option value="Chennai">Pune</option>
+    <option value="Bangalore">Mysore</option>
+    <option value="Chennai">Chandigarh</option>
+     
+    </select></td>
+     
+    </tr>
+     
+    <tr >
+    <td align="left" valign="top" width="41%">Designation</td>
+    <td width="57%">
+    <select name="mydropdown">
+    <option value="Default">Default</option>
+    <option value="Systems Engineer">Systems Engineer</option>
+    <option value="Senior Systems Engineer">Senior Systems Engineer</option>
+    <option value="Technology Analyst">Technology Analyst</option>
+    <option value="Technology Lead">Technology Lead</option>
+    <option value="Project Manager">Project Manager</option>
+     
+     
+    </select></td>
+     
+    </tr>
+    <tr>
+    <td align="left" valign="top" width="41%">Email<span style="color:red">*</span></td>
+    <td width="57%">
+    <input type="text" value="" name="email_id" size="24"></td>
+    </tr>
+    <tr>
+    <td align="left" valign="top" width="41%">DOB<span style="color:red">*</span></td>
+    <td width="57%">
+    <input type="text" value="" name="dob" size="24"></td>
+    </tr>
+    <tr>
+    <td colspan="2">
+    <p align="center">
+    <input type="submit" value="Submit" name="B4" onclick="return validate();">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="reset" value="Reset All " name="B5"></td>
+    </tr>
+     
+    </table>
+    </form>
+    </body>
+    </html>
+
