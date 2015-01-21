@@ -1,7 +1,7 @@
 <web-app>  
  <servlet>  
     <servlet-name>LoginServlet</servlet-name>  
-    <servlet-class>LoginServlet</servlet-class>  
+    <servlet-class>login.LoginServlet</servlet-class>  
   </servlet>  
   
   <servlet-mapping>  
@@ -10,7 +10,7 @@
   </servlet-mapping>
 <servlet>  
     <servlet-name>BirthdayServlet</servlet-name>  
-    <servlet-class>BirthdayServlet</servlet-class>  
+    <servlet-class>login.BirthdayServlet</servlet-class>  
   </servlet>  
   
   <servlet-mapping>  
@@ -19,7 +19,7 @@
   </servlet-mapping>
 <servlet>
   <servlet-name>ProfileServlet</servlet-name>  
-    <servlet-class>ProfileServlet</servlet-class>  
+    <servlet-class>login.ProfileServlet</servlet-class>  
   </servlet>  
   
   <servlet-mapping>  
@@ -28,7 +28,7 @@
   </servlet-mapping>
 <servlet>
   <servlet-name>LogoutServlet</servlet-name>  
-    <servlet-class>LogoutServlet</servlet-class>  
+    <servlet-class>login.LogoutServlet</servlet-class>  
   </servlet>  
   
   <servlet-mapping>  
@@ -37,7 +37,7 @@
   </servlet-mapping>
  <filter>  
   <filter-name>f1</filter-name>  
-  <filter-class>MyFilter</filter-class> 
+  <filter-class>login.MyFilter</filter-class> 
   </filter>  
   <filter-mapping>  
   <filter-name>f1</filter-name>  

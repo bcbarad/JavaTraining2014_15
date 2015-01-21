@@ -4,6 +4,15 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.util.*;
 public class ProfileServlet extends HttpServlet {
+    Properties properties = new Properties();
+    public void init(ServletConfig config) throws ServletException {
+            super.init(config);
+            try {
+            properties.load(getServletContext().getResourceAsStream("/WEB-INF/resources/bday.properties"));
+         } catch(Exception ie) {
+             ie.printStackTrace();
+         }
+    }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -16,9 +25,8 @@ public class ProfileServlet extends HttpServlet {
             request.getRequestDispatcher("index.html").include(request, response);  
         }
         String dob = request.getParameter("date");
-        Properties properties = new Properties();
-        properties.load(getServletContext().getResourceAsStream("/WEB-INF/resources/bday.properties"));
-        String dob1 = properties.getProperty(name, dob);
+        
+        String dob1 = properties.getProperty(name, "dob");
         if(dob1.equals(dob)){
             out.print("<html>");
             out.print("<body>");
