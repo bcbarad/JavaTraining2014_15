@@ -1,0 +1,28 @@
+<html>
+  <head> <title> Registration </title> <script type="text/javascript" src="Form_Validations.js"> </script></head>
+  <body onload="document.registration.firstname.focus();">
+     <form name="registration" onSubmit="formValidation();" >
+       <center> <h1>  Registration </h1> 
+       *FirstName:<input type="text" name="firstname" ><br><br>
+       LastName:<input type="text" name="lastname" ><br><br>
+       *UserId:<input type="text" name="userid" ><br><br>
+       *Password:<input type="password" name="password" ><br><br>
+       *Confirm Password:<input type="password" name="confirmpass" ><br><br>
+       Age:<input type="text" name="age" ><br><br>
+       *Date of joining(dd/mm/yyyy):<input type="text" name="doj"><br><br>
+       Address:<br>
+         <textarea rows="5" cols="30" name="address"></textarea><br><br>
+       *Country:
+         <select name="country">
+            <option value="India" selected>India</option>
+            <option value="USA">USA</option>
+            <option value="Australia">Australia</option>
+            <option value="Japan">Japan</option>
+         </select>
+       <br><br>
+       <input type="submit" name="submit" value="submit">
+       <input type="reset" name="clear">
+       </center>
+     </form>
+  </body>
+</html>
