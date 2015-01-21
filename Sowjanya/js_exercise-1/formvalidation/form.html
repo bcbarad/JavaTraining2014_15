@@ -1,0 +1,31 @@
+<html>
+      <head>
+            <title>Form Validation</title>
+            <script type = "text/javascript" src = "formvalidation.js"></script>
+      </head>
+      <body>
+            <form>
+                  <h4>User Registration Form</h4>
+                  First Name: <input type = "text" name = "firstname" /><br>
+                  Last Name : <input type = "text" name = "lastname" /><br>
+                  E-mail: <input type="email" name="email"><br>
+                  password : <input type = "password" name = "password" /><br>
+                  enter your gender : <br>
+                  <input type="radio" name="sex" value="1" checked>Male<br>
+                  <input type="radio" name="sex" value="0">Female <br>
+                  enter ur age :
+                  <input type = "text" name ="age" /><br>
+                  enter your city :
+                  <select name="country">
+                       <option value="India">India</option>
+                       <option value="Pakisthan">Pakisthan</option>
+                       <option value="U.S.A">U.S.A</option>
+                       <option value="Ausralia">Ausralia</option>
+                  </select> <br>
+                  enter ur dateofbirth :
+                  <input type = "date" name  = "dateofbirth" max = "01/21/2015"/> <br>
+                  <input type = "button" onClick = "formValidation(this.form)" value = "submit" />
+                  <button type="reset" value="Reset">Reset</button>
+            </form>
+      </body>
+</html>     
