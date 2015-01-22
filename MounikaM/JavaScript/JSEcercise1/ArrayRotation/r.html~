@@ -1,0 +1,11 @@
+<html>
+<head> <title> sort </title>
+<script type="text/javascript" src="r.js"> </script>
+</head>
+<body>
+<p>Click the button to enter array elements</p>
+<button onclick="rotateArray()">rotate</button>
+<p id="unrotate"></p>
+<p id="rotate"></p>
+</body>
+</html>
