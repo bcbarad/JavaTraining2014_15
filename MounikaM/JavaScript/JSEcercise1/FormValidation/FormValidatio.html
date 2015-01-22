@@ -1,0 +1,64 @@
+<html>
+<head>
+<script type = "text/javascript" src = "FormValidation.js">
+</script>
+</head>
+<body>
+<h2 align = "center"> Student Registartion </h2>
+<form name = "validationForm" method = "post">
+<h6> Personal Details </h6>
+<table name = "Employee Registartion" cellspacing = "15" cellpadding = "2">
+<tr>
+<td>FirstName <span style =color:red>*</span></td> 
+<td><input type = "text" name = "FirstName" value = "" size = "24"></td>
+</tr>
+<tr>
+<td>LastName</td> 
+<td><input type = "text" name = "LastName" value = "" size = "24"></td>
+</tr>
+<tr>
+<td> Date Of Birth:<span style =color:red>*</span> </td>
+<td><input type = "text" name = "DOB" size = "24"></td>
+
+</tr>
+<td> Employee Id :<span style =color:red>*</span> </td>
+<td><input type = "text" name = "EMPID" size = "24"></td>
+</tr>
+<tr>
+<td> Contact Number<span style =color:red>*</span></td>
+<td> <input type = "text" name = "contactNumber" size = "24"></td>
+</tr>
+<tr>
+<td> Email Id<span style =color:red>*</span></td>
+<td> <input type = "text" name = "emailId" size = "24"></td>
+</tr>
+<tr>
+<td> Address:</td>
+<td> <textarea rows = "6" cols = "50" name = "address" size = "24"></textarea>
+</tr>
+<tr>
+<td> Job Location </td>
+<td> <select name = "joblocation">
+<option value="default">Hyderabad</option>
+  <option value="TamilNadu">Chennai</option>
+  <option value="Karnataka">Begulure</option>
+  <option value="WBengal">Pune</option>
+</select>
+</td>
+</tr>
+<tr>
+<td> Job Position </td>
+<td> <select name = "jobPosition">
+<option value="default">SoftwareDeveloper</option>
+  <option value="ProgramAnalyst">ProgramAnalyst</option>
+  <option value="Hr">Hr</option>
+  <option value="ProjectManager">ProjectManager</option>
+</select>
+</td>
+</tr>
+</table>
+<input type ="submit" value ="submit" onclick = "return validation();" align = <tr>
+<input type ="reset" value = "resetAll">
+</form>
+</body>
+</html>

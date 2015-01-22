@@ -1,0 +1,13 @@
+<html>
+<body>
+<p id = "myH"></p>
+<p id="demo"></p>
+<script>
+var d = new Date();
+var str = "now the time is";
+document.getElementById("myH").innerHTML = str + d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" ";
+var str1= "today the date is";
+document.getElementById("demo").innerHTML = str1+d.toDateString();
+</script>
+</body>
+</html>
