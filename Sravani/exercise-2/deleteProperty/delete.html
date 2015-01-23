@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>You can delete object properties.</p>
+<p id="bdel"></p>
+<p id="del"></p>
+<script>
+var student = {
+    firstname:"sravani",
+    age:22,
+    eyecolor:"blue"
+};
+document.getElementById("bdel").innerHTML =
+student.firstname + " is " + student.age + " years old " + "with eye color " + student.eyecolor;
+delete student.eyecolor;
+document.getElementById("del").innerHTML =
+student.firstname + " is " + student.age + " years old " + "with eye color " + student.eyecolor;
+</script>
+
+</body>
+</html>
