@@ -1,21 +1,17 @@
     var Singleton = (function () {
     var instance;
      
-    function createInstance() {
-          var name = "sravani";
-          /*var reverse = " ";
-    var length = str.length;
-    var i;
-    for (i = length - 1 ; i >= 0 ; i--) {
-        reverse = str.split("").reverse().join("");
-    }*/
-    return name;
+    function createInstance(name) {
+          //var name = 'sravani';
+          var Reverse= name.split("").reverse().join("");
+    return Reverse;
     }
      
     return {
-    getInstance: function () {
+    getInstance: function (str) {
     if (!instance) {
-    instance = createInstance();
+    
+    instance = createInstance(str);
     }
     return instance;
     }
@@ -23,9 +19,9 @@
     })();
      
     function run() {
-     
-    var instance1 = Singleton.getInstance();
-    var instance2 = Singleton.getInstance();
+    var str = document.getElementById("str").value; 
+    var instance1 = Singleton.getInstance(str);
+    var instance2 = Singleton.getInstance(str);
      
     alert(instance1 + " " + instance2);
     }
