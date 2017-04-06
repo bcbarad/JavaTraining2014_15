@@ -1,0 +1,65 @@
+<html>
+	<head>		
+	<style>
+		#launched, #ui-elements{display:none;}
+		#overlay {
+		    background-color: #8f9ba9;
+		    opacity: 0.8;
+		    position: absolute;
+		    left: 0px;
+		    top: 0px;
+		    z-index: 100;
+		    height: 100%;
+		    width: 100%;
+		    overflow: hidden;
+		    background-image: url('img/gears.svg');
+		    background-position: center;
+		    background-repeat: no-repeat;
+		}
+		canvas {
+		    pointer-events: none;       /* make the canvas transparent to the mouse - needed since canvas is position infront of image */
+		    position: absolute;	
+		    z-index:99;
+		}
+		map area:hover { border: 1px solid #d5d5d5; }	
+	</style>
+		<title>Grabber Portal</title>
+		<script src="js/lib/angular.min.js"></script>
+		<script src="js/lib/angular-resource.js"></script>
+		<script src="js/lib/jquery.js"></script>
+		<script src="js/grabber.js"></script>
+		<script type="text/javascript" src="http://www.outsharked.com/scripts/jquery.imagemapster.js"></script>
+		<!--script src="js/image-mapster.js"></script-->
+	</head>
+	<div id="overlay"></div>
+	<body>	
+		<div ng-controller="Ctrl">
+			<button ng-click="launch()" id="launch">Launch</button>
+			<div id="launched">
+				<button ng-click="grab()">Grab Elements</button>
+				<button ng-click="kill()">Kill Application</button>
+				<!--div id="grabbed"-->
+					<canvas id='myCanvas'>hfghfghfghhdghdfghdfgergdfgtgh</canvas>
+					<img id="uiScreen" ng-src="{{uiScreen}}" alt="" usemap = "#map" onload="myInit()"/>
+					<map name= "map"  ng-if="uielements">
+						<area href="#" ng-repeat="element in uielements" shape="rect" coords="{{element.coords}}" ng-click="elementClicked(element)" title="{{element.bounds}}"/><!--  onmouseover='myHover(this);' onmouseout='myLeave();'/-->
+					</map>				
+				<!--/div-->
+				<table align="right">
+					<thead>
+						<tr>
+							<td>Property</td>
+							<td>Value</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(key, value) in selected">
+							<td>{{key}} </td>
+							<td>{{value}} </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

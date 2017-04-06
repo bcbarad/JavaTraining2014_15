@@ -1,0 +1,51 @@
+<html>
+	<head>		
+	<style>
+		#launched, #ui-elements{display:none;}
+		#overlay {
+		    background-color: #8f9ba9;
+		    opacity: 0.8;
+		    position: absolute;
+		    left: 0px;
+		    top: 0px;
+		    z-index: 100;
+		    height: 100%;
+		    width: 100%;
+		    overflow: hidden;
+		    background-image: url('img/gears.svg');
+		    background-position: center;
+		    background-repeat: no-repeat;
+		}
+		canvas {
+		    pointer-events: none;       /* make the canvas transparent to the mouse - needed since canvas is position infront of image */
+		    position: absolute;
+		}
+		.area-hover:hover{
+			background-color:blue;
+			color:red;
+			background-image: url('img/gears.svg');
+		}	
+	</style>
+		<title>Grabber Portal</title>
+		<script src="js/lib/angular.min.js"></script>
+		<script src="js/lib/angular-resource.js"></script>
+		<script src="js/lib/jquery.js"></script>
+		<script src="js/grabber.js"></script>
+		<!--script type="text/javascript" src="http://www.outsharked.com/scripts/jquery.imagemapster.js"></script-->
+	</head>
+	<div id="overlay"></div>
+	<body>	
+		<div ng-controller="Ctrl">
+			<button ng-click="launch()" id="launch">Launch</button>
+			<div id="launched">
+				<button ng-click="grab()">Grab Elements</button>
+				<button ng-click="kill()">Kill Application</button>				
+				<div id='div'></div>
+				<img id="uiScreen" ng-src="{{uiScreen}}" alt="" usemap = "#map"/>
+				<map name= "map" ng-if="uielements">
+					<area href="#" class="area-hover" ng-repeat="element in uielements" shape="rect" coords="{{element.coords}}" ng-click="elementClicked(element)" title="{{element.bounds}}"/>
+				</map>
+			</div>
+		</div>
+	</body>
+</html>
