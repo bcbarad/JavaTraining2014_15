@@ -1,0 +1,235 @@
+package com.dbs.mutual_fund.research_adapter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import com.dbs.mutual_fund.research.DateUtils;
+import com.dbs.mutual_fund.research.MFReasearchFundSearch;
+import com.dbs.mutual_fund.research_constants.BatchConstants;
+import com.dbs.mutual_fund.research_constants.FilterConstants;
+import com.dbs.mutual_fund.research_constants.FundTranType;
+import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
+
+import static com.dbs.mutual_fund.research.MFReasearchArrayUtils.anyNull;
+import static com.dbs.mutual_fund.research.MFReasearchArrayUtils.isArrayNotEmpty;
+
+/**
+ * @author DBS Asia Hub 2
+ * @version 1.0
+ *
+ */
+@Component
+@AllArgsConstructor
+public class MFReasearchSpecification {
+
+	private static final Logger LOG = LoggerFactory.getLogger(MFReasearchSpecification.class);
+
+	private static final String IS_ENABLED = "Y";
+
+	private static final String NEW_FUND_NAME = "C";
+
+	private static final String SI_TYPE = "SIP";
+
+	private static final String SIP_START_LOW = "SIP_START_LOW";
+
+	private static final String WILDCARD_CHAR = "%";
+
+	private QueryJpaAdapter queryJpaAdapter;
+
+	/**
+	 * @param mfResearchRequest
+	 * @param filterConfigurationList
+	 * @return
+	 */
+	public Specification<FundDetailEntity> create(MFReasearchFundSearch mfResearchRequest,
+			List<FilterConfigurationEntity> filterConfigurationList) {
+
+		return (searchCodeRoot, searchCodeCriteriaQuery, searchCodeCriteriaBuilder) -> {
+
+			List<Predicate> predicateList = new ArrayList<>();
+
+			if (Objects.nonNull(filterConfigurationList) && !filterConfigurationList.isEmpty()) {
+				List<FilterDetailEntity> filterDetailsList = toFilterDetailsList(filterConfigurationList);
+				String columnName = filterDetailsList.get(0).getColumnName();
+				predicateList.add(searchCodeCriteriaBuilder
+						.and(searchCodeRoot.get(columnName).in(toFilterValues(filterDetailsList))));
+			}
+			if (SIP_START_LOW.equals(mfResearchRequest.getSearchCode())) {
+				int minTenure = queryJpaAdapter.findAppropriateMinTenure();
+				LOG.info("minTenure: {}", minTenure);
+				predicateList
+						.add(
+								searchCodeCriteriaBuilder.or(
+										searchCodeCriteriaBuilder.and(
+												searchCodeRoot.get(BatchConstants.AIP_SI_TYPE).in(SI_TYPE),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_TENURE)
+														.in(minTenure),
+												searchCodeRoot.get(BatchConstants.AIP_FREQUENCY)
+														.in(FilterConstants.FREQUENCY),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_AMOUNT)
+														.in(FilterConstants.MIN_AMOUNT)),
+
+										searchCodeCriteriaBuilder.and(
+												searchCodeRoot.get(BatchConstants.AIP_SI_TYPE2).in(SI_TYPE),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_TENURE2)
+														.in(minTenure),
+												searchCodeRoot.get(BatchConstants.AIP_FREQUENCY2)
+														.in(FilterConstants.FREQUENCY),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_AMOUNT2)
+														.in(FilterConstants.MIN_AMOUNT)),
+
+										searchCodeCriteriaBuilder.and(
+												searchCodeRoot.get(BatchConstants.AIP_SI_TYPE3).in(SI_TYPE),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_TENURE3)
+														.in(minTenure),
+												searchCodeRoot.get(BatchConstants.AIP_FREQUENCY3)
+														.in(FilterConstants.FREQUENCY),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_AMOUNT3)
+														.in(FilterConstants.MIN_AMOUNT)),
+
+										searchCodeCriteriaBuilder.and(
+												searchCodeRoot.get(BatchConstants.AIP_SI_TYPE4).in(SI_TYPE),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_TENURE4)
+														.in(minTenure),
+												searchCodeRoot.get(BatchConstants.AIP_FREQUENCY4)
+														.in(FilterConstants.FREQUENCY),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_AMOUNT4)
+														.in(FilterConstants.MIN_AMOUNT)),
+
+										searchCodeCriteriaBuilder.and(
+												searchCodeRoot.get(BatchConstants.AIP_SI_TYPE5).in(SI_TYPE),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_TENURE5)
+														.in(minTenure),
+												searchCodeRoot.get(BatchConstants.AIP_FREQUENCY5)
+														.in(FilterConstants.FREQUENCY),
+												searchCodeRoot.get(BatchConstants.AIP_MIN_AMOUNT5)
+														.in(FilterConstants.MIN_AMOUNT))));
+
+			}
+
+			predicateList
+					.addAll(innerSearch(mfResearchRequest, searchCodeRoot, searchCodeCriteriaBuilder));
+
+			predicateList
+					.addAll(ratingsAndFundHouse(mfResearchRequest, searchCodeRoot, searchCodeCriteriaBuilder));
+
+			return searchCodeCriteriaBuilder.and(predicateList.toArray(new Predicate[predicateList.size()]));
+		};
+
+	}
+
+	private List<Predicate> ratingsAndFundHouse(MFReasearchFundSearch mfResearchRequest, Root<FundDetailEntity> root,
+			CriteriaBuilder criteriaBuilder) {
+
+		List<Predicate> predicateList = new ArrayList<>();
+
+		if (isArrayNotEmpty(mfResearchRequest.getRatingFilter())) {
+			predicateList.add(criteriaBuilder.and(root.get(FilterConstants.ACTUAL_RATING)
+					.in(Arrays.asList(mfResearchRequest.getRatingFilter()))));
+		}
+		if (isArrayNotEmpty(mfResearchRequest.getFundHouseFilter())) {
+			predicateList.add(criteriaBuilder.and(root.get(FilterConstants.FUND_AMC)
+					.in(Arrays.asList(mfResearchRequest.getFundHouseFilter()))));
+		}
+		return predicateList;
+	}
+
+	private List<Predicate> innerSearch(MFReasearchFundSearch mfResearchRequest, Root<FundDetailEntity> root,
+			CriteriaBuilder criteriaBuilder) {
+
+		List<Predicate> predicateList = new ArrayList<>();
+
+		String[] searchKeys = mfResearchRequest.getSearchKeys();
+		String[] searchValues = mfResearchRequest.getSearchValues();
+
+		if (!anyNull(searchKeys) && !anyNull(searchValues)) {
+			for (int i = 0; i < searchKeys.length; i++) {
+				if (FilterConstants.FUND_LEGAL_NAME.equals(searchKeys[i])) {
+					predicateList.add(criteriaBuilder.like(root.get(searchKeys[i]),
+							WILDCARD_CHAR + searchValues[i] + WILDCARD_CHAR));
+					continue;
+				}
+				predicateList.add(criteriaBuilder
+						.and(root.get(searchKeys[i])
+								.in(searchValues[i])));
+			}
+		}
+		return predicateList;
+	}
+
+	/**
+	 * @param filterConfigurationList
+	 * @return
+	 */
+	private List<FilterDetailEntity> toFilterDetailsList(
+			List<FilterConfigurationEntity> filterConfigurationList) {
+		return filterConfigurationList.stream().map(FilterConfigurationEntity::getFilterDetailsList)
+				.flatMap(Collection::stream).collect(Collectors.toList());
+	}
+
+	/**
+	 * @param filterDetailsList
+	 * @return
+	 */
+	private List<String> toFilterValues(List<FilterDetailEntity> filterDetailsList) {
+
+		return filterDetailsList.stream().map(FilterDetailEntity::getColumnValue).collect(Collectors.toList());
+	}
+
+	public Specification<FinacleFundDetailsEntity> newFundsSpecification() {
+		return (root, criteriaQuery,
+				criteriaBuilder) -> {
+
+			List<Predicate> predicateList = new ArrayList<>();
+
+			Predicate ipoEndDateGreaterThanOrEqualTo = null;
+			if (DateUtils.currentDateTime().getHour() < 13) {
+				ipoEndDateGreaterThanOrEqualTo = criteriaBuilder.greaterThanOrEqualTo(
+						root.get(FilterConstants.IPO_END_DATE),
+						DateUtils.currentLocalDate());
+			}
+			else {
+				ipoEndDateGreaterThanOrEqualTo = criteriaBuilder.greaterThan(root.get(FilterConstants.IPO_END_DATE),
+						DateUtils.currentLocalDate());
+			}
+
+			Predicate commonCondition = criteriaBuilder.and(
+					criteriaBuilder.and(root.get(FilterConstants.TRAN_TYPE).in(FundTranType.P.value()),
+							root.get(FilterConstants.TRAN_ENABLED_FOR_DIGI).in(IS_ENABLED),
+							root.get(FilterConstants.FUND_ENABLED_FOR_DIGI).in(IS_ENABLED),
+							root.get(FilterConstants.FUND_NAME).in(NEW_FUND_NAME),
+							root.get(FilterConstants.FUND_HOUSE_ACCOUNT_NUMBER).isNotNull()));
+
+			Predicate startEndDateNotNull = criteriaBuilder.and(
+					root.get(FilterConstants.IPO_START_DATE).isNotNull(),
+					root.get(FilterConstants.IPO_END_DATE).isNotNull(),
+					criteriaBuilder.lessThanOrEqualTo(root.get(FilterConstants.IPO_START_DATE),
+							DateUtils.currentLocalDate()),
+					ipoEndDateGreaterThanOrEqualTo);
+
+			Predicate endDateNull = criteriaBuilder.and(root.get(FilterConstants.IPO_START_DATE).isNotNull(),
+					root.get(FilterConstants.IPO_END_DATE).isNull(),
+					criteriaBuilder.lessThanOrEqualTo(root.get(FilterConstants.IPO_START_DATE),
+							DateUtils.currentLocalDate()));
+
+			predicateList.add(criteriaBuilder.and(commonCondition));
+			predicateList.add(criteriaBuilder.or(startEndDateNotNull, endDateNull));
+
+			return criteriaBuilder.and(predicateList.toArray(new Predicate[predicateList.size()]));
+
+		};
+	}
+}
