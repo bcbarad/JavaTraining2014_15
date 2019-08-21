@@ -1,0 +1,89 @@
+package com.dbs.mutual_fund.research;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import com.dbs.mutual_fund.research_adapter.FilterConfigurationEntity;
+import com.dbs.mutual_fund.research_constants.FilterConstants;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
+import org.springframework.util.StringUtils;
+
+@Builder
+@Setter
+@Getter
+public class MFReasearchPageable {
+
+	@Builder.Default
+	private List<Order> orders = new ArrayList<>();
+
+	private int pageNumber;
+
+	private int pageSize;
+
+	public MFReasearchPageable addOrder(String sortBy, String sortOrder) {
+		if (!StringUtils.isEmpty(sortBy)) {
+			Order order = new Order(Direction.ASC, sortBy);
+			if (FilterConstants.DESC.equalsIgnoreCase(sortOrder.toUpperCase())) {
+				order = new Order(Direction.DESC, sortBy);
+			}
+			orders.add(order);
+		}
+		return this;
+	}
+
+	public MFReasearchPageable addSearchKeySortOrder(String sortBy) {
+		if (!StringUtils.isEmpty(sortBy)) {
+			orders.add(toOrder(sortBy, FilterConstants.DESC));
+		}
+		else {
+			orders.add(toOrder(FilterConstants.ACTUAL_RATING, FilterConstants.DESC));
+		}
+		orders.add(toOrder(FilterConstants.FUND_LEGAL_NAME, FilterConstants.ASC));
+		return this;
+	}
+
+	public MFReasearchPageable toOrder(List<FilterConfigurationEntity> filterConfigurationList, String sortByOption) {
+
+		if (!StringUtils.isEmpty(sortByOption)) {
+			orders.add(toOrder(sortByOption, FilterConstants.DESC));
+			orders.add(toOrder(FilterConstants.FUND_LEGAL_NAME, FilterConstants.ASC));
+			return this;
+		}
+
+		if (Objects.nonNull(filterConfigurationList) && !filterConfigurationList.isEmpty()) {
+			orders.addAll(filterConfigurationList
+					.stream()
+					.map(FilterConfigurationEntity::getSortDetailsList)
+					.flatMap(Collection::stream)
+					.map(sortDetails -> toOrder(sortDetails.getSortName(), sortDetails.getSortOrder()))
+					.collect(Collectors.toList()));
+		}
+		return this;
+	}
+
+	private static Order toOrder(String sortBy, String sortOrder) {
+		Order order = new Order(Direction.ASC, sortBy);
+		if (FilterConstants.DESC.equalsIgnoreCase(sortOrder.toUpperCase())) {
+			order = new Order(Direction.DESC, sortBy);
+		}
+		return order;
+	}
+
+	public PageRequest toPageable() {
+		if (Objects.isNull(orders) || orders.isEmpty()) {
+			return PageRequest.of(pageNumber - 1, pageSize);
+		}
+		return PageRequest.of(pageNumber - 1, pageSize, Sort.by(orders));
+	}
+
+}
