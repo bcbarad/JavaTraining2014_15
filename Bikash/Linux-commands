@@ -1,0 +1,14 @@
+ps -ef | grep -i jboss
+du -sh jdk
+find / -name something
+
+ ls -tlr /opt/jboss/ | grep jdk | awk '{print $9}'
+ 
+ ps -ef |grep -i jboss
+ 
+ 
+ mvn clean install -DskipTests=true -Dskip.unit.tests=true -Dskip.integration.tests=true -Dskip.jmeter.tests=true
+
+mvn clean verify -P all-test
+
+mvn clean install -DskipTests=true -Dskip.unit.tests=true -Dskip.integration.tests=true -Dskip.jmeter.tests=true
