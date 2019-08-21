@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="WARN" monitorInterval="30">
+
+	<Properties>
+		<Property name="CONSOLE_LOG_PATTERN">
+			%X{msguid} %d{dd-MMM-yyyy HH:mm:ss.SSS} %-5level %logger{36} - %replace{%msg}{\n}{\u2028}%n
+		</Property>
+	</Properties>
+
+	<Appenders>
+	
+		<Console name="ELKAppender" target="SYSTEM_OUT">
+			<JSONLayout compact="true" eventEol="true"
+				properties="true">
+			</JSONLayout>
+		</Console>
+		
+		<Console name="Console-Appender" target="SYSTEM_OUT">
+			<PatternLayout>
+				<Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+			</PatternLayout>
+		</Console>
+		
+	</Appenders>
+	
+	<Loggers>
+	
+		<Logger name="org.springframework.web" level="warn"
+			additivity="false">
+			<AppenderRef ref="Console-Appender" />
+		</Logger>
+		
+<!-- 		<Logger name="org.hibernate.SQL" level="debug"
+			additivity="false">
+			<AppenderRef ref="Console-Appender" />
+		</Logger> -->
+		
+	<!-- 	<Logger name="org.springframework.jdbc" level="debug"
+			additivity="false">
+			<AppenderRef ref="Console-Appender" />
+		</Logger> -->
+		
+		<Logger name="com.dbs" level="debug" additivity="false">
+			<AppenderRef ref="Console-Appender" />
+		</Logger>
+		
+		<Logger name="elklogger" level="info" additivity="false">
+			<AppenderRef ref="ELKAppender" />
+		</Logger>
+		
+		<Root>
+			<AppenderRef ref="Console-Appender" />
+		</Root>
+		
+	</Loggers>
+	
+</Configuration>
